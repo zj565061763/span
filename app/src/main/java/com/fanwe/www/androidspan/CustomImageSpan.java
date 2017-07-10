@@ -84,7 +84,8 @@ public class CustomImageSpan extends ImageSpan
         int transY = bottom - b.getBounds().bottom;
         if (mVerticalAlignment == ALIGN_BASELINE)
         {
-            transY -= paint.getFontMetricsInt().descent;
+            int descent = paint.getFontMetricsInt().descent;
+            transY -= descent;
         }
 
         canvas.translate(x, transY);

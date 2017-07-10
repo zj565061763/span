@@ -2,7 +2,6 @@ package com.fanwe.www.androidspan;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -45,9 +44,9 @@ public class MainActivity extends AppCompatActivity
     private void testTextView()
     {
         SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
-        sb.append("hello");
+        sb.append("0");
 
-        CustomImageSpan imageSpan = new CustomImageSpan(this, R.drawable.test, DynamicDrawableSpan.ALIGN_BOTTOM);
+        CustomImageSpan imageSpan = new CustomImageSpan(this, R.drawable.test);
 
         sb.appendSpan(imageSpan, "launcher");
         tv.setText(sb);
