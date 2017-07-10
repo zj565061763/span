@@ -67,16 +67,17 @@ public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan
     @Override
     public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
     {
-        Drawable d = getDrawable();
-        Rect rect = d.getBounds();
+        Drawable b = getDrawable();
         canvas.save();
-        int transY = bottom - rect.bottom;
+
+        int transY = bottom - b.getBounds().bottom;
         if (mVerticalAlignment == ALIGN_BASELINE)
         {
             transY -= paint.getFontMetricsInt().descent;
         }
+
         canvas.translate(x, transY);
-        d.draw(canvas);
+        b.draw(canvas);
         canvas.restore();
     }
 
@@ -85,6 +86,7 @@ public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan
     {
         Drawable d = getDrawable();
         Rect rect = d.getBounds();
+
         if (fm != null)
         {
             fm.ascent = -rect.bottom;
@@ -93,6 +95,7 @@ public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan
             fm.top = fm.ascent;
             fm.bottom = 0;
         }
+
         return rect.right;
     }
 
