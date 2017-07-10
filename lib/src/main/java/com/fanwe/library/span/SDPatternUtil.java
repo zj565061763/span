@@ -20,29 +20,11 @@ public class SDPatternUtil
      * @param strContent 内容
      * @return
      */
-    public static Matcher matcher(String strPattern, String strContent)
+    private static Matcher matcher(String strPattern, String strContent)
     {
         Pattern pattern = Pattern.compile(strPattern);
         Matcher matcher = pattern.matcher(strContent);
         return matcher;
-    }
-
-    /**
-     * 是否有匹配正则表达式的内容
-     *
-     * @param strPattern 正则表达式
-     * @param strContent 内容
-     * @return
-     */
-    public static boolean hasMatch(String strPattern, String strContent)
-    {
-        boolean isMatch = false;
-        Matcher matcher = matcher(strPattern, strContent);
-        if (matcher != null && matcher.find())
-        {
-            isMatch = true;
-        }
-        return isMatch;
     }
 
     /**
