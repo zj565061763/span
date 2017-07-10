@@ -1,23 +1,17 @@
 package com.fanwe.www.androidspan;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.style.BackgroundColorSpan;
-import android.util.Log;
+import android.text.style.ImageSpan;
+import android.view.View;
 import android.widget.TextView;
 
-import com.fanwe.library.span.SDPatternUtil;
-import com.fanwe.library.span.SDSpannableStringBuilder;
-
-import java.util.List;
+import com.fanwe.library.span.view.SDSpannableEditText;
 
 public class MainActivity extends AppCompatActivity
 {
-    private static final String TAG_SDPATTERNUTIL = "tag_sdpatternutil";
-
     private TextView tv;
-    private SDSpannableStringBuilder mBuilder = new SDSpannableStringBuilder();
+    private SDSpannableEditText et_span;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,26 +19,21 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv = (TextView) findViewById(R.id.tv);
-
-        mBuilder.append("hello");
-
-
-        BackgroundColorSpan spanBg = new BackgroundColorSpan(Color.RED);
+        et_span = (SDSpannableEditText) findViewById(R.id.et_span);
 
 
-        mBuilder.setSpan(spanBg, 0, 4);
-        tv.setText(mBuilder);
+        tv.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                et_span.removeSpan();
+            }
+        });
 
-        testSDPatternUtil();
+        ImageSpan imageSpan = new ImageSpan(this, R.mipmap.ic_launcher);
+        et_span.insertSpan(imageSpan, "key");
+        et_span.setSelection(et_span.length() - 1);
     }
 
-
-    private void testSDPatternUtil()
-    {
-        String content = "hellohello";
-
-        List<String> listResult = SDPatternUtil.find("ll", content);
-
-        Log.i(TAG_SDPATTERNUTIL, "");
-    }
 }
