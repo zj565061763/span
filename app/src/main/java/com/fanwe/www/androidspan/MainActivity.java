@@ -6,6 +6,7 @@ import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import com.fanwe.library.span.SDImageSpan;
 import com.fanwe.library.span.SDSpannableStringBuilder;
 import com.fanwe.library.span.view.SDSpannableEditText;
 
@@ -46,7 +47,10 @@ public class MainActivity extends AppCompatActivity
         SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
         sb.append("0");
 
-        CustomImageSpan imageSpan = new CustomImageSpan(this, R.drawable.test);
+        SDImageSpan imageSpan = new SDImageSpan(this, R.drawable.test);
+        imageSpan.setMarginLeft(100);
+        imageSpan.setMarginRight(100);
+        imageSpan.setWidth(50);
 
         sb.appendSpan(imageSpan, "launcher");
         tv.setText(sb);
