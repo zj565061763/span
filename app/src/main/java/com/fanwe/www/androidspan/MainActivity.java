@@ -2,10 +2,12 @@ package com.fanwe.www.androidspan;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import com.fanwe.library.span.SDSpannableStringBuilder;
 import com.fanwe.library.span.view.SDSpannableEditText;
 
 public class MainActivity extends AppCompatActivity
@@ -21,7 +23,12 @@ public class MainActivity extends AppCompatActivity
         tv = (TextView) findViewById(R.id.tv);
         et_span = (SDSpannableEditText) findViewById(R.id.et_span);
 
+        testTextView();
+        testEditText();
+    }
 
+    private void testEditText()
+    {
         tv.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -31,8 +38,19 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        ImageSpan imageSpan = new ImageSpan(this, R.mipmap.ic_launcher);
+        ImageSpan imageSpan = new ImageSpan(this, R.drawable.test);
         et_span.insertSpan(imageSpan, "key");
+    }
+
+    private void testTextView()
+    {
+        SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
+        sb.append("hello");
+
+        ImageSpan imageSpan = new ImageSpan(this, R.drawable.test, DynamicDrawableSpan.ALIGN_BASELINE);
+
+        sb.appendSpan(imageSpan, "launcher");
+        tv.setText(sb);
     }
 
 }
