@@ -13,9 +13,7 @@ import android.view.View;
 
 public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan
 {
-
     private View mView;
-    private Context context;
 
     public SDDynamicDrawableSpan(View view)
     {
@@ -25,6 +23,11 @@ public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan
     public View getView()
     {
         return mView;
+    }
+
+    public Context getContext()
+    {
+        return mView.getContext();
     }
 
     protected abstract int getDefaultDrawableResId();
@@ -44,13 +47,13 @@ public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan
         Bitmap bitmap = onGetBitmap();
         if (bitmap != null)
         {
-            drawable = new BitmapDrawable(context.getResources(), bitmap);
+            drawable = new BitmapDrawable(getContext().getResources(), bitmap);
         } else
         {
             int drawableResIdDefault = getDefaultDrawableResId();
             if (drawableResIdDefault != 0)
             {
-                drawable = new BitmapDrawable(context.getResources(), context.getResources().openRawResource(drawableResIdDefault));
+                drawable = new BitmapDrawable(getContext().getResources(), getContext().getResources().openRawResource(drawableResIdDefault));
             }
         }
 
