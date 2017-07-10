@@ -92,14 +92,4 @@ public class SDSpannableStringBuilder extends SpannableStringBuilder
             setSpan(what, matcherInfo.getStart(), matcherInfo.getEnd());
         }
     }
-
-    /**
-     * 重置，清空当前builder的内容
-     */
-    public void reset()
-    {
-        clear();
-        clearSpans();
-    }
-
 }
