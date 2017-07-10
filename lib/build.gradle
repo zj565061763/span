@@ -33,7 +33,7 @@ publish {
     artifactId = 'span'
     publishVersion = '1.0.0'
     desc = 'android span library'
-    website = 'https://github.com/zj565061763/SwitchButton'
+    website = 'https://github.com/zj565061763/AndroidSpan'
 }
 
 tasks.withType(Javadoc) {
