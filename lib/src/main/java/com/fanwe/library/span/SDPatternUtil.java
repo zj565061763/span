@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -95,30 +94,6 @@ public class SDPatternUtil
     }
 
     /**
-     * 找到关键字key在内容中的所有起始位置
-     *
-     * @param content 内容
-     * @param key     关键字
-     * @return
-     */
-    public static LinkedBlockingQueue<Integer> findPositionQueue(String content, String key)
-    {
-        LinkedBlockingQueue<Integer> listPosition = new LinkedBlockingQueue<>();
-        if (content != null && !TextUtils.isEmpty(key))
-        {
-            int searchIndex = 0;
-            int index = content.indexOf(key, searchIndex);
-            while (index >= 0)
-            {
-                listPosition.add(index);
-                searchIndex = index + 1;
-                index = content.indexOf(key, searchIndex);
-            }
-        }
-        return listPosition;
-    }
-
-    /**
      * 找到内容中所有匹配正则表达式的信息
      *
      * @param strPattern 正则表达式
@@ -132,22 +107,22 @@ public class SDPatternUtil
         if (listKey != null && !listKey.isEmpty())
         {
             Integer position = null;
-            Map<String, LinkedBlockingQueue<Integer>> mapKeyPositions = new HashMap<>();
+            Map<String, List<Integer>> mapKeyPositions = new HashMap<>();
             for (String key : listKey)
             {
-                LinkedBlockingQueue<Integer> queuePosition = null;
+                List<Integer> listPosition = null;
                 if (!mapKeyPositions.containsKey(key))
                 {
-                    queuePosition = findPositionQueue(strContent, key);
-                    mapKeyPositions.put(key, queuePosition);
+                    listPosition = findPosition(strContent, key);
+                    mapKeyPositions.put(key, listPosition);
                 } else
                 {
-                    queuePosition = mapKeyPositions.get(key);
+                    listPosition = mapKeyPositions.get(key);
                 }
 
-                if (queuePosition.size() > 0)
+                if (listPosition.size() > 0)
                 {
-                    position = queuePosition.poll();
+                    position = listPosition.remove(0);
                     if (position != null)
                     {
                         MatcherInfo matcherInfo = new MatcherInfo();
