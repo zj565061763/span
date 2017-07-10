@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
         sb.append("hello");
 
-        ImageSpan imageSpan = new ImageSpan(this, R.drawable.test, DynamicDrawableSpan.ALIGN_BASELINE);
+        CustomImageSpan imageSpan = new CustomImageSpan(this, R.drawable.test, DynamicDrawableSpan.ALIGN_BOTTOM);
 
         sb.appendSpan(imageSpan, "launcher");
         tv.setText(sb);
