@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity
 
         ImageSpan imageSpan = new ImageSpan(this, R.mipmap.ic_launcher);
         et_span.insertSpan(imageSpan, "key");
-        et_span.setSelection(et_span.length() - 1);
     }
 
 }
