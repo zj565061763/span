@@ -20,11 +20,6 @@ public class SDSpannableEditText extends EditText
         super(context, attrs);
     }
 
-    public SDSpannableEditText(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context, attrs, defStyleAttr);
-    }
-
     private SparseArray<SpanInfo> mArrSpan = new SparseArray<>();
 
     /**
