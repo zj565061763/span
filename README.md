@@ -5,6 +5,9 @@
 ## Gradle
 `compile 'com.fanwe.android:span:1.0.4'`
 
+## 实际项目效果图
+![](http://thumbsnap.com/i/QeKxWmbM.png?0718)
+
 ## TextView效果
 ![](http://thumbsnap.com/i/uKnMNBqU.gif?0718)<br>
 
