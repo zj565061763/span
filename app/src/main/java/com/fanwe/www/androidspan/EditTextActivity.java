@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.library.span.IImageSpanHelper;
 import com.fanwe.library.span.SDImageSpan;
 import com.fanwe.library.span.view.SDSpannableEditText;
 
@@ -33,7 +32,6 @@ public class EditTextActivity extends SDBaseActivity
             public void onClick(View v)
             {
                 SDImageSpan span = new SDImageSpan(getApplicationContext(), R.drawable.face);
-                span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM); //设置对齐控件底部
                 et.insertSpan(span, "face");
             }
         });

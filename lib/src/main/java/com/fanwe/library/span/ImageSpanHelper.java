@@ -15,7 +15,7 @@ class ImageSpanHelper implements IImageSpanHelper
     private int mMarginRight;
     private int mMarginBottom;
     private int mWidth;
-    private VerticalAlignType mVerticalAlignType = VerticalAlignType.ALIGN_BASELINE;
+    private VerticalAlignType mVerticalAlignType = VerticalAlignType.ALIGN_BOTTOM;
 
     private DynamicDrawableSpan mSpan;
 
