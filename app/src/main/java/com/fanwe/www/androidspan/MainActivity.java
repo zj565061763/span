@@ -23,6 +23,14 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(MainActivity.this, TextViewActivity.class));
             }
         });
+        findViewById(R.id.btn_edittext).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(MainActivity.this, EditTextActivity.class));
+            }
+        });
     }
 
 

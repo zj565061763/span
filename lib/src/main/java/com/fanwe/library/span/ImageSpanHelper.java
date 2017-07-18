@@ -65,14 +65,11 @@ class ImageSpanHelper implements IImageSpanHelper
         Drawable b = getSpan().getDrawable();
         canvas.save();
 
-        int transY = 0;
+        int transY = bottom - b.getBounds().bottom; //底部对齐的参数
 
         if (mVerticalAlignType == VerticalAlignType.ALIGN_BASELINE)
         {
-            //默认对齐方式，不处理
-        } else if (mVerticalAlignType == VerticalAlignType.ALIGN_BOTTOM)
-        {
-            transY = bottom - b.getBounds().bottom;
+            transY -= paint.getFontMetricsInt().descent;
         }
 
         transY -= mMarginBottom;

@@ -24,8 +24,8 @@ public class TextViewActivity extends SDBaseActivity
         SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
         sb.append("0");
 
-        SDImageSpan span = new SDImageSpan(this, R.drawable.test);
-        span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BASELINE); //设置对齐TextView基准线
+        SDImageSpan span = new SDImageSpan(this, R.drawable.face);
+        span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BASELINE); //设置对齐TextView基准线(默认对齐方式)
         span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM); //设置对齐TextView底部
         span.setWidth(100); //设置图片宽度，内部会按比例缩放
         span.setMarginLeft(10); //设置左边间距
