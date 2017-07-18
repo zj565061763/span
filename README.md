@@ -124,7 +124,7 @@ tv.setText("fdkfsofosi[face]fdsfsdf[face]");
 效果图:<br>
 ![](http://thumbsnap.com/i/UmzIoF5v.gif?0718)<br>
 
-1. 自定义TextView
+1. 自定义Span
 ```java
 public class NetImageSpan extends SDDynamicDrawableSpan
 {
