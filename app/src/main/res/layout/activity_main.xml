@@ -4,18 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:background="@color/colorAccent"
-        android:gravity="bottom"
-        android:text="Hello World!"/>
-
-
-    <com.fanwe.library.span.view.SDSpannableEditText
-        android:id="@+id/et_span"
+    <Button
+        android:id="@+id/btn_textview"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        android:text="btn_textview"/>
 
 </LinearLayout>
