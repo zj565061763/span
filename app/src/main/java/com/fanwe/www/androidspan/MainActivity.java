@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         sb.append("0");
 
         SDImageSpan imageSpan = new SDImageSpan(this, R.drawable.test);
-        imageSpan.setWidth(50);
+        imageSpan.setWidth(100);
         imageSpan.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BASELINE);
 
         sb.appendSpan(imageSpan, "launcher");
