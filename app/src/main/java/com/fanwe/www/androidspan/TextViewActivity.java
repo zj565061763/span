@@ -1,6 +1,8 @@
 package com.fanwe.www.androidspan;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.fanwe.library.activity.SDBaseActivity;
@@ -14,25 +16,54 @@ import com.fanwe.library.span.SDSpannableStringBuilder;
 public class TextViewActivity extends SDBaseActivity
 {
     private TextView tv;
+    private Button btn_add_bottom, btn_add_baseline;
 
     @Override
     protected void init(Bundle savedInstanceState)
     {
         setContentView(R.layout.act_textview);
         tv = (TextView) findViewById(R.id.tv);
+        btn_add_bottom = (Button) findViewById(R.id.btn_add_bottom);
+        btn_add_baseline = (Button) findViewById(R.id.btn_add_baseline);
 
-        SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
-        sb.append("0");
+        btn_add_bottom.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
+                sb.append("f");
 
-        SDImageSpan span = new SDImageSpan(this, R.drawable.face);
-        span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BASELINE); //设置对齐TextView基准线(默认对齐方式)
-        span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM); //设置对齐TextView底部
-        span.setWidth(100); //设置图片宽度，内部会按比例缩放
-        span.setMarginLeft(10); //设置左边间距
-        span.setMarginRight(10); //设置右边间距
-        span.setMarginBottom(10); //设置底部间距
+                SDImageSpan span = new SDImageSpan(getApplicationContext(), R.drawable.face);
+                span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM); //设置对齐TextView底部
+                span.setWidth(100); //设置图片宽度，内部会按比例缩放
+                span.setMarginLeft(10); //设置左边间距
+                span.setMarginRight(10); //设置右边间距
 
-        sb.appendSpan(span, "launcher");
-        tv.setText(sb);
+                sb.appendSpan(span, "launcher");
+                tv.setText(sb);
+            }
+        });
+
+        btn_add_baseline.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
+                sb.append("f");
+
+                SDImageSpan span = new SDImageSpan(getApplicationContext(), R.drawable.face);
+                span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BASELINE); //设置对齐基准线
+                span.setWidth(100); //设置图片宽度，内部会按比例缩放
+                span.setMarginLeft(10); //设置左边间距
+                span.setMarginRight(10); //设置右边间距
+
+                sb.appendSpan(span, "launcher");
+                tv.setText(sb);
+            }
+        });
+
+
     }
 }

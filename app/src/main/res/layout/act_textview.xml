@@ -11,4 +11,16 @@
         android:background="@color/red"
         android:gravity="bottom"/>
 
+    <Button
+        android:id="@+id/btn_add_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="添加底部对齐span"/>
+
+    <Button
+        android:id="@+id/btn_add_baseline"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="添加基准线对齐span"/>
+
 </LinearLayout>
