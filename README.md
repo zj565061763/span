@@ -120,7 +120,7 @@ tv.setText("fdkfsofosi[face]fdsfsdf[face]");
 ```
 
 ## 加载网络图片并用span展示
-实现TextView中展示网络图片<br>
+实现TextView中展示网络图片，demo中用Glide框架加载图片演示<br>
 效果图:<br>
 ![](http://thumbsnap.com/i/UmzIoF5v.gif?0718)<br>
 
