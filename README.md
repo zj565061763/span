@@ -2,6 +2,9 @@
 # AndroidSpan
 实现富文本TextView和EditText，可以调节span的宽度以及间距
 
+## Gradle
+`compile 'com.fanwe.android:span:1.0.4'`
+
 ## TextView效果
 ![](http://thumbsnap.com/i/uKnMNBqU.gif?0718)<br>
 
