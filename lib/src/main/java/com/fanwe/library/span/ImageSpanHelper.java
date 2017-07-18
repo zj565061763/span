@@ -15,6 +15,7 @@ class ImageSpanHelper implements IImageSpanHelper
     private int mMarginLeft;
     private int mMarginRight;
     private int mWidth;
+    private VerticalAlignType mVerticalAlignType = VerticalAlignType.ALIGN_BOTTOM;
 
     private DynamicDrawableSpan mSpan;
 
@@ -52,7 +53,7 @@ class ImageSpanHelper implements IImageSpanHelper
         canvas.save();
 
         int transY = bottom - b.getBounds().bottom;
-        if (getSpan().getVerticalAlignment() == DynamicDrawableSpan.ALIGN_BASELINE)
+        if (mVerticalAlignType == VerticalAlignType.ALIGN_BASELINE)
         {
             transY -= paint.getFontMetricsInt().descent;
         }
@@ -95,5 +96,15 @@ class ImageSpanHelper implements IImageSpanHelper
     public void setMarginRight(int marginRight)
     {
         mMarginRight = marginRight;
+    }
+
+    @Override
+    public void setVerticalAlignType(VerticalAlignType alignType)
+    {
+        if (alignType == null)
+        {
+            return;
+        }
+        mVerticalAlignType = alignType;
     }
 }

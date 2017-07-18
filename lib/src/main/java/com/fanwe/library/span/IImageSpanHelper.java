@@ -4,7 +4,7 @@ package com.fanwe.library.span;
  * Created by Administrator on 2017/7/10.
  */
 
-interface IImageSpanHelper
+public interface IImageSpanHelper
 {
     /**
      * 设置宽度
@@ -26,4 +26,17 @@ interface IImageSpanHelper
      * @param marginRight
      */
     void setMarginRight(int marginRight);
+
+    /**
+     * 设置竖直方向对齐方式
+     *
+     * @param alignType
+     */
+    void setVerticalAlignType(VerticalAlignType alignType);
+
+    enum VerticalAlignType
+    {
+        ALIGN_BOTTOM,
+        ALIGN_BASELINE,
+    }
 }

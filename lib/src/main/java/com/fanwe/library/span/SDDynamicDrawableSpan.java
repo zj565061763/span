@@ -126,4 +126,10 @@ public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan implemen
     {
         getImageSpanHelper().setMarginRight(marginRight);
     }
+
+    @Override
+    public void setVerticalAlignType(VerticalAlignType alignType)
+    {
+        getImageSpanHelper().setVerticalAlignType(alignType);
+    }
 }
