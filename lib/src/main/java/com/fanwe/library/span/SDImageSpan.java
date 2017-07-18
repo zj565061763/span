@@ -125,8 +125,8 @@ public class SDImageSpan extends ImageSpan implements IImageSpanHelper
     }
 
     @Override
-    public void setVerticalAlignType(VerticalAlignType alignType)
+    public void setVerticalAlignType(VerticalAlignType verticalAlignType)
     {
-        getImageSpanHelper().setVerticalAlignType(alignType);
+        getImageSpanHelper().setVerticalAlignType(verticalAlignType);
     }
 }

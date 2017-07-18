@@ -30,9 +30,9 @@ public interface IImageSpanHelper
     /**
      * 设置竖直方向对齐方式
      *
-     * @param alignType
+     * @param verticalAlignType
      */
-    void setVerticalAlignType(VerticalAlignType alignType);
+    void setVerticalAlignType(VerticalAlignType verticalAlignType);
 
     enum VerticalAlignType
     {

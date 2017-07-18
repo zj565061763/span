@@ -130,12 +130,12 @@ class ImageSpanHelper implements IImageSpanHelper
     }
 
     @Override
-    public void setVerticalAlignType(VerticalAlignType alignType)
+    public void setVerticalAlignType(VerticalAlignType verticalAlignType)
     {
-        if (alignType == null)
+        if (verticalAlignType == null)
         {
             return;
         }
-        mVerticalAlignType = alignType;
+        mVerticalAlignType = verticalAlignType;
     }
 }
