@@ -118,3 +118,67 @@ public class CustomTextView extends SDSpannableTextView
 ```java
 tv.setText("fdkfsofosi[face]fdsfsdf[face]");
 ```
+
+## 加载网络图片并用span展示
+实现TextView中展示网络图片<br>
+效果图:<br>
+![](http://thumbsnap.com/i/UmzIoF5v.gif?0718)<br>
+
+1. 自定义TextView
+```java
+public class NetImageSpan extends SDDynamicDrawableSpan
+{
+    private String mUrl; //图片url地址
+    private Bitmap mBitmap;
+
+    /**
+     * @param view span要依附的view
+     */
+    public NetImageSpan(View view)
+    {
+        super(view);
+    }
+
+    public void setUrl(String url)
+    {
+        mUrl = url;
+    }
+
+    @Override
+    protected int getDefaultDrawableResId()
+    {
+        //返回图片未加载成功之前的占位图片
+        return R.drawable.ic_default;
+    }
+
+    @Override
+    protected Bitmap onGetBitmap()
+    {
+        if (mBitmap == null || mBitmap.isRecycled())
+        {
+            Glide.with(getContext()).load(mUrl).asBitmap().into(new SimpleTarget<Bitmap>()
+            {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation)
+                {
+                    mBitmap = resource; //demo演示简单在span内部保存，具体项目中应该把Bitmap对象存到app的缓存管理中
+                    getView().postInvalidate(); //加载成功后，刷新View
+                }
+            });
+        }
+        return mBitmap;
+    }
+}
+```
+
+2. java代码
+```java
+SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
+
+NetImageSpan span = new NetImageSpan(tv);
+span.setUrl("https://www.baidu.com/img/bd_logo1.png");
+span.setWidth(200);
+sb.appendSpan(span, "span");
+
+tv.setText(sb);
+```
