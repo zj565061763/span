@@ -43,7 +43,13 @@ public interface IImageSpanHelper
 
     enum VerticalAlignType
     {
+        /**
+         * 对齐字体的底部
+         */
         ALIGN_BOTTOM,
+        /**
+         * 对齐字体的基准线
+         */
         ALIGN_BASELINE,
     }
 }
