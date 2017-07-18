@@ -128,6 +128,12 @@ public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan implemen
     }
 
     @Override
+    public void setMarginBottom(int marginBottom)
+    {
+        getImageSpanHelper().setMarginBottom(marginBottom);
+    }
+
+    @Override
     public void setVerticalAlignType(VerticalAlignType verticalAlignType)
     {
         getImageSpanHelper().setVerticalAlignType(verticalAlignType);

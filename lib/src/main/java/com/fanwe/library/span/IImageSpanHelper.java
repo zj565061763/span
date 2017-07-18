@@ -28,6 +28,13 @@ public interface IImageSpanHelper
     void setMarginRight(int marginRight);
 
     /**
+     * 设置底部边距
+     *
+     * @param marginBottom
+     */
+    void setMarginBottom(int marginBottom);
+
+    /**
      * 设置竖直方向对齐方式
      *
      * @param verticalAlignType

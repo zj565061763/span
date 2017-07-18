@@ -125,6 +125,12 @@ public class SDImageSpan extends ImageSpan implements IImageSpanHelper
     }
 
     @Override
+    public void setMarginBottom(int marginBottom)
+    {
+        getImageSpanHelper().setMarginBottom(marginBottom);
+    }
+
+    @Override
     public void setVerticalAlignType(VerticalAlignType verticalAlignType)
     {
         getImageSpanHelper().setVerticalAlignType(verticalAlignType);

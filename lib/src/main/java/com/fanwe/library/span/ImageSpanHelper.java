@@ -13,6 +13,7 @@ class ImageSpanHelper implements IImageSpanHelper
 {
     private int mMarginLeft;
     private int mMarginRight;
+    private int mMarginBottom;
     private int mWidth;
     private VerticalAlignType mVerticalAlignType = VerticalAlignType.ALIGN_BASELINE;
 
@@ -74,6 +75,8 @@ class ImageSpanHelper implements IImageSpanHelper
             transY = bottom - b.getBounds().bottom;
         }
 
+        transY -= mMarginBottom;
+
         canvas.translate(x + mMarginLeft, transY);
         b.draw(canvas);
         canvas.restore();
@@ -126,6 +129,12 @@ class ImageSpanHelper implements IImageSpanHelper
     public void setMarginRight(int marginRight)
     {
         mMarginRight = marginRight;
+    }
+
+    @Override
+    public void setMarginBottom(int marginBottom)
+    {
+        mMarginBottom = marginBottom;
     }
 
     @Override
