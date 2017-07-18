@@ -32,7 +32,7 @@ public class EditTextActivity extends SDBaseActivity
             public void onClick(View v)
             {
                 SDImageSpan span = new SDImageSpan(getApplicationContext(), R.drawable.face);
-                et.insertSpan(span, "face");
+                et.insertSpan(span, "face"); //插入span
             }
         });
 
@@ -41,7 +41,7 @@ public class EditTextActivity extends SDBaseActivity
             @Override
             public void onClick(View v)
             {
-                et.removeSpan();
+                et.removeSpan(); //删除span
             }
         });
     }
