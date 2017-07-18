@@ -15,7 +15,7 @@ class ImageSpanHelper implements IImageSpanHelper
     private int mMarginLeft;
     private int mMarginRight;
     private int mWidth;
-    private VerticalAlignType mVerticalAlignType = VerticalAlignType.ALIGN_BOTTOM;
+    private VerticalAlignType mVerticalAlignType = VerticalAlignType.ALIGN_BASELINE;
 
     private DynamicDrawableSpan mSpan;
 
@@ -47,15 +47,32 @@ class ImageSpanHelper implements IImageSpanHelper
         }
     }
 
+    /**
+     * Draws the span into the canvas.
+     *
+     * @param canvas Canvas into which the span should be rendered.
+     * @param text   Current text.
+     * @param start  Start character index for span.
+     * @param end    End character index for span.
+     * @param x      Edge of the replacement closest to the leading margin.
+     * @param top    Top of the line.
+     * @param y      Baseline.
+     * @param bottom Bottom of the line.
+     * @param paint  Paint instance.
+     */
     public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
     {
         Drawable b = getSpan().getDrawable();
         canvas.save();
 
-        int transY = bottom - b.getBounds().bottom;
+        int transY = 0;
+
         if (mVerticalAlignType == VerticalAlignType.ALIGN_BASELINE)
         {
-            transY -= paint.getFontMetricsInt().descent;
+            //默认对齐方式，不处理
+        } else if (mVerticalAlignType == VerticalAlignType.ALIGN_BOTTOM)
+        {
+            transY = bottom - b.getBounds().bottom;
         }
 
         canvas.translate(x + mMarginLeft, transY);
@@ -63,6 +80,20 @@ class ImageSpanHelper implements IImageSpanHelper
         canvas.restore();
     }
 
+    /**
+     * Returns the width of the span. Extending classes can set the height of the span by updating
+     * attributes of {@link android.graphics.Paint.FontMetricsInt}. If the span covers the whole
+     * text, and the height is not set,
+     * {@link #draw(Canvas, CharSequence, int, int, float, int, int, int, Paint)} will not be
+     * called for the span.
+     *
+     * @param paint Paint instance.
+     * @param text  Current text.
+     * @param start Start character index for span.
+     * @param end   End character index for span.
+     * @param fm    Font metrics, can be null.
+     * @return Width of the span.
+     */
     public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm)
     {
         Drawable d = getSpan().getDrawable();

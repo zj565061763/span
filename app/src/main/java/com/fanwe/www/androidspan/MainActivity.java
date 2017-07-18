@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity
         sb.append("0");
 
         SDImageSpan imageSpan = new SDImageSpan(this, R.drawable.test);
-        imageSpan.setWidth(100);
-        imageSpan.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BASELINE);
+//        imageSpan.setWidth(100);
+        imageSpan.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM);
 
         sb.appendSpan(imageSpan, "launcher");
         tv.setText(sb);
