@@ -7,9 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.text.style.DynamicDrawableSpan;
 
 /**
- * Created by Administrator on 2017/7/10.
+ * draw和getSize方法参考安卓原生的{@link DynamicDrawableSpan}实现
  */
-
 class ImageSpanHelper implements IImageSpanHelper
 {
     private int mMarginLeft;
