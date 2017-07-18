@@ -14,7 +14,7 @@ import com.fanwe.library.span.SDDynamicDrawableSpan;
 
 public class NetImageSpan extends SDDynamicDrawableSpan
 {
-    private String mUrl;
+    private String mUrl; //图片url地址
     private Bitmap mBitmap;
 
     /**
@@ -33,6 +33,7 @@ public class NetImageSpan extends SDDynamicDrawableSpan
     @Override
     protected int getDefaultDrawableResId()
     {
+        //返回图片未加载成功之前的占位图片
         return R.drawable.ic_default;
     }
 
@@ -46,8 +47,8 @@ public class NetImageSpan extends SDDynamicDrawableSpan
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation)
                 {
-                    mBitmap = resource;
-                    getView().postInvalidate();
+                    mBitmap = resource; //demo演示简单在span内部保存，具体项目中应该把Bitmap对象存到app的缓存管理中
+                    getView().postInvalidate(); //加载成功后，刷新View
                 }
             });
         }
