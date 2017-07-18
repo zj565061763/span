@@ -20,7 +20,7 @@ SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
 sb.append("f");
 
 SDImageSpan span = new SDImageSpan(getApplicationContext(), R.drawable.face);
-span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM); //设置对齐字体底部
+span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM); //设置对齐字体底部（默认对齐方式）
 span.setWidth(100); //设置图片宽度，内部会按比例缩放
 span.setMarginLeft(10); //设置左边间距
 span.setMarginRight(10); //设置右边间距
