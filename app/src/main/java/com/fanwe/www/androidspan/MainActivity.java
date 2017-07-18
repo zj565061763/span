@@ -39,6 +39,14 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(MainActivity.this, PatternActivity.class));
             }
         });
+        findViewById(R.id.btn_netspan).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startActivity(new Intent(MainActivity.this, NetSpanActivity.class));
+            }
+        });
     }
 
 

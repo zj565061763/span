@@ -20,5 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="btn_pattern"/>
+    <Button
+        android:id="@+id/btn_netspan"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="btn_netspan"/>
 
 </LinearLayout>
