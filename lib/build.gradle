@@ -33,7 +33,7 @@ publish {
     artifactId = 'span'
     publishVersion = '1.0.5'
     desc = 'android span library'
-    website = 'https://github.com/zj565061763/AndroidSpan'
+    website = 'https://github.com/zj565061763/span'
 }
 
 tasks.withType(Javadoc) {
