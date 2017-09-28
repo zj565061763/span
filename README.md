@@ -48,7 +48,7 @@ tv.setText(sb);
 
 1. xml布局
 ```xml
-<com.fanwe.library.span.view.SDSpannableEditText
+<com.fanwe.lib.span.view.SDSpannableEditText
     android:id="@+id/et"
     android:layout_width="match_parent"
     android:layout_height="50dp"/>
