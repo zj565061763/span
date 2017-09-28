@@ -6,7 +6,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.fanwe.library.span.SDDynamicDrawableSpan;
+import com.fanwe.lib.span.SDDynamicDrawableSpan;
 
 /**
  * Created by Administrator on 2017/7/18.

@@ -13,52 +13,81 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fanwe.library.span;
+package com.fanwe.lib.span;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Paint.FontMetricsInt;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.text.style.DynamicDrawableSpan;
-import android.view.View;
+import android.net.Uri;
+import android.text.style.ImageSpan;
 
-import java.lang.ref.WeakReference;
 
-public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan implements IImageSpanHelper
+/**
+ * Created by Administrator on 2017/7/10.
+ */
+
+public class SDImageSpan extends ImageSpan implements IImageSpanHelper
 {
-    private WeakReference<View> mView;
-
-    /**
-     * @param view span要依附的view
-     */
-    public SDDynamicDrawableSpan(View view)
+    public SDImageSpan(Bitmap b)
     {
-        mView = new WeakReference<>(view);
+        super(b);
     }
 
-    /**
-     * span依附的view
-     *
-     * @return
-     */
-    public View getView()
+    public SDImageSpan(Bitmap b, int verticalAlignment)
     {
-        return mView.get();
+        super(b, verticalAlignment);
     }
 
-    public Context getContext()
+    public SDImageSpan(Context context, Bitmap b)
     {
-        View view = getView();
-        if (view != null)
-        {
-            return view.getContext();
-        } else
-        {
-            return null;
-        }
+        super(context, b);
+    }
+
+    public SDImageSpan(Context context, Bitmap b, int verticalAlignment)
+    {
+        super(context, b, verticalAlignment);
+    }
+
+    public SDImageSpan(Drawable d)
+    {
+        super(d);
+    }
+
+    public SDImageSpan(Drawable d, int verticalAlignment)
+    {
+        super(d, verticalAlignment);
+    }
+
+    public SDImageSpan(Drawable d, String source)
+    {
+        super(d, source);
+    }
+
+    public SDImageSpan(Drawable d, String source, int verticalAlignment)
+    {
+        super(d, source, verticalAlignment);
+    }
+
+    public SDImageSpan(Context context, Uri uri)
+    {
+        super(context, uri);
+    }
+
+    public SDImageSpan(Context context, Uri uri, int verticalAlignment)
+    {
+        super(context, uri, verticalAlignment);
+    }
+
+    public SDImageSpan(Context context, int resourceId)
+    {
+        super(context, resourceId);
+    }
+
+    public SDImageSpan(Context context, int resourceId, int verticalAlignment)
+    {
+        super(context, resourceId, verticalAlignment);
     }
 
     private ImageSpanHelper mImageSpanHelper;
@@ -72,42 +101,10 @@ public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan implemen
         return mImageSpanHelper;
     }
 
-    /**
-     * 返回默认的图片资源id
-     *
-     * @return
-     */
-    protected abstract int getDefaultDrawableResId();
-
-    /**
-     * 返回图片的bitmap对象
-     *
-     * @return
-     */
-    protected abstract Bitmap onGetBitmap();
-
     @Override
     public Drawable getDrawable()
     {
-        Drawable drawable = null;
-
-        Bitmap bitmap = onGetBitmap();
-        if (bitmap != null)
-        {
-            drawable = new BitmapDrawable(getContext().getResources(), bitmap);
-        } else
-        {
-            int drawableResIdDefault = getDefaultDrawableResId();
-            if (drawableResIdDefault != 0)
-            {
-                drawable = new BitmapDrawable(getContext().getResources(), getContext().getResources().openRawResource(drawableResIdDefault));
-            }
-        }
-
-        int width = drawable.getIntrinsicWidth();
-        int height = drawable.getIntrinsicHeight();
-        drawable.setBounds(0, 0, width, height);
-
+        Drawable drawable = super.getDrawable();
         getImageSpanHelper().processSize(drawable);
         return drawable;
     }
@@ -119,7 +116,7 @@ public abstract class SDDynamicDrawableSpan extends DynamicDrawableSpan implemen
     }
 
     @Override
-    public int getSize(Paint paint, CharSequence text, int start, int end, FontMetricsInt fm)
+    public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm)
     {
         return getImageSpanHelper().getSize(paint, text, start, end, fm);
     }

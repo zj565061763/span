@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.library.span.SDImageSpan;
-import com.fanwe.library.span.view.SDSpannableEditText;
+import com.fanwe.lib.span.SDImageSpan;
+import com.fanwe.lib.span.view.SDSpannableEditText;
 
 /**
  * Created by Administrator on 2017/7/18.

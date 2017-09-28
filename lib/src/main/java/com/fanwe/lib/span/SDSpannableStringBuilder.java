@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fanwe.library.span;
+package com.fanwe.lib.span;
 
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;

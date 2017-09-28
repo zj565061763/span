@@ -6,9 +6,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.library.span.IImageSpanHelper;
-import com.fanwe.library.span.SDImageSpan;
-import com.fanwe.library.span.SDSpannableStringBuilder;
+import com.fanwe.lib.span.IImageSpanHelper;
+import com.fanwe.lib.span.SDImageSpan;
+import com.fanwe.lib.span.SDSpannableStringBuilder;
 
 /**
  * Created by Administrator on 2017/7/18.

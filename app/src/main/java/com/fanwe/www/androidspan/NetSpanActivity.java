@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.library.span.SDSpannableStringBuilder;
+import com.fanwe.lib.span.SDSpannableStringBuilder;
 
 /**
  * Created by Administrator on 2017/7/18.

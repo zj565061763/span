@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fanwe.library.span.view;
+package com.fanwe.lib.span.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.fanwe.library.span.SDSpannableStringBuilder;
+import com.fanwe.lib.span.SDSpannableStringBuilder;
+
 
 /**
  * Created by Administrator on 2017/7/13.

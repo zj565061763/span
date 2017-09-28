@@ -3,11 +3,11 @@ package com.fanwe.www.androidspan;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.fanwe.library.span.MatcherInfo;
-import com.fanwe.library.span.SDImageSpan;
-import com.fanwe.library.span.SDPatternUtil;
-import com.fanwe.library.span.SDSpannableStringBuilder;
-import com.fanwe.library.span.view.SDSpannableTextView;
+import com.fanwe.lib.span.MatcherInfo;
+import com.fanwe.lib.span.SDImageSpan;
+import com.fanwe.lib.span.SDPatternUtil;
+import com.fanwe.lib.span.SDSpannableStringBuilder;
+import com.fanwe.lib.span.view.SDSpannableTextView;
 import com.fanwe.library.utils.SDPackageUtil;
 
 import java.util.List;
