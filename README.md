@@ -9,7 +9,7 @@ allprojects {
 }
 
 dependencies {
-        compile 'com.github.zj565061763:span:1.0.6'
+        compile 'com.github.zj565061763:span:1.0.7'
 }
 
 ```
