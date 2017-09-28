@@ -1,7 +1,18 @@
 
-
 ## Gradle
-`compile 'com.fanwe.android:span:1.0.5'`
+```
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+        compile 'com.github.zj565061763:span:1.0.6'
+}
+
+```
 
 ## 实际项目效果图
 ![](http://thumbsnap.com/i/QeKxWmbM.png?0718)
