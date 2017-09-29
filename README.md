@@ -1,18 +1,6 @@
 
 ## Gradle
-```
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
-}
-
-dependencies {
-        compile 'com.github.zj565061763:span:1.0.7'
-}
-
-```
+[![](https://jitpack.io/v/zj565061763/span.svg)](https://jitpack.io/#zj565061763/span)
 
 ## 实际项目效果图
 ![](http://thumbsnap.com/i/QeKxWmbM.png?0718)
