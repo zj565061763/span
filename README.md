@@ -19,10 +19,10 @@
 ```
 2. java代码
 ```java
-SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
+FSpannableStringBuilder sb = new FSpannableStringBuilder();
 sb.append("f");
 
-SDImageSpan span = new SDImageSpan(getApplicationContext(), R.drawable.face);
+FImageSpan span = new FImageSpan(getApplicationContext(), R.drawable.face);
 span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM); //设置对齐字体底部（默认对齐方式）
 span.setWidth(100); //设置图片宽度，内部会按比例缩放
 span.setMarginLeft(10); //设置左边间距
@@ -36,7 +36,7 @@ tv.setText(sb);
 
 1. xml布局
 ```xml
-<com.fanwe.lib.span.view.SDSpannableEditText
+<com.fanwe.lib.span.view.FSpannableEditText
     android:id="@+id/et"
     android:layout_width="match_parent"
     android:layout_height="50dp"/>
@@ -48,7 +48,7 @@ btn_add.setOnClickListener(new View.OnClickListener()
     @Override
     public void onClick(View v)
     {
-        SDImageSpan span = new SDImageSpan(getApplicationContext(), R.drawable.face);
+        FImageSpan span = new FImageSpan(getApplicationContext(), R.drawable.face);
         et.insertSpan(span, "face"); //插入span
     }
 });
@@ -69,7 +69,7 @@ btn_remove.setOnClickListener(new View.OnClickListener()
 
 1. 自定义TextView
 ```java
-public class CustomTextView extends SDSpannableTextView
+public class CustomTextView extends FSpannableTextView
 {
     public CustomTextView(Context context)
     {
@@ -82,10 +82,10 @@ public class CustomTextView extends SDSpannableTextView
     }
 
     @Override
-    protected void onProcessSpannableStringBuilder(SDSpannableStringBuilder builder)
+    protected void onProcessSpannableStringBuilder(FSpannableStringBuilder builder)
     {
         //正则表达式匹配[***]中括号这种规则的字符串
-        List<MatcherInfo> list = SDPatternUtil.findMatcherInfo("\\[([^\\[\\]]+)\\]", builder.toString());
+        List<MatcherInfo> list = FPatternUtil.findMatcherInfo("\\[([^\\[\\]]+)\\]", builder.toString());
         for (final MatcherInfo info : list)
         {
             String key = info.getKey(); //获得匹配的字符串
@@ -93,7 +93,7 @@ public class CustomTextView extends SDSpannableTextView
             int resId = getIdentifierDrawable(key); //根据文件名获得图片资源id
             if (resId != 0)
             {
-                SDImageSpan span = new SDImageSpan(getContext(), resId);
+                FImageSpan span = new FImageSpan(getContext(), resId);
                 builder.setSpan(span, info); //用span，替换匹配到的字符串
             }
         }
@@ -101,7 +101,7 @@ public class CustomTextView extends SDSpannableTextView
 
     public int getIdentifierDrawable(String name)
     {
-        return getResources().getIdentifier(name, "drawable", SDPackageUtil.getPackageName());
+        return getResources().getIdentifier(name, "drawable", FPackageUtil.getPackageName());
     }
 }
 ```
@@ -126,7 +126,7 @@ tv.setText("fdkfsofosi[face]fdsfsdf[face]");
 
 1. 自定义Span
 ```java
-public class NetImageSpan extends SDDynamicDrawableSpan
+public class NetImageSpan extends FDynamicDrawableSpan
 {
     private String mUrl; //图片url地址
     private Bitmap mBitmap;
@@ -173,7 +173,7 @@ public class NetImageSpan extends SDDynamicDrawableSpan
 
 2. java代码
 ```java
-SDSpannableStringBuilder sb = new SDSpannableStringBuilder();
+FSpannableStringBuilder sb = new FSpannableStringBuilder();
 
 NetImageSpan span = new NetImageSpan(tv);
 span.setUrl("https://www.baidu.com/img/bd_logo1.png");
