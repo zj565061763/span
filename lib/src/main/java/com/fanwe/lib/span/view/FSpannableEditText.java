@@ -23,14 +23,14 @@ import android.widget.EditText;
 
 import com.fanwe.lib.span.MatcherInfo;
 
-public class SDSpannableEditText extends EditText
+public class FSpannableEditText extends EditText
 {
-    public SDSpannableEditText(Context context)
+    public FSpannableEditText(Context context)
     {
         super(context);
     }
 
-    public SDSpannableEditText(Context context, AttributeSet attrs)
+    public FSpannableEditText(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }

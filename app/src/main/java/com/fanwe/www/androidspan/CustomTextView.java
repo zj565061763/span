@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import com.fanwe.lib.span.MatcherInfo;
-import com.fanwe.lib.span.SDImageSpan;
-import com.fanwe.lib.span.SDPatternUtil;
-import com.fanwe.lib.span.SDSpannableStringBuilder;
-import com.fanwe.lib.span.view.SDSpannableTextView;
+import com.fanwe.lib.span.FImageSpan;
+import com.fanwe.lib.span.FPatternUtil;
+import com.fanwe.lib.span.FSpannableStringBuilder;
+import com.fanwe.lib.span.view.FSpannableTextView;
 import com.fanwe.library.utils.SDPackageUtil;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Administrator on 2017/7/18.
  */
 
-public class CustomTextView extends SDSpannableTextView
+public class CustomTextView extends FSpannableTextView
 {
     public CustomTextView(Context context)
     {
@@ -29,10 +29,10 @@ public class CustomTextView extends SDSpannableTextView
     }
 
     @Override
-    protected void onProcessSpannableStringBuilder(SDSpannableStringBuilder builder)
+    protected void onProcessSpannableStringBuilder(FSpannableStringBuilder builder)
     {
         //正则表达式匹配[***]中括号这种规则的字符串
-        List<MatcherInfo> list = SDPatternUtil.findMatcherInfo("\\[([^\\[\\]]+)\\]", builder.toString());
+        List<MatcherInfo> list = FPatternUtil.findMatcherInfo("\\[([^\\[\\]]+)\\]", builder.toString());
         for (final MatcherInfo info : list)
         {
             String key = info.getKey(); //获得匹配的字符串
@@ -40,7 +40,7 @@ public class CustomTextView extends SDSpannableTextView
             int resId = getIdentifierDrawable(key); //根据文件名获得图片资源id
             if (resId != 0)
             {
-                SDImageSpan span = new SDImageSpan(getContext(), resId);
+                FImageSpan span = new FImageSpan(getContext(), resId);
                 builder.setSpan(span, info); //用span，替换匹配到的字符串
             }
         }

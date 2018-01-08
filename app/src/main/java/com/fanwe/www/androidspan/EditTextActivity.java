@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.lib.span.SDImageSpan;
-import com.fanwe.lib.span.view.SDSpannableEditText;
+import com.fanwe.lib.span.FImageSpan;
+import com.fanwe.lib.span.view.FSpannableEditText;
 
 /**
  * Created by Administrator on 2017/7/18.
@@ -14,7 +14,7 @@ import com.fanwe.lib.span.view.SDSpannableEditText;
 
 public class EditTextActivity extends SDBaseActivity
 {
-    private SDSpannableEditText et;
+    private FSpannableEditText et;
 
     private Button btn_add, btn_remove;
 
@@ -22,7 +22,7 @@ public class EditTextActivity extends SDBaseActivity
     protected void init(Bundle savedInstanceState)
     {
         setContentView(R.layout.act_edittext);
-        et = (SDSpannableEditText) findViewById(R.id.et);
+        et = (FSpannableEditText) findViewById(R.id.et);
         btn_add = (Button) findViewById(R.id.btn_add);
         btn_remove = (Button) findViewById(R.id.btn_remove);
 
@@ -31,7 +31,7 @@ public class EditTextActivity extends SDBaseActivity
             @Override
             public void onClick(View v)
             {
-                SDImageSpan span = new SDImageSpan(getApplicationContext(), R.drawable.face);
+                FImageSpan span = new FImageSpan(getApplicationContext(), R.drawable.face);
                 et.insertSpan(span, "face"); //插入span
             }
         });

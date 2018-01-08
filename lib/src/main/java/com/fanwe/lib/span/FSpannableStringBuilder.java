@@ -19,7 +19,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 
-public class SDSpannableStringBuilder extends SpannableStringBuilder
+public class FSpannableStringBuilder extends SpannableStringBuilder
 {
 
     public static final int DEFAULT_FLAG = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE;

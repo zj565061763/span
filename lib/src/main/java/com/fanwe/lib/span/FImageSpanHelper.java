@@ -24,7 +24,7 @@ import android.text.style.DynamicDrawableSpan;
 /**
  * draw和getSize方法参考安卓原生的{@link DynamicDrawableSpan}实现
  */
-class ImageSpanHelper implements IImageSpanHelper
+class FImageSpanHelper implements FIImageSpanHelper
 {
     private int mMarginLeft;
     private int mMarginRight;
@@ -34,7 +34,7 @@ class ImageSpanHelper implements IImageSpanHelper
 
     private DynamicDrawableSpan mSpan;
 
-    public ImageSpanHelper(DynamicDrawableSpan span)
+    public FImageSpanHelper(DynamicDrawableSpan span)
     {
         mSpan = span;
     }
