@@ -3,12 +3,11 @@ package com.fanwe.www.androidspan;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.fanwe.lib.span.MatcherInfo;
 import com.fanwe.lib.span.FImageSpan;
 import com.fanwe.lib.span.FPatternUtil;
 import com.fanwe.lib.span.FSpannableStringBuilder;
+import com.fanwe.lib.span.MatcherInfo;
 import com.fanwe.lib.span.view.FSpannableTextView;
-import com.fanwe.library.utils.SDPackageUtil;
 
 import java.util.List;
 
@@ -48,6 +47,6 @@ public class CustomTextView extends FSpannableTextView
 
     public int getIdentifierDrawable(String name)
     {
-        return getResources().getIdentifier(name, "drawable", SDPackageUtil.getPackageName());
+        return getResources().getIdentifier(name, "drawable", getContext().getPackageName());
     }
 }
