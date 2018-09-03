@@ -1,12 +1,12 @@
-package com.fanwe.www.androidspan;
+package com.sd.www.androidspan;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.lib.span.FImageSpan;
-import com.fanwe.lib.span.view.FSpannableEditText;
+import com.sd.lib.span.FImageSpan;
+import com.sd.lib.span.view.FSpannableEditText;
 
 /**
  * Created by Administrator on 2017/7/18.

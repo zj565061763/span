@@ -36,7 +36,7 @@ tv.setText(sb);
 
 1. xml布局
 ```xml
-<com.fanwe.lib.span.view.FSpannableEditText
+<com.sd.lib.span.view.FSpannableEditText
     android:id="@+id/et"
     android:layout_width="match_parent"
     android:layout_height="50dp"/>
@@ -108,7 +108,7 @@ public class CustomTextView extends FSpannableTextView
 
 2. xml布局
 ```xml
-<com.fanwe.www.androidspan.CustomTextView
+<com.sd.www.androidspan.CustomTextView
     android:id="@+id/tv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>

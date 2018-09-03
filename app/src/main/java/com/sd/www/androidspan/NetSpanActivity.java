@@ -1,10 +1,10 @@
-package com.fanwe.www.androidspan;
+package com.sd.www.androidspan;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.lib.span.FSpannableStringBuilder;
+import com.sd.lib.span.FSpannableStringBuilder;
 
 /**
  * Created by Administrator on 2017/7/18.

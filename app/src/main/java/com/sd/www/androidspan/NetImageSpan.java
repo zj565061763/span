@@ -1,4 +1,4 @@
-package com.fanwe.www.androidspan;
+package com.sd.www.androidspan;
 
 import android.graphics.Bitmap;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.fanwe.lib.span.FDynamicDrawableSpan;
+import com.sd.lib.span.FDynamicDrawableSpan;
 
 /**
  * Created by Administrator on 2017/7/18.

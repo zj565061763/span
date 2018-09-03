@@ -1,4 +1,4 @@
-package com.fanwe.www.androidspan;
+package com.sd.www.androidspan;
 
 import android.os.Bundle;
 

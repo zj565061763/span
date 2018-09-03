@@ -1,4 +1,4 @@
-package com.fanwe.www.androidspan;
+package com.sd.www.androidspan;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,6 +48,4 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
-
 }

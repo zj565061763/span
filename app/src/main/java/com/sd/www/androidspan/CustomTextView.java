@@ -1,19 +1,15 @@
-package com.fanwe.www.androidspan;
+package com.sd.www.androidspan;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.fanwe.lib.span.FImageSpan;
-import com.fanwe.lib.span.FPatternUtil;
-import com.fanwe.lib.span.FSpannableStringBuilder;
-import com.fanwe.lib.span.MatcherInfo;
-import com.fanwe.lib.span.view.FSpannableTextView;
+import com.sd.lib.span.FImageSpan;
+import com.sd.lib.span.FPatternUtil;
+import com.sd.lib.span.FSpannableStringBuilder;
+import com.sd.lib.span.MatcherInfo;
+import com.sd.lib.span.view.FSpannableTextView;
 
 import java.util.List;
-
-/**
- * Created by Administrator on 2017/7/18.
- */
 
 public class CustomTextView extends FSpannableTextView
 {

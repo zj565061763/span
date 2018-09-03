@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.fanwe.lib.span.view.FSpannableEditText
+    <com.sd.lib.span.view.FSpannableEditText
         android:id="@+id/et"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>

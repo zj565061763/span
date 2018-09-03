@@ -1,4 +1,4 @@
-package com.fanwe.www.androidspan;
+package com.sd.www.androidspan;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,9 +6,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.fanwe.library.activity.SDBaseActivity;
-import com.fanwe.lib.span.FIImageSpanHelper;
-import com.fanwe.lib.span.FImageSpan;
-import com.fanwe.lib.span.FSpannableStringBuilder;
+import com.sd.lib.span.FIImageSpanHelper;
+import com.sd.lib.span.FImageSpan;
+import com.sd.lib.span.FSpannableStringBuilder;
 
 /**
  * Created by Administrator on 2017/7/18.
