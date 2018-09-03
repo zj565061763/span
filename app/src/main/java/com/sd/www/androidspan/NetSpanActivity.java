@@ -1,24 +1,25 @@
 package com.sd.www.androidspan;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.fanwe.library.activity.SDBaseActivity;
 import com.sd.lib.span.FSpannableStringBuilder;
 
 /**
  * Created by Administrator on 2017/7/18.
  */
 
-public class NetSpanActivity extends SDBaseActivity
+public class NetSpanActivity extends AppCompatActivity
 {
     private TextView tv;
 
     @Override
-    protected void init(Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.act_netspan);
-        tv = (TextView) findViewById(R.id.tv);
+        tv = findViewById(R.id.tv);
 
         FSpannableStringBuilder sb = new FSpannableStringBuilder();
 

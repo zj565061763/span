@@ -1,11 +1,11 @@
 package com.sd.www.androidspan;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.fanwe.library.activity.SDBaseActivity;
 import com.sd.lib.span.FIImageSpanHelper;
 import com.sd.lib.span.FImageSpan;
 import com.sd.lib.span.FSpannableStringBuilder;
@@ -13,18 +13,19 @@ import com.sd.lib.span.FSpannableStringBuilder;
 /**
  * Created by Administrator on 2017/7/18.
  */
-public class TextViewActivity extends SDBaseActivity
+public class TextViewActivity extends AppCompatActivity
 {
     private TextView tv;
     private Button btn_add_bottom, btn_add_baseline;
 
     @Override
-    protected void init(Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.act_textview);
-        tv = (TextView) findViewById(R.id.tv);
-        btn_add_bottom = (Button) findViewById(R.id.btn_add_bottom);
-        btn_add_baseline = (Button) findViewById(R.id.btn_add_baseline);
+        tv = findViewById(R.id.tv);
+        btn_add_bottom = findViewById(R.id.btn_add_bottom);
+        btn_add_baseline = findViewById(R.id.btn_add_baseline);
 
         btn_add_bottom.setOnClickListener(new View.OnClickListener()
         {

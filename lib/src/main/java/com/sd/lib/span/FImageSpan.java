@@ -8,10 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.style.ImageSpan;
 
-
-/**
- * Created by zhengjun on 2017/7/10.
- */
 public class FImageSpan extends ImageSpan implements FIImageSpanHelper
 {
     public FImageSpan(Bitmap b)

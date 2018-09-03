@@ -1,9 +1,5 @@
 package com.sd.lib.span;
 
-/**
- * Created by zhengjun on 2017/7/10.
- */
-
 public interface FIImageSpanHelper
 {
     /**
