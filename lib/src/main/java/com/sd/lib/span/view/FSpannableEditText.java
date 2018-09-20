@@ -30,13 +30,10 @@ public class FSpannableEditText extends EditText
      */
     public void insertSpan(Object span, String key)
     {
+        MatcherInfo matcherInfo = new MatcherInfo(key);
+
         SpanInfo spanInfo = new SpanInfo(span);
-
-        MatcherInfo matcherInfo = new MatcherInfo();
-        matcherInfo.setKey(key);
-
         spanInfo.matcherInfo = matcherInfo;
-
         insertSpan(spanInfo);
     }
 
