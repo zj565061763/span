@@ -12,10 +12,10 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 
-public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan
+public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan implements ImageSpanHelper
 {
     private final WeakReference<View> mView;
-    private FImageSpanHelper mImageSpanHelper;
+    private SimpleImageSpanHelper mImageSpanHelper;
 
     public FDynamicDrawableSpan(View view)
     {
@@ -38,10 +38,10 @@ public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan
         return view == null ? null : view.getContext();
     }
 
-    public FImageSpanHelper getImageSpanHelper()
+    private SimpleImageSpanHelper getImageSpanHelper()
     {
         if (mImageSpanHelper == null)
-            mImageSpanHelper = new FImageSpanHelper(this);
+            mImageSpanHelper = new SimpleImageSpanHelper(this);
         return mImageSpanHelper;
     }
 
@@ -95,5 +95,35 @@ public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan
     public int getSize(Paint paint, CharSequence text, int start, int end, FontMetricsInt fm)
     {
         return getImageSpanHelper().getSize(paint, text, start, end, fm);
+    }
+
+    @Override
+    public void setWidth(int width)
+    {
+        getImageSpanHelper().setWidth(width);
+    }
+
+    @Override
+    public void setMarginLeft(int marginLeft)
+    {
+        getImageSpanHelper().setMarginLeft(marginLeft);
+    }
+
+    @Override
+    public void setMarginRight(int marginRight)
+    {
+        getImageSpanHelper().setMarginRight(marginRight);
+    }
+
+    @Override
+    public void setMarginBottom(int marginBottom)
+    {
+        getImageSpanHelper().setMarginBottom(marginBottom);
+    }
+
+    @Override
+    public void setVerticalAlignType(VerticalAlignType verticalAlignType)
+    {
+        getImageSpanHelper().setVerticalAlignType(verticalAlignType);
     }
 }

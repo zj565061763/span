@@ -9,7 +9,7 @@ import android.text.style.DynamicDrawableSpan;
 /**
  * draw和getSize方法参考安卓原生的{@link DynamicDrawableSpan}实现
  */
-public class FImageSpanHelper
+class SimpleImageSpanHelper implements ImageSpanHelper
 {
     private final DynamicDrawableSpan mSpan;
 
@@ -19,56 +19,36 @@ public class FImageSpanHelper
     private int mMarginBottom;
     private int mWidth;
 
-    public FImageSpanHelper(DynamicDrawableSpan span)
+    public SimpleImageSpanHelper(DynamicDrawableSpan span)
     {
         mSpan = span;
     }
 
-    /**
-     * 设置宽度
-     *
-     * @param width
-     */
+    @Override
     public void setWidth(int width)
     {
         mWidth = width;
     }
 
-    /**
-     * 设置左边间距
-     *
-     * @param marginLeft
-     */
+    @Override
     public void setMarginLeft(int marginLeft)
     {
         mMarginLeft = marginLeft;
     }
 
-    /**
-     * 设置右边间距
-     *
-     * @param marginRight
-     */
+    @Override
     public void setMarginRight(int marginRight)
     {
         mMarginRight = marginRight;
     }
 
-    /**
-     * 设置底部边距
-     *
-     * @param marginBottom
-     */
+    @Override
     public void setMarginBottom(int marginBottom)
     {
         mMarginBottom = marginBottom;
     }
 
-    /**
-     * 设置竖直方向对齐方式
-     *
-     * @param verticalAlignType
-     */
+    @Override
     public void setVerticalAlignType(VerticalAlignType verticalAlignType)
     {
         if (verticalAlignType != null)
@@ -134,17 +114,5 @@ public class FImageSpanHelper
         }
 
         return rect.right + mMarginLeft + mMarginRight;
-    }
-
-    public enum VerticalAlignType
-    {
-        /**
-         * 对齐字体的底部
-         */
-        ALIGN_BOTTOM,
-        /**
-         * 对齐字体的基准线
-         */
-        ALIGN_BASELINE,
     }
 }

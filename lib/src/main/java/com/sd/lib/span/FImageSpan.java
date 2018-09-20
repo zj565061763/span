@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.style.ImageSpan;
 
-public class FImageSpan extends ImageSpan
+public class FImageSpan extends ImageSpan implements ImageSpanHelper
 {
     public FImageSpan(Bitmap b)
     {
@@ -70,12 +70,12 @@ public class FImageSpan extends ImageSpan
         super(context, resourceId, verticalAlignment);
     }
 
-    private FImageSpanHelper mImageSpanHelper;
+    private SimpleImageSpanHelper mImageSpanHelper;
 
-    public FImageSpanHelper getImageSpanHelper()
+    private SimpleImageSpanHelper getImageSpanHelper()
     {
         if (mImageSpanHelper == null)
-            mImageSpanHelper = new FImageSpanHelper(this);
+            mImageSpanHelper = new SimpleImageSpanHelper(this);
         return mImageSpanHelper;
     }
 
@@ -97,5 +97,35 @@ public class FImageSpan extends ImageSpan
     public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm)
     {
         return getImageSpanHelper().getSize(paint, text, start, end, fm);
+    }
+
+    @Override
+    public void setWidth(int width)
+    {
+        getImageSpanHelper().setWidth(width);
+    }
+
+    @Override
+    public void setMarginLeft(int marginLeft)
+    {
+        getImageSpanHelper().setMarginLeft(marginLeft);
+    }
+
+    @Override
+    public void setMarginRight(int marginRight)
+    {
+        getImageSpanHelper().setMarginRight(marginRight);
+    }
+
+    @Override
+    public void setMarginBottom(int marginBottom)
+    {
+        getImageSpanHelper().setMarginBottom(marginBottom);
+    }
+
+    @Override
+    public void setVerticalAlignType(VerticalAlignType verticalAlignType)
+    {
+        getImageSpanHelper().setVerticalAlignType(verticalAlignType);
     }
 }

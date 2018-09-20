@@ -24,7 +24,7 @@ public class NetSpanActivity extends AppCompatActivity
 
         NetImageSpan span = new NetImageSpan(tv);
         span.setUrl("https://www.baidu.com/img/bd_logo1.png");
-        span.getImageSpanHelper().setWidth(200);
+        span.setWidth(200);
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
         FSpanUtil.appendSpan("span", span, builder);
