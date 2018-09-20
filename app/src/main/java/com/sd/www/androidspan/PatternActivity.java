@@ -1,11 +1,16 @@
 package com.sd.www.androidspan;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sd.lib.span.FTextViewPattern;
 
@@ -24,6 +29,9 @@ public class PatternActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_pattern);
         tv = findViewById(R.id.tv);
+
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
+        tv.setHighlightColor(Color.TRANSPARENT);
         tv.setText("fdkfsofosi[face]fdsfsdf[face]54654655[face]654654");
 
         getTextViewPattern().setTextView(tv);
@@ -52,9 +60,21 @@ public class PatternActivity extends AppCompatActivity
                     final String name = key.substring(1, key.length() - 1);
                     // 根据名称获得资源id
                     final int resId = getResources().getIdentifier(name, "drawable", getPackageName());
+                    if (resId != 0)
+                    {
+                        // 添加表情span
+                        builder.setSpan(new ImageSpan(PatternActivity.this, resId), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
 
-                    final ImageSpan span = new ImageSpan(PatternActivity.this, resId);
-                    builder.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    builder.setSpan(new ClickableSpan()
+                    {
+                        @Override
+                        public void onClick(View widget)
+                        {
+                            Toast.makeText(PatternActivity.this, "span clicked", Toast.LENGTH_SHORT).show();
+                        }
+                    }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
                 }
             });
         }
