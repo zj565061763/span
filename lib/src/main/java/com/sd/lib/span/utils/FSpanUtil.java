@@ -14,15 +14,14 @@ public class FSpanUtil
      *
      * @param key
      * @param span
-     * @param flags   {@link Spanned#SPAN_EXCLUSIVE_EXCLUSIVE}
      * @param builder
      */
-    public static void appendSpan(String key, Object span, int flags, SpannableStringBuilder builder)
+    public static void appendSpan(String key, Object span, SpannableStringBuilder builder)
     {
         builder.append(key);
         final int end = builder.length();
         final int start = end - key.length();
-        builder.setSpan(span, start, end, flags);
+        builder.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     /**
@@ -30,13 +29,12 @@ public class FSpanUtil
      *
      * @param oldSpan
      * @param newSpan
-     * @param flags   {@link Spanned#SPAN_EXCLUSIVE_EXCLUSIVE}
      * @param builder
      */
-    public void overlyingSpan(Object oldSpan, Object newSpan, int flags, SpannableStringBuilder builder)
+    public void overlyingSpan(Object oldSpan, Object newSpan, SpannableStringBuilder builder)
     {
         final int end = builder.getSpanEnd(oldSpan);
         final int start = builder.getSpanStart(oldSpan);
-        builder.setSpan(newSpan, start, end, flags);
+        builder.setSpan(newSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 }

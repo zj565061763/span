@@ -4,16 +4,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.sd.lib.span.FImageSpan;
-import com.sd.lib.span.view.FSpannableEditText;
+import com.sd.lib.span.utils.FEditTextSpanHandler;
 
 /**
  * Created by Administrator on 2017/7/18.
  */
 public class EditTextActivity extends AppCompatActivity
 {
-    private FSpannableEditText et;
+    private FEditTextSpanHandler mEditTextSpanHandler;
     private Button btn_add, btn_remove;
 
     @Override
@@ -21,7 +22,6 @@ public class EditTextActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_edittext);
-        et = findViewById(R.id.et);
         btn_add = findViewById(R.id.btn_add);
         btn_remove = findViewById(R.id.btn_remove);
 
@@ -30,8 +30,8 @@ public class EditTextActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                FImageSpan span = new FImageSpan(getApplicationContext(), R.drawable.face);
-                et.insertSpan(span, "face"); //插入span
+                // 插入span
+                getEditTextSpanHandler().insertSpan("face", new FImageSpan(EditTextActivity.this, R.drawable.face));
             }
         });
 
@@ -40,8 +40,15 @@ public class EditTextActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                et.removeSpan(); //删除span
+                getEditTextSpanHandler().removeSpan(); //删除span
             }
         });
+    }
+
+    public FEditTextSpanHandler getEditTextSpanHandler()
+    {
+        if (mEditTextSpanHandler == null)
+            mEditTextSpanHandler = new FEditTextSpanHandler((EditText) findViewById(R.id.et));
+        return mEditTextSpanHandler;
     }
 }

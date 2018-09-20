@@ -3,7 +3,6 @@ package com.sd.www.androidspan;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.widget.TextView;
 
 import com.sd.lib.span.utils.FSpanUtil;
@@ -28,7 +27,7 @@ public class NetSpanActivity extends AppCompatActivity
         span.getImageSpanHelper().setWidth(200);
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        FSpanUtil.appendSpan("span", span, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE, builder);
+        FSpanUtil.appendSpan("span", span, builder);
         tv.setText(builder);
     }
 }

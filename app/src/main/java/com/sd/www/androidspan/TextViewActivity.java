@@ -3,7 +3,6 @@ package com.sd.www.androidspan;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,7 +42,7 @@ public class TextViewActivity extends AppCompatActivity
                 span.getImageSpanHelper().setMarginLeft(10); //设置左边间距
                 span.getImageSpanHelper().setMarginRight(10); //设置右边间距
 
-                FSpanUtil.appendSpan("launcher", span, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE, builder);
+                FSpanUtil.appendSpan("launcher", span, builder);
                 tv.setText(builder);
             }
         });
@@ -62,7 +61,7 @@ public class TextViewActivity extends AppCompatActivity
                 span.getImageSpanHelper().setMarginLeft(10); //设置左边间距
                 span.getImageSpanHelper().setMarginRight(10); //设置右边间距
 
-                FSpanUtil.appendSpan("launcher", span, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE, builder);
+                FSpanUtil.appendSpan("launcher", span, builder);
                 tv.setText(builder);
             }
         });
