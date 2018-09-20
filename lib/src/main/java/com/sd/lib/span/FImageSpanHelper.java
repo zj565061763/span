@@ -9,24 +9,70 @@ import android.text.style.DynamicDrawableSpan;
 /**
  * draw和getSize方法参考安卓原生的{@link DynamicDrawableSpan}实现
  */
-class FImageSpanHelper implements FIImageSpanHelper
+public class FImageSpanHelper
 {
+    private final DynamicDrawableSpan mSpan;
+
+    private VerticalAlignType mVerticalAlignType = VerticalAlignType.ALIGN_BOTTOM;
     private int mMarginLeft;
     private int mMarginRight;
     private int mMarginBottom;
     private int mWidth;
-    private VerticalAlignType mVerticalAlignType = VerticalAlignType.ALIGN_BOTTOM;
-
-    private DynamicDrawableSpan mSpan;
 
     public FImageSpanHelper(DynamicDrawableSpan span)
     {
         mSpan = span;
     }
 
-    public DynamicDrawableSpan getSpan()
+    /**
+     * 设置宽度
+     *
+     * @param width
+     */
+    public void setWidth(int width)
     {
-        return mSpan;
+        mWidth = width;
+    }
+
+    /**
+     * 设置左边间距
+     *
+     * @param marginLeft
+     */
+    public void setMarginLeft(int marginLeft)
+    {
+        mMarginLeft = marginLeft;
+    }
+
+    /**
+     * 设置右边间距
+     *
+     * @param marginRight
+     */
+    public void setMarginRight(int marginRight)
+    {
+        mMarginRight = marginRight;
+    }
+
+    /**
+     * 设置底部边距
+     *
+     * @param marginBottom
+     */
+    public void setMarginBottom(int marginBottom)
+    {
+        mMarginBottom = marginBottom;
+    }
+
+    /**
+     * 设置竖直方向对齐方式
+     *
+     * @param verticalAlignType
+     */
+    public void setVerticalAlignType(VerticalAlignType verticalAlignType)
+    {
+        if (verticalAlignType != null)
+            mVerticalAlignType = verticalAlignType;
     }
 
     /**
@@ -34,35 +80,26 @@ class FImageSpanHelper implements FIImageSpanHelper
      *
      * @param drawable
      */
-    public void processSize(Drawable drawable)
+    public void processDrawable(Drawable drawable)
     {
-        if (drawable != null && mWidth > 0)
-        {
-            int scaleWidth = drawable.getIntrinsicWidth();
-            int scaleHeight = drawable.getIntrinsicHeight();
+        if (drawable == null)
+            return;
+        if (mWidth <= 0)
+            return;
 
-            int targetHeight = scaleHeight * mWidth / scaleWidth;
+        final int scaleWidth = drawable.getIntrinsicWidth();
+        final int scaleHeight = drawable.getIntrinsicHeight();
+        final int targetHeight = scaleHeight * mWidth / scaleWidth;
 
-            drawable.setBounds(0, 0, mWidth, targetHeight);
-        }
+        drawable.setBounds(0, 0, mWidth, targetHeight);
     }
 
     /**
-     * Draws the span into the canvas.
-     *
-     * @param canvas Canvas into which the span should be rendered.
-     * @param text   Current text.
-     * @param start  Start character index for span.
-     * @param end    End character index for span.
-     * @param x      Edge of the replacement closest to the leading margin.
-     * @param top    Top of the line.
-     * @param y      Baseline.
-     * @param bottom Bottom of the line.
-     * @param paint  Paint instance.
+     * {@link DynamicDrawableSpan#draw(Canvas, CharSequence, int, int, float, int, int, int, Paint)}
      */
     public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
     {
-        Drawable b = getSpan().getDrawable();
+        Drawable b = mSpan.getDrawable();
         canvas.save();
 
         int transY = bottom - b.getBounds().bottom; //底部对齐的参数
@@ -80,22 +117,11 @@ class FImageSpanHelper implements FIImageSpanHelper
     }
 
     /**
-     * Returns the width of the span. Extending classes can set the height of the span by updating
-     * attributes of {@link android.graphics.Paint.FontMetricsInt}. If the span covers the whole
-     * text, and the height is not set,
-     * {@link #draw(Canvas, CharSequence, int, int, float, int, int, int, Paint)} will not be
-     * called for the span.
-     *
-     * @param paint Paint instance.
-     * @param text  Current text.
-     * @param start Start character index for span.
-     * @param end   End character index for span.
-     * @param fm    Font metrics, can be null.
-     * @return Width of the span.
+     * {@link DynamicDrawableSpan#getSize(Paint, CharSequence, int, int, Paint.FontMetricsInt)}
      */
     public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm)
     {
-        Drawable d = getSpan().getDrawable();
+        Drawable d = mSpan.getDrawable();
         Rect rect = d.getBounds();
 
         if (fm != null)
@@ -110,37 +136,15 @@ class FImageSpanHelper implements FIImageSpanHelper
         return rect.right + mMarginLeft + mMarginRight;
     }
 
-    @Override
-    public void setWidth(int width)
+    public enum VerticalAlignType
     {
-        mWidth = width;
-    }
-
-    @Override
-    public void setMarginLeft(int marginLeft)
-    {
-        mMarginLeft = marginLeft;
-    }
-
-    @Override
-    public void setMarginRight(int marginRight)
-    {
-        mMarginRight = marginRight;
-    }
-
-    @Override
-    public void setMarginBottom(int marginBottom)
-    {
-        mMarginBottom = marginBottom;
-    }
-
-    @Override
-    public void setVerticalAlignType(VerticalAlignType verticalAlignType)
-    {
-        if (verticalAlignType == null)
-        {
-            return;
-        }
-        mVerticalAlignType = verticalAlignType;
+        /**
+         * 对齐字体的底部
+         */
+        ALIGN_BOTTOM,
+        /**
+         * 对齐字体的基准线
+         */
+        ALIGN_BASELINE,
     }
 }

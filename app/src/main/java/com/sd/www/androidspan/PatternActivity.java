@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sd.lib.span.FTextViewPattern;
+import com.sd.lib.span.utils.FTextViewPattern;
 
 /**
  * Created by Administrator on 2017/7/18.

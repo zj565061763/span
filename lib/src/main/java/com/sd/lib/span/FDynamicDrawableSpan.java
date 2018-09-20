@@ -12,13 +12,11 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 
-public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan implements FIImageSpanHelper
+public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan
 {
-    private WeakReference<View> mView;
+    private final WeakReference<View> mView;
+    private FImageSpanHelper mImageSpanHelper;
 
-    /**
-     * @param view span要依附的view
-     */
     public FDynamicDrawableSpan(View view)
     {
         mView = new WeakReference<>(view);
@@ -36,24 +34,14 @@ public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan implement
 
     public Context getContext()
     {
-        View view = getView();
-        if (view != null)
-        {
-            return view.getContext();
-        } else
-        {
-            return null;
-        }
+        final View view = getView();
+        return view == null ? null : view.getContext();
     }
 
-    private FImageSpanHelper mImageSpanHelper;
-
-    private FImageSpanHelper getImageSpanHelper()
+    public FImageSpanHelper getImageSpanHelper()
     {
         if (mImageSpanHelper == null)
-        {
             mImageSpanHelper = new FImageSpanHelper(this);
-        }
         return mImageSpanHelper;
     }
 
@@ -93,7 +81,7 @@ public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan implement
         int height = drawable.getIntrinsicHeight();
         drawable.setBounds(0, 0, width, height);
 
-        getImageSpanHelper().processSize(drawable);
+        getImageSpanHelper().processDrawable(drawable);
         return drawable;
     }
 
@@ -107,35 +95,5 @@ public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan implement
     public int getSize(Paint paint, CharSequence text, int start, int end, FontMetricsInt fm)
     {
         return getImageSpanHelper().getSize(paint, text, start, end, fm);
-    }
-
-    @Override
-    public void setWidth(int width)
-    {
-        getImageSpanHelper().setWidth(width);
-    }
-
-    @Override
-    public void setMarginLeft(int marginLeft)
-    {
-        getImageSpanHelper().setMarginLeft(marginLeft);
-    }
-
-    @Override
-    public void setMarginRight(int marginRight)
-    {
-        getImageSpanHelper().setMarginRight(marginRight);
-    }
-
-    @Override
-    public void setMarginBottom(int marginBottom)
-    {
-        getImageSpanHelper().setMarginBottom(marginBottom);
-    }
-
-    @Override
-    public void setVerticalAlignType(VerticalAlignType verticalAlignType)
-    {
-        getImageSpanHelper().setVerticalAlignType(verticalAlignType);
     }
 }

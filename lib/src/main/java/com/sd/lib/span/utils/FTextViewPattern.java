@@ -1,4 +1,4 @@
-package com.sd.lib.span;
+package com.sd.lib.span.utils;
 
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
