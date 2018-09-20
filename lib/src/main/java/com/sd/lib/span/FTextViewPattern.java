@@ -42,6 +42,11 @@ public class FTextViewPattern
         mListCallback.remove(regex);
     }
 
+    /**
+     * 设置要处理的对象
+     *
+     * @param textView
+     */
     public void setTextView(TextView textView)
     {
         final TextView old = mTextView;
@@ -131,7 +136,7 @@ public class FTextViewPattern
             {
                 while (matcher.find())
                 {
-                    item.onMatch(regex, matcher.group(), matcher.start(), matcher.end(), getBuilder());
+                    item.onMatch(matcher.group(), matcher.start(), matcher.end(), getBuilder());
                 }
             }
         }
@@ -151,12 +156,11 @@ public class FTextViewPattern
         /**
          * 正则表达式匹配回调
          *
-         * @param regex   {{@link #getRegex()}}的返回值
          * @param key     匹配到的关键字
          * @param start   匹配到的关键字在字符串中的开始位置
          * @param end     匹配到的关键字在字符串中的结束位置
          * @param builder
          */
-        void onMatch(String regex, String key, int start, int end, SpannableStringBuilder builder);
+        void onMatch(String key, int start, int end, SpannableStringBuilder builder);
     }
 }

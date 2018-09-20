@@ -39,16 +39,21 @@ public class PatternActivity extends AppCompatActivity
                 @Override
                 public String getRegex()
                 {
+                    /**
+                     * 匹配中括号的内容
+                     */
                     return "\\[([^\\[\\]]+)\\]";
                 }
 
                 @Override
-                public void onMatch(String regex, String key, int start, int end, SpannableStringBuilder builder)
+                public void onMatch(String key, int start, int end, SpannableStringBuilder builder)
                 {
-                    final String drawableName = key.substring(1, key.length() - 1);
-                    final int drawableId = getResources().getIdentifier(drawableName, "drawable", getPackageName());
+                    // 截取中括号中的名称
+                    final String name = key.substring(1, key.length() - 1);
+                    // 根据名称获得资源id
+                    final int resId = getResources().getIdentifier(name, "drawable", getPackageName());
 
-                    final ImageSpan span = new ImageSpan(PatternActivity.this, drawableId);
+                    final ImageSpan span = new ImageSpan(PatternActivity.this, resId);
                     builder.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             });
