@@ -136,7 +136,7 @@ public class FTextViewPattern
             {
                 while (matcher.find())
                 {
-                    item.onMatch(matcher.group(), matcher.start(), matcher.end(), getBuilder());
+                    item.onMatch(matcher, getBuilder());
                 }
             }
         }
@@ -156,11 +156,9 @@ public class FTextViewPattern
         /**
          * 正则表达式匹配回调
          *
-         * @param key     匹配到的关键字
-         * @param start   匹配到的关键字在字符串中的开始位置
-         * @param end     匹配到的关键字在字符串中的结束位置
+         * @param matcher
          * @param builder
          */
-        void onMatch(String key, int start, int end, SpannableStringBuilder builder);
+        void onMatch(Matcher matcher, SpannableStringBuilder builder);
     }
 }

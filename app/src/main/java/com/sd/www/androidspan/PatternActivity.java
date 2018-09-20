@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.sd.lib.span.utils.FTextViewPattern;
 
+import java.util.regex.Matcher;
+
 /**
  * Created by Administrator on 2017/7/18.
  */
@@ -54,8 +56,12 @@ public class PatternActivity extends AppCompatActivity
                 }
 
                 @Override
-                public void onMatch(String key, int start, int end, SpannableStringBuilder builder)
+                public void onMatch(Matcher matcher, SpannableStringBuilder builder)
                 {
+                    final String key = matcher.group();
+                    final int start = matcher.start();
+                    final int end = matcher.end();
+
                     // 截取中括号中的名称
                     final String name = key.substring(1, key.length() - 1);
                     // 根据名称获得资源id
