@@ -2,7 +2,6 @@ package com.sd.lib.span.utils;
 
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -11,15 +10,7 @@ import java.util.regex.Pattern;
 
 public class FTextViewPattern
 {
-    private SpannableStringBuilder mBuilder;
     private final List<MatchCallback> mListCallback = new CopyOnWriteArrayList<>();
-
-    private SpannableStringBuilder getBuilder()
-    {
-        if (mBuilder == null)
-            mBuilder = new SpannableStringBuilder();
-        return mBuilder;
-    }
 
     /**
      * 添加正则表达式匹配回调
@@ -47,19 +38,29 @@ public class FTextViewPattern
 
     /**
      * 开始处理
+     *
+     * @param text
+     * @return
      */
-    public void process(TextView textView)
+    public SpannableStringBuilder process(CharSequence text)
     {
-        if (textView == null)
-            return;
+        if (text == null)
+            return null;
 
         if (mListCallback.isEmpty())
-            return;
+            return null;
 
-        final String content = textView.getText().toString();
+        final String content = text.toString();
 
-        getBuilder().clear();
-        getBuilder().append(content);
+        SpannableStringBuilder builder = null;
+        if (text instanceof SpannableStringBuilder)
+        {
+            builder = (SpannableStringBuilder) text;
+        } else
+        {
+            builder = new SpannableStringBuilder();
+            builder.append(content);
+        }
 
         for (MatchCallback item : mListCallback)
         {
@@ -72,12 +73,12 @@ public class FTextViewPattern
             {
                 while (matcher.find())
                 {
-                    item.onMatch(matcher, getBuilder());
+                    item.onMatch(matcher, builder);
                 }
             }
         }
 
-        textView.setText(getBuilder());
+        return builder;
     }
 
     public interface MatchCallback

@@ -34,10 +34,10 @@ public class PatternActivity extends AppCompatActivity
 
         tv.setMovementMethod(LinkMovementMethod.getInstance());
         tv.setHighlightColor(Color.TRANSPARENT);
-        tv.setText("fdkfsofosi[face]fdsfsdf[face]54654655[face]654654");
 
-        // 开始处理TextView
-        getTextViewPattern().process(tv);
+        // 开始正则表达式匹配
+        final CharSequence text = getTextViewPattern().process("fdkfsofosi[face]fdsfsdf[face]54654655[face]654654");
+        tv.setText(text);
     }
 
     public FTextViewPattern getTextViewPattern()
