@@ -2,8 +2,6 @@ package com.sd.lib.span.utils;
 
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,10 +11,15 @@ import java.util.regex.Pattern;
 
 public class FTextViewPattern
 {
-    private TextView mTextView;
     private SpannableStringBuilder mBuilder;
-
     private final List<MatchCallback> mListCallback = new CopyOnWriteArrayList<>();
+
+    private SpannableStringBuilder getBuilder()
+    {
+        if (mBuilder == null)
+            mBuilder = new SpannableStringBuilder();
+        return mBuilder;
+    }
 
     /**
      * 添加正则表达式匹配回调
@@ -43,89 +46,20 @@ public class FTextViewPattern
     }
 
     /**
-     * 设置要处理的对象
-     *
-     * @param textView
+     * 开始处理
      */
-    public void setTextView(TextView textView)
+    public void process(TextView textView)
     {
-        final TextView old = mTextView;
-        if (old != textView)
-        {
-            if (old != null)
-            {
-                old.removeOnAttachStateChangeListener(mOnAttachStateChangeListener);
-                addOnPreDrawListener(false, old);
-            }
+        if (textView == null)
+            return;
 
-            mTextView = textView;
-            if (mBuilder != null)
-                mBuilder.clear();
-
-            if (textView != null)
-            {
-                textView.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
-                addOnPreDrawListener(true, textView);
-            }
-        }
-    }
-
-    private void addOnPreDrawListener(boolean add, View view)
-    {
-        final ViewTreeObserver observer = view.getViewTreeObserver();
-        if (observer.isAlive())
-        {
-            observer.removeOnPreDrawListener(mOnPreDrawListener);
-            if (add)
-                observer.addOnPreDrawListener(mOnPreDrawListener);
-        }
-    }
-
-    private final View.OnAttachStateChangeListener mOnAttachStateChangeListener = new View.OnAttachStateChangeListener()
-    {
-        @Override
-        public void onViewAttachedToWindow(View v)
-        {
-            addOnPreDrawListener(true, v);
-        }
-
-        @Override
-        public void onViewDetachedFromWindow(View v)
-        {
-            addOnPreDrawListener(false, v);
-        }
-    };
-
-    private final ViewTreeObserver.OnPreDrawListener mOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener()
-    {
-        @Override
-        public boolean onPreDraw()
-        {
-            processPattern();
-            return true;
-        }
-    };
-
-    private SpannableStringBuilder getBuilder()
-    {
-        if (mBuilder == null)
-            mBuilder = new SpannableStringBuilder();
-        return mBuilder;
-    }
-
-    private void processPattern()
-    {
         if (mListCallback.isEmpty())
             return;
 
-        final CharSequence text = mTextView.getText();
-        if (getBuilder().equals(text))
-            return;
-
-        final String textViewContent = text.toString();
+        final String content = textView.getText().toString();
 
         getBuilder().clear();
-        getBuilder().append(textViewContent);
+        getBuilder().append(content);
 
         for (MatchCallback item : mListCallback)
         {
@@ -133,7 +67,7 @@ public class FTextViewPattern
             if (TextUtils.isEmpty(regex))
                 continue;
 
-            final Matcher matcher = Pattern.compile(regex).matcher(textViewContent);
+            final Matcher matcher = Pattern.compile(regex).matcher(content);
             if (matcher != null)
             {
                 while (matcher.find())
@@ -143,7 +77,7 @@ public class FTextViewPattern
             }
         }
 
-        mTextView.setText(getBuilder());
+        textView.setText(getBuilder());
     }
 
     public interface MatchCallback

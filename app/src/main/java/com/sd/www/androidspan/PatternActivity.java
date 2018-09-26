@@ -36,7 +36,8 @@ public class PatternActivity extends AppCompatActivity
         tv.setHighlightColor(Color.TRANSPARENT);
         tv.setText("fdkfsofosi[face]fdsfsdf[face]54654655[face]654654");
 
-        getTextViewPattern().setTextView(tv);
+        // 开始处理TextView
+        getTextViewPattern().process(tv);
     }
 
     public FTextViewPattern getTextViewPattern()
