@@ -74,56 +74,83 @@ btn_remove.setOnClickListener(new View.OnClickListener()
 效果图：<br>
 ![](http://thumbsnap.com/s/a5Dgu0Cj.png?0718)<br>
 
-1. 自定义TextView
-```java
-public class CustomTextView extends FSpannableTextView
-{
-    public CustomTextView(Context context)
-    {
-        super(context);
-    }
-
-    public CustomTextView(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-    }
-
-    @Override
-    protected void onProcessSpannableStringBuilder(FSpannableStringBuilder builder)
-    {
-        //正则表达式匹配[***]中括号这种规则的字符串
-        List<MatcherInfo> list = FPatternUtil.findMatcherInfo("\\[([^\\[\\]]+)\\]", builder.toString());
-        for (final MatcherInfo info : list)
-        {
-            String key = info.getKey(); //获得匹配的字符串
-            key = key.substring(1, key.length() - 1); //移除中括号，得到文件名
-            int resId = getIdentifierDrawable(key); //根据文件名获得图片资源id
-            if (resId != 0)
-            {
-                FImageSpan span = new FImageSpan(getContext(), resId);
-                builder.setSpan(span, info); //用span，替换匹配到的字符串
-            }
-        }
-    }
-
-    public int getIdentifierDrawable(String name)
-    {
-        return getResources().getIdentifier(name, "drawable", FPackageUtil.getPackageName());
-    }
-}
-```
-
-2. xml布局
+1. xml布局
 ```xml
-<com.sd.www.androidspan.CustomTextView
+<TextView
     android:id="@+id/tv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
 ```
 
-3. java代码
+2. java代码
 ```java
-tv.setText("fdkfsofosi[face]fdsfsdf[face]");
+public class PatternActivity extends AppCompatActivity
+{
+    private FTextViewPattern mTextViewPattern;
+    private TextView tv;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.act_pattern);
+        tv = findViewById(R.id.tv);
+
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
+        tv.setHighlightColor(Color.TRANSPARENT);
+        tv.setText("fdkfsofosi[face]fdsfsdf[face]54654655[face]654654");
+
+        getTextViewPattern().setTextView(tv);
+    }
+
+    public FTextViewPattern getTextViewPattern()
+    {
+        if (mTextViewPattern == null)
+        {
+            mTextViewPattern = new FTextViewPattern();
+            mTextViewPattern.addMatchCallback(new FTextViewPattern.MatchCallback()
+            {
+                @Override
+                public String getRegex()
+                {
+                    /**
+                     * 匹配中括号的内容
+                     */
+                    return "\\[([^\\[\\]]+)\\]";
+                }
+
+                @Override
+                public void onMatch(Matcher matcher, SpannableStringBuilder builder)
+                {
+                    final String key = matcher.group();
+                    final int start = matcher.start();
+                    final int end = matcher.end();
+
+                    // 截取中括号中的名称
+                    final String name = key.substring(1, key.length() - 1);
+                    // 根据名称获得资源id
+                    final int resId = getResources().getIdentifier(name, "drawable", getPackageName());
+                    if (resId != 0)
+                    {
+                        // 添加表情span
+                        builder.setSpan(new ImageSpan(PatternActivity.this, resId), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+
+                    builder.setSpan(new ClickableSpan()
+                    {
+                        @Override
+                        public void onClick(View widget)
+                        {
+                            Toast.makeText(PatternActivity.this, "span clicked", Toast.LENGTH_SHORT).show();
+                        }
+                    }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                }
+            });
+        }
+        return mTextViewPattern;
+    }
+}
 ```
 
 ## 加载网络图片并用span展示
@@ -180,12 +207,11 @@ public class NetImageSpan extends FDynamicDrawableSpan
 
 2. java代码
 ```java
-FSpannableStringBuilder sb = new FSpannableStringBuilder();
-
 NetImageSpan span = new NetImageSpan(tv);
 span.setUrl("https://www.baidu.com/img/bd_logo1.png");
 span.setWidth(200);
-sb.appendSpan(span, "span");
 
-tv.setText(sb);
+SpannableStringBuilder builder = new SpannableStringBuilder();
+FSpanUtil.appendSpan("span", span, builder);
+tv.setText(builder);
 ```
