@@ -118,9 +118,11 @@ public class FTextViewPattern
         if (mListCallback.isEmpty())
             return;
 
-        final String textViewContent = mTextView.getText().toString();
-        if (getBuilder().toString().equals(textViewContent))
+        final CharSequence text = mTextView.getText();
+        if (getBuilder().equals(text))
             return;
+
+        final String textViewContent = text.toString();
 
         getBuilder().clear();
         getBuilder().append(textViewContent);
