@@ -8,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FTextViewPattern
+public class FTextPattern
 {
     private final List<MatchCallback> mListCallback = new CopyOnWriteArrayList<>();
 

@@ -86,7 +86,7 @@ btn_remove.setOnClickListener(new View.OnClickListener()
 ```java
 public class PatternActivity extends AppCompatActivity
 {
-    private FTextViewPattern mTextViewPattern;
+    private FTextPattern mTextPattern;
     private TextView tv;
 
     @Override
@@ -100,16 +100,16 @@ public class PatternActivity extends AppCompatActivity
         tv.setHighlightColor(Color.TRANSPARENT);
 
         // 开始正则表达式匹配
-        final CharSequence text = getTextViewPattern().process("fdkfsofosi[face]fdsfsdf[face]54654655[face]654654");
+        final CharSequence text = getTextPattern().process("fdkfsofosi[face]fdsfsdf[face]54654655[face]654654");
         tv.setText(text);
     }
 
-    public FTextViewPattern getTextViewPattern()
+    private FTextPattern getTextPattern()
     {
-        if (mTextViewPattern == null)
+        if (mTextPattern == null)
         {
-            mTextViewPattern = new FTextViewPattern();
-            mTextViewPattern.addMatchCallback(new FTextViewPattern.MatchCallback()
+            mTextPattern = new FTextPattern();
+            mTextPattern.addMatchCallback(new FTextPattern.MatchCallback()
             {
                 @Override
                 public String getRegex()
@@ -149,7 +149,7 @@ public class PatternActivity extends AppCompatActivity
                 }
             });
         }
-        return mTextViewPattern;
+        return mTextPattern;
     }
 }
 ```
