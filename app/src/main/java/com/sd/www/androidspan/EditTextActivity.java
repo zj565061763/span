@@ -40,7 +40,8 @@ public class EditTextActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                getEditTextSpanHandler().removeSpan(); //删除span
+                // 删除span
+                getEditTextSpanHandler().removeSpan();
             }
         });
     }

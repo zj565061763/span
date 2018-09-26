@@ -37,11 +37,15 @@ public class TextViewActivity extends AppCompatActivity
                 builder.append("f");
 
                 FImageSpan span = new FImageSpan(getApplicationContext(), R.drawable.face);
-                span.setVerticalAlignType(ImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM); //设置对齐字体底部
-                span.setWidth(100); //设置图片宽度，内部会按比例缩放
-                span.setMarginLeft(10); //设置左边间距
-                span.setMarginRight(10); //设置右边间距
-
+                // 设置对齐字体底部
+                span.setVerticalAlignType(ImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM);
+                // 设置图片宽度，内部会按比例缩放
+                span.setWidth(100);
+                // 设置左边间距
+                span.setMarginLeft(10);
+                // 设置右边间距
+                span.setMarginRight(10);
+                // 将span添加到SpannableStringBuilder
                 FSpanUtil.appendSpan("launcher", span, builder);
                 tv.setText(builder);
             }

@@ -19,37 +19,43 @@
 ```
 2. java代码
 ```java
-FSpannableStringBuilder sb = new FSpannableStringBuilder();
-sb.append("f");
+SpannableStringBuilder builder = new SpannableStringBuilder();
+builder.append("f");
 
 FImageSpan span = new FImageSpan(getApplicationContext(), R.drawable.face);
-span.setVerticalAlignType(IImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM); //设置对齐字体底部（默认对齐方式）
-span.setWidth(100); //设置图片宽度，内部会按比例缩放
-span.setMarginLeft(10); //设置左边间距
-span.setMarginRight(10); //设置右边间距
-
-sb.appendSpan(span, "launcher");
-tv.setText(sb);
+// 设置对齐字体底部
+span.setVerticalAlignType(ImageSpanHelper.VerticalAlignType.ALIGN_BOTTOM);
+// 设置图片宽度，内部会按比例缩放
+span.setWidth(100);
+// 设置左边间距
+span.setMarginLeft(10);
+// 设置右边间距
+span.setMarginRight(10);
+// 将span添加到SpannableStringBuilder
+FSpanUtil.appendSpan("launcher", span, builder);
+tv.setText(builder);
 ```
 ## EditText效果
 ![](http://thumbsnap.com/i/8T87giV5.gif?0718)<br>
 
 1. xml布局
 ```xml
-<com.sd.lib.span.view.FSpannableEditText
+<EditText
     android:id="@+id/et"
     android:layout_width="match_parent"
     android:layout_height="50dp"/>
 ```
 2. java代码
 ```java
+final FEditTextSpanHandler editTextSpanHandler = new FEditTextSpanHandler((EditText) findViewById(R.id.et));
+
 btn_add.setOnClickListener(new View.OnClickListener()
 {
     @Override
     public void onClick(View v)
     {
-        FImageSpan span = new FImageSpan(getApplicationContext(), R.drawable.face);
-        et.insertSpan(span, "face"); //插入span
+        // 插入span
+        editTextSpanHandler.insertSpan("face", new FImageSpan(EditTextActivity.this, R.drawable.face));
     }
 });
 
@@ -58,7 +64,8 @@ btn_remove.setOnClickListener(new View.OnClickListener()
     @Override
     public void onClick(View v)
     {
-        et.removeSpan(); //删除span
+        // 删除span
+        editTextSpanHandler.removeSpan();
     }
 });
 ```
