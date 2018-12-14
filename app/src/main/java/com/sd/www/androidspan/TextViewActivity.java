@@ -46,7 +46,7 @@ public class TextViewActivity extends AppCompatActivity
                 // 设置右边间距
                 span.setMarginRight(10);
                 // 将span添加到SpannableStringBuilder
-                FSpanUtil.appendSpan("launcher", span, builder);
+                FSpanUtil.appendSpan(builder, "launcher", span);
                 tv.setText(builder);
             }
         });
@@ -65,7 +65,7 @@ public class TextViewActivity extends AppCompatActivity
                 span.setMarginLeft(10); //设置左边间距
                 span.setMarginRight(10); //设置右边间距
 
-                FSpanUtil.appendSpan("launcher", span, builder);
+                FSpanUtil.appendSpan(builder, "launcher", span);
                 tv.setText(builder);
             }
         });

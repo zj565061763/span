@@ -2,6 +2,7 @@ package com.sd.lib.span.utils;
 
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 
 public class FSpanUtil
 {
@@ -10,31 +11,43 @@ public class FSpanUtil
     }
 
     /**
-     * 添加span
+     * 添加Span
      *
-     * @param key
-     * @param span
      * @param builder
+     * @param key
+     * @param spans
      */
-    public static void appendSpan(String key, Object span, SpannableStringBuilder builder)
+    public static void appendSpan(SpannableStringBuilder builder, String key, Object... spans)
     {
+        if (TextUtils.isEmpty(key) || spans == null || spans.length <= 0)
+            throw new IllegalArgumentException();
+
         builder.append(key);
         final int end = builder.length();
         final int start = end - key.length();
-        builder.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        for (Object item : spans)
+        {
+            builder.setSpan(item, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
     }
 
     /**
      * 叠加span
      *
-     * @param oldSpan
-     * @param newSpan
      * @param builder
+     * @param oldSpan
+     * @param spans
      */
-    public static void overlyingSpan(Object oldSpan, Object newSpan, SpannableStringBuilder builder)
+    public static void overlyingSpan(SpannableStringBuilder builder, Object oldSpan, Object... spans)
     {
+        if (oldSpan == null || spans == null || spans.length <= 0)
+            throw new IllegalArgumentException();
+
         final int end = builder.getSpanEnd(oldSpan);
         final int start = builder.getSpanStart(oldSpan);
-        builder.setSpan(newSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        for (Object item : spans)
+        {
+            builder.setSpan(item, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
     }
 }

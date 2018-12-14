@@ -27,7 +27,7 @@ public class NetSpanActivity extends AppCompatActivity
         span.setWidth(200);
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        FSpanUtil.appendSpan("span", span, builder);
+        FSpanUtil.appendSpan(builder, "span", span);
         tv.setText(builder);
     }
 }
