@@ -32,7 +32,7 @@ span.setMarginLeft(10);
 // 设置右边间距
 span.setMarginRight(10);
 // 将span添加到SpannableStringBuilder
-FSpanUtil.appendSpan("launcher", span, builder);
+FSpanUtil.appendSpan(builder, "launcher", span);
 tv.setText(builder);
 ```
 ## EditText效果
@@ -213,6 +213,6 @@ span.setUrl("https://www.baidu.com/img/bd_logo1.png");
 span.setWidth(200);
 
 SpannableStringBuilder builder = new SpannableStringBuilder();
-FSpanUtil.appendSpan("span", span, builder);
+FSpanUtil.appendSpan(builder, "span", span);
 tv.setText(builder);
 ```
