@@ -31,7 +31,7 @@ public class FSpanUtil
      * @param newSpan
      * @param builder
      */
-    public void overlyingSpan(Object oldSpan, Object newSpan, SpannableStringBuilder builder)
+    public static void overlyingSpan(Object oldSpan, Object newSpan, SpannableStringBuilder builder)
     {
         final int end = builder.getSpanEnd(oldSpan);
         final int start = builder.getSpanStart(oldSpan);
