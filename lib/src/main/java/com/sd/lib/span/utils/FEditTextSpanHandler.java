@@ -29,10 +29,19 @@ public class FEditTextSpanHandler
      */
     public void insertSpan(String key, Object span)
     {
-        final int start = getEditText().getSelectionStart();
-        final int end = start + key.length();
+        final int selectionStart = getEditText().getSelectionStart();
+        final int selectionEnd = getEditText().getSelectionEnd();
 
-        getEditText().getText().append(key);
+        if (selectionStart == selectionEnd)
+        {
+            getEditText().getText().insert(selectionStart, key);
+        } else
+        {
+            getEditText().getText().replace(selectionStart, selectionEnd, key);
+        }
+
+        final int start = selectionStart;
+        final int end = start + key.length();
         getEditText().getText().setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         mArrSpan.put(end, span);
