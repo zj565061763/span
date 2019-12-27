@@ -1,13 +1,15 @@
 package com.sd.lib.span.utils;
 
 import android.text.Spannable;
-import android.util.SparseArray;
 import android.widget.EditText;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FEditTextSpanHandler
 {
     private final EditText mEditText;
-    private final SparseArray<Object> mArrSpan = new SparseArray<>();
+    private final Map<Object, String> mMapSpan = new ConcurrentHashMap<>();
 
     public FEditTextSpanHandler(EditText editText)
     {
@@ -44,7 +46,7 @@ public class FEditTextSpanHandler
         final int end = start + key.length();
         getEditText().getText().setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        mArrSpan.put(end, span);
+        mMapSpan.put(span, "");
     }
 
     /**
@@ -52,19 +54,33 @@ public class FEditTextSpanHandler
      *
      * @return
      */
-    public boolean removeSpan()
+    public int removeSpan()
     {
-        final int index = getEditText().getSelectionStart();
-        final Object span = mArrSpan.get(index);
-        if (span == null)
-            return false;
+        final int selectionStart = getEditText().getSelectionStart();
+        final int selectionEnd = getEditText().getSelectionEnd();
 
-        final int start = getEditText().getText().getSpanStart(span);
-        final int end = getEditText().getText().getSpanEnd(span);
+        int count = 0;
+        for (Object item : mMapSpan.keySet())
+        {
+            final int spanStart = getEditText().getText().getSpanStart(item);
+            if (spanStart >= selectionStart && spanStart <= selectionEnd)
+            {
+                getEditText().getText().removeSpan(item);
+                mMapSpan.remove(item);
+                count++;
+                continue;
+            }
 
-        getEditText().getText().delete(start, end);
-        mArrSpan.remove(index);
+            final int spanEnd = getEditText().getText().getSpanEnd(item);
+            if (spanEnd >= selectionStart && spanEnd <= selectionEnd)
+            {
+                getEditText().getText().removeSpan(item);
+                mMapSpan.remove(item);
+                count++;
+                continue;
+            }
+        }
 
-        return true;
+        return count;
     }
 }
