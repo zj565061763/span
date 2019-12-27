@@ -14,7 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="100dp"
-        android:text="添加span" />
+        android:text="添加图片span" />
+
+    <Button
+        android:id="@+id/btn_add_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="添加文字span" />
 
     <Button
         android:id="@+id/btn_remove"
