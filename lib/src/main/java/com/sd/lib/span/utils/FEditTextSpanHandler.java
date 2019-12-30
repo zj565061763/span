@@ -68,48 +68,40 @@ public class FEditTextSpanHandler
     {
         final int selectionStart = getEditText().getSelectionStart();
         final int selectionEnd = getEditText().getSelectionEnd();
+        return removeSpanInternal(selectionStart, selectionEnd);
+    }
 
+    private int removeSpanInternal(int selectionStart, int selectionEnd)
+    {
         int count = 0;
-        if (selectionStart == selectionEnd)
+        for (Object item : mMapSpan.keySet())
         {
-            for (Object item : mMapSpan.keySet())
+            final int spanStart = getEditText().getText().getSpanStart(item);
+            final int spanEnd = getEditText().getText().getSpanEnd(item);
+
+            if (checkBounds(spanStart, spanEnd, selectionStart, selectionEnd))
             {
-                final int spanStart = getEditText().getText().getSpanStart(item);
-                final int spanEnd = getEditText().getText().getSpanEnd(item);
+                getEditText().getText().removeSpan(item);
+                mMapSpan.remove(item);
+                count++;
 
-                if (selectionStart >= spanStart && selectionStart <= spanEnd)
-                {
-                    getEditText().getText().removeSpan(item);
-                    mMapSpan.remove(item);
-                    count++;
-
-                    if (mCallback != null)
-                        mCallback.onSpanRemove(item, spanStart, spanEnd);
-                }
-            }
-        } else
-        {
-            for (Object item : mMapSpan.keySet())
-            {
-                final int spanStart = getEditText().getText().getSpanStart(item);
-                final int spanEnd = getEditText().getText().getSpanEnd(item);
-
-                if (selectionEnd < spanStart || spanEnd < selectionStart)
-                {
-                    continue;
-                } else
-                {
-                    getEditText().getText().removeSpan(item);
-                    mMapSpan.remove(item);
-                    count++;
-
-                    if (mCallback != null)
-                        mCallback.onSpanRemove(item, spanStart, spanEnd);
-                }
+                if (mCallback != null)
+                    mCallback.onSpanRemove(item, spanStart, spanEnd);
             }
         }
-
         return count;
+    }
+
+    private static boolean checkBounds(int spanStart, int spanEnd, int selectionStart, int selectionEnd)
+    {
+        if (selectionStart == selectionEnd)
+        {
+            final int index = selectionStart;
+            return index > spanStart && index < spanEnd;
+        } else
+        {
+            return !(selectionEnd <= spanStart || spanEnd <= selectionStart);
+        }
     }
 
     public interface Callback
