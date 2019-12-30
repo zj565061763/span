@@ -28,7 +28,7 @@ public class FEditTextSpanHandler
             {
                 final int delta = after - count;
                 final int end = start + Math.abs(delta);
-                removeSpanInternal(start, end);
+                removeSpanInternal(start, end, false);
             }
 
             @Override
@@ -83,24 +83,33 @@ public class FEditTextSpanHandler
     }
 
     /**
-     * 移除光标前面的span
+     * 移除光标或者光标前面位置的span
      *
      * @return
      */
-    public final int removeSpan()
+    public final boolean removeSpan()
     {
         final int selectionStart = getEditText().getSelectionStart();
         final int selectionEnd = getEditText().getSelectionEnd();
-        return removeSpanInternal(selectionStart, selectionEnd);
+        if (selectionStart == selectionEnd)
+        {
+            final int count = removeSpanInternal(selectionStart, selectionEnd, true);
+            return count > 0;
+        }
+
+        return false;
     }
 
-    private int removeSpanInternal(int selectionStart, int selectionEnd)
+    private int removeSpanInternal(int selectionStart, int selectionEnd, boolean removeText)
     {
         int count = 0;
         final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd);
         for (SpanInfo item : list)
         {
             getEditText().getText().removeSpan(item.getSpan());
+            if (removeText)
+                getEditText().getText().delete(item.getStart(), item.getEnd());
+
             mMapSpan.remove(item);
             count++;
 
@@ -110,7 +119,7 @@ public class FEditTextSpanHandler
     }
 
     /**
-     * 返回光标或者光标前面位置对应的span
+     * 返回光标或者光标前面位置的span信息
      *
      * @param index
      * @return
