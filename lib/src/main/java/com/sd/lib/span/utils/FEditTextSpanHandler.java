@@ -174,16 +174,7 @@ public class FEditTextSpanHandler
         if (selectionStart == selectionEnd)
         {
             final int index = selectionStart;
-
-            List<FEditTextSpanHandler.SpanInfo> listInfo = null;
-            if (index == text.length())
-            {
-                listInfo = getSpanInfo(index - 1, index - 1);
-            } else
-            {
-                listInfo = getSpanInfo(index, index);
-            }
-
+            final List<FEditTextSpanHandler.SpanInfo> listInfo = getSpanInfo(index, index);
             if (listInfo.size() > 0)
             {
                 final FEditTextSpanHandler.SpanInfo spanInfo = listInfo.get(0);
@@ -207,7 +198,7 @@ public class FEditTextSpanHandler
         if (selectionStart == selectionEnd)
         {
             final int index = selectionStart;
-            return index > spanStart && index < spanEnd;
+            return index > spanStart && index <= spanEnd;
         } else
         {
             return !(selectionEnd <= spanStart || spanEnd <= selectionStart);
