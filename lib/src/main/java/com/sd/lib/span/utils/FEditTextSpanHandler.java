@@ -16,8 +16,6 @@ public class FEditTextSpanHandler
     private final EditText mEditText;
     private final Map<Object, String> mMapSpan = new ConcurrentHashMap<>();
 
-    private Callback mCallback;
-
     public FEditTextSpanHandler(EditText editText)
     {
         if (editText == null)
@@ -46,16 +44,6 @@ public class FEditTextSpanHandler
 
             }
         });
-    }
-
-    /**
-     * 设置回调对象
-     *
-     * @param callback
-     */
-    public final void setCallback(Callback callback)
-    {
-        mCallback = callback;
     }
 
     private EditText getEditText()
@@ -92,9 +80,7 @@ public class FEditTextSpanHandler
         spanInfo.end = end;
 
         mMapSpan.put(span, "");
-
-        if (mCallback != null)
-            mCallback.onSpanInsert(spanInfo);
+        onSpanInsert(spanInfo);
     }
 
     /**
@@ -147,12 +133,11 @@ public class FEditTextSpanHandler
         final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd);
         for (SpanInfo item : list)
         {
-            getEditText().getText().removeSpan(item);
+            getEditText().getText().removeSpan(item.getSpan());
             mMapSpan.remove(item);
             count++;
 
-            if (mCallback != null)
-                mCallback.onSpanRemove(item);
+            onSpanRemove(item);
         }
         return count;
     }
@@ -209,6 +194,14 @@ public class FEditTextSpanHandler
         return false;
     }
 
+    protected void onSpanRemove(SpanInfo spanInfo)
+    {
+    }
+
+    protected void onSpanInsert(SpanInfo spanInfo)
+    {
+    }
+
     private static boolean checkBounds(int spanStart, int spanEnd, int selectionStart, int selectionEnd)
     {
         if (selectionStart == selectionEnd)
@@ -219,13 +212,6 @@ public class FEditTextSpanHandler
         {
             return !(selectionEnd <= spanStart || spanEnd <= selectionStart);
         }
-    }
-
-    public interface Callback
-    {
-        void onSpanInsert(SpanInfo spanInfo);
-
-        void onSpanRemove(SpanInfo spanInfo);
     }
 
     public static class SpanInfo

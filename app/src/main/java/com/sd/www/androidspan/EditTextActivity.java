@@ -79,21 +79,22 @@ public class EditTextActivity extends AppCompatActivity
     {
         if (mEditTextSpanHandler == null)
         {
-            mEditTextSpanHandler = new FEditTextSpanHandler(et);
-            mEditTextSpanHandler.setCallback(new FEditTextSpanHandler.Callback()
+            mEditTextSpanHandler = new FEditTextSpanHandler(et)
             {
                 @Override
-                public void onSpanInsert(FEditTextSpanHandler.SpanInfo spanInfo)
+                protected void onSpanInsert(SpanInfo spanInfo)
                 {
+                    super.onSpanInsert(spanInfo);
                     Log.i(TAG, "onSpanInsert start:" + spanInfo.getStart() + " end:" + spanInfo.getEnd() + " span:" + spanInfo.getSpan());
                 }
 
                 @Override
-                public void onSpanRemove(FEditTextSpanHandler.SpanInfo spanInfo)
+                protected void onSpanRemove(SpanInfo spanInfo)
                 {
+                    super.onSpanRemove(spanInfo);
                     Log.i(TAG, "onSpanRemove start:" + spanInfo.getStart() + " end:" + spanInfo.getEnd() + " span:" + spanInfo.getSpan());
                 }
-            });
+            };
         }
         return mEditTextSpanHandler;
     }
