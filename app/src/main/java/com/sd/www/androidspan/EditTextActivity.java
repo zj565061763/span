@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import com.sd.lib.span.utils.FEditTextSpanHandler;
  */
 public class EditTextActivity extends AppCompatActivity
 {
+    public static final String TAG = EditTextActivity.class.getSimpleName();
+
     private FEditTextSpanHandler mEditTextSpanHandler;
     private Button btn_add, btn_add_text, btn_remove;
 
@@ -62,7 +65,23 @@ public class EditTextActivity extends AppCompatActivity
     public FEditTextSpanHandler getEditTextSpanHandler()
     {
         if (mEditTextSpanHandler == null)
+        {
             mEditTextSpanHandler = new FEditTextSpanHandler((EditText) findViewById(R.id.et));
+            mEditTextSpanHandler.setCallback(new FEditTextSpanHandler.Callback()
+            {
+                @Override
+                public void onSpanInsert(Object span, int start, int end)
+                {
+                    Log.i(TAG, "onSpanInsert start:" + start + " end:" + end + " span:" + span);
+                }
+
+                @Override
+                public void onSpanRemove(Object span, int start, int end)
+                {
+                    Log.i(TAG, "onSpanRemove start:" + start + " end:" + end + " span:" + span);
+                }
+            });
+        }
         return mEditTextSpanHandler;
     }
 }
