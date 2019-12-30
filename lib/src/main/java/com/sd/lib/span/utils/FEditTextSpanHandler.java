@@ -133,6 +133,18 @@ public class FEditTextSpanHandler
         return list.get(0);
     }
 
+    /**
+     * 返回所有span信息
+     *
+     * @return
+     */
+    public final List<SpanInfo> getAllSpanInfo()
+    {
+        final int selectionStart = 0;
+        final int selectionEnd = getEditText().getText().length();
+        return getSpanInfo(selectionStart, selectionEnd);
+    }
+
     private List<SpanInfo> getSpanInfo(int selectionStart, int selectionEnd)
     {
         final List<SpanInfo> list = new ArrayList<>();
