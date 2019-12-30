@@ -3,7 +3,6 @@ package com.sd.lib.span.utils;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -95,14 +94,37 @@ public class FEditTextSpanHandler
         return removeSpanInternal(selectionStart, selectionEnd);
     }
 
+    private int removeSpanInternal(int selectionStart, int selectionEnd)
+    {
+        int count = 0;
+        final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd);
+        for (SpanInfo item : list)
+        {
+            getEditText().getText().removeSpan(item.getSpan());
+            mMapSpan.remove(item);
+            count++;
+
+            onSpanRemove(item);
+        }
+        return count;
+    }
+
     /**
-     * 返回Span信息
+     * 返回光标或者光标前面位置对应的span
      *
-     * @param selectionStart
-     * @param selectionEnd
+     * @param index
      * @return
      */
-    public final List<SpanInfo> getSpanInfo(int selectionStart, int selectionEnd)
+    public final SpanInfo getSpanInfo(int index)
+    {
+        final List<SpanInfo> list = getSpanInfo(index, index);
+        if (list == null || list.isEmpty())
+            return null;
+
+        return list.get(0);
+    }
+
+    private List<SpanInfo> getSpanInfo(int selectionStart, int selectionEnd)
     {
         final List<SpanInfo> list = new ArrayList<>();
         for (Object item : mMapSpan.keySet())
@@ -125,64 +147,6 @@ public class FEditTextSpanHandler
             }
         }
         return list;
-    }
-
-    private int removeSpanInternal(int selectionStart, int selectionEnd)
-    {
-        int count = 0;
-        final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd);
-        for (SpanInfo item : list)
-        {
-            getEditText().getText().removeSpan(item.getSpan());
-            mMapSpan.remove(item);
-            count++;
-
-            onSpanRemove(item);
-        }
-        return count;
-    }
-
-    /**
-     * 分发按键事件
-     *
-     * @param keyCode
-     * @param event
-     * @return
-     */
-    public final boolean dispatchKeyEvent(int keyCode, KeyEvent event)
-    {
-        if (event.getAction() != KeyEvent.ACTION_DOWN)
-            return false;
-
-        if (checkKeyDelete(keyCode))
-            return true;
-
-        return false;
-    }
-
-    private boolean checkKeyDelete(int keyCode)
-    {
-        if (keyCode != KeyEvent.KEYCODE_DEL)
-            return false;
-
-        final Editable text = getEditText().getText();
-        if (text.length() <= 0)
-            return false;
-
-        final int selectionStart = getEditText().getSelectionStart();
-        final int selectionEnd = getEditText().getSelectionEnd();
-        if (selectionStart == selectionEnd)
-        {
-            final int index = selectionStart;
-            final List<FEditTextSpanHandler.SpanInfo> listInfo = getSpanInfo(index, index);
-            if (listInfo.size() > 0)
-            {
-                final FEditTextSpanHandler.SpanInfo spanInfo = listInfo.get(0);
-                getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
-                return true;
-            }
-        }
-        return false;
     }
 
     protected void onSpanRemove(SpanInfo spanInfo)
