@@ -55,8 +55,9 @@ public class FEditTextSpanHandler
      *
      * @param span span对象
      * @param key  对应的key
+     * @return
      */
-    public final void insertSpan(String key, Object span)
+    public final SpanInfo insertSpan(String key, Object span)
     {
         final int selectionStart = getEditText().getSelectionStart();
         final int selectionEnd = getEditText().getSelectionEnd();
@@ -80,6 +81,8 @@ public class FEditTextSpanHandler
 
         mMapSpan.put(span, "");
         onSpanInsert(spanInfo);
+
+        return spanInfo;
     }
 
     /**
