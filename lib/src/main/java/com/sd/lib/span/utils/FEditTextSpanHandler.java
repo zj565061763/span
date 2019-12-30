@@ -1,6 +1,8 @@
 package com.sd.lib.span.utils;
 
+import android.text.Editable;
 import android.text.Spannable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 
 import java.util.Map;
@@ -18,6 +20,29 @@ public class FEditTextSpanHandler
         if (editText == null)
             throw new NullPointerException();
         mEditText = editText;
+
+        mEditText.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
+                final int delta = after - count;
+                final int end = start + Math.abs(delta);
+                removeSpanInternal(start, end);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)
+            {
+
+            }
+        });
     }
 
     public void setCallback(Callback callback)
