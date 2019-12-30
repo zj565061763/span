@@ -5,45 +5,37 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.btn_textview).setOnClickListener(new View.OnClickListener()
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
         {
-            @Override
-            public void onClick(View v)
-            {
+            case R.id.btn_textview:
                 startActivity(new Intent(MainActivity.this, TextViewActivity.class));
-            }
-        });
-        findViewById(R.id.btn_edittext).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
+                break;
+            case R.id.btn_edittext:
                 startActivity(new Intent(MainActivity.this, EditTextActivity.class));
-            }
-        });
-        findViewById(R.id.btn_pattern).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
+                break;
+            case R.id.btn_at_edittext:
+                startActivity(new Intent(MainActivity.this, AtEditTextActivity.class));
+                break;
+            case R.id.btn_pattern:
                 startActivity(new Intent(MainActivity.this, PatternActivity.class));
-            }
-        });
-        findViewById(R.id.btn_netspan).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
+                break;
+            case R.id.btn_netspan:
                 startActivity(new Intent(MainActivity.this, NetSpanActivity.class));
-            }
-        });
+                break;
+            default:
+                break;
+        }
     }
 }

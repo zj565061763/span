@@ -45,7 +45,7 @@ public class FEditTextSpanHandler
         });
     }
 
-    private EditText getEditText()
+    public final EditText getEditText()
     {
         return mEditText;
     }
