@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,8 @@ public class EditTextActivity extends AppCompatActivity
     private FEditTextSpanHandler mEditTextSpanHandler;
     private Button btn_add, btn_add_text, btn_remove;
 
+    private EditText et;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -30,6 +33,7 @@ public class EditTextActivity extends AppCompatActivity
         btn_add = findViewById(R.id.btn_add);
         btn_add_text = findViewById(R.id.btn_add_text);
         btn_remove = findViewById(R.id.btn_remove);
+        et = findViewById(R.id.et);
 
         btn_add.setOnClickListener(new View.OnClickListener()
         {
@@ -60,25 +64,34 @@ public class EditTextActivity extends AppCompatActivity
                 getEditTextSpanHandler().removeSpan();
             }
         });
+
+        et.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                return getEditTextSpanHandler().dispatchKeyEvent(keyCode, event);
+            }
+        });
     }
 
     public FEditTextSpanHandler getEditTextSpanHandler()
     {
         if (mEditTextSpanHandler == null)
         {
-            mEditTextSpanHandler = new FEditTextSpanHandler((EditText) findViewById(R.id.et));
+            mEditTextSpanHandler = new FEditTextSpanHandler(et);
             mEditTextSpanHandler.setCallback(new FEditTextSpanHandler.Callback()
             {
                 @Override
-                public void onSpanInsert(Object span, int start, int end)
+                public void onSpanInsert(FEditTextSpanHandler.SpanInfo spanInfo)
                 {
-                    Log.i(TAG, "onSpanInsert start:" + start + " end:" + end + " span:" + span);
+                    Log.i(TAG, "onSpanInsert start:" + spanInfo.getStart() + " end:" + spanInfo.getEnd() + " span:" + spanInfo.getSpan());
                 }
 
                 @Override
-                public void onSpanRemove(Object span, int start, int end)
+                public void onSpanRemove(FEditTextSpanHandler.SpanInfo spanInfo)
                 {
-                    Log.i(TAG, "onSpanRemove start:" + start + " end:" + end + " span:" + span);
+                    Log.i(TAG, "onSpanRemove start:" + spanInfo.getStart() + " end:" + spanInfo.getEnd() + " span:" + spanInfo.getSpan());
                 }
             });
         }

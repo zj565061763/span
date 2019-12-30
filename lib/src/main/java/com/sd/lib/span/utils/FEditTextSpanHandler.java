@@ -3,8 +3,11 @@ package com.sd.lib.span.utils;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -45,7 +48,12 @@ public class FEditTextSpanHandler
         });
     }
 
-    public void setCallback(Callback callback)
+    /**
+     * 设置回调对象
+     *
+     * @param callback
+     */
+    public final void setCallback(Callback callback)
     {
         mCallback = callback;
     }
@@ -61,7 +69,7 @@ public class FEditTextSpanHandler
      * @param span span对象
      * @param key  对应的key
      */
-    public void insertSpan(String key, Object span)
+    public final void insertSpan(String key, Object span)
     {
         final int selectionStart = getEditText().getSelectionStart();
         final int selectionEnd = getEditText().getSelectionEnd();
@@ -78,10 +86,15 @@ public class FEditTextSpanHandler
         final int end = start + key.length();
         getEditText().getText().setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+        final SpanInfo spanInfo = new SpanInfo();
+        spanInfo.span = span;
+        spanInfo.start = start;
+        spanInfo.end = end;
+
         mMapSpan.put(span, "");
 
         if (mCallback != null)
-            mCallback.onSpanInsert(span, start, end);
+            mCallback.onSpanInsert(spanInfo);
     }
 
     /**
@@ -89,16 +102,23 @@ public class FEditTextSpanHandler
      *
      * @return
      */
-    public int removeSpan()
+    public final int removeSpan()
     {
         final int selectionStart = getEditText().getSelectionStart();
         final int selectionEnd = getEditText().getSelectionEnd();
         return removeSpanInternal(selectionStart, selectionEnd);
     }
 
-    private int removeSpanInternal(int selectionStart, int selectionEnd)
+    /**
+     * 返回Span信息
+     *
+     * @param selectionStart
+     * @param selectionEnd
+     * @return
+     */
+    public final List<SpanInfo> getSpanInfo(int selectionStart, int selectionEnd)
     {
-        int count = 0;
+        final List<SpanInfo> list = new ArrayList<>();
         for (Object item : mMapSpan.keySet())
         {
             final int spanStart = getEditText().getText().getSpanStart(item);
@@ -111,15 +131,82 @@ public class FEditTextSpanHandler
 
             if (checkBounds(spanStart, spanEnd, selectionStart, selectionEnd))
             {
-                getEditText().getText().removeSpan(item);
-                mMapSpan.remove(item);
-                count++;
-
-                if (mCallback != null)
-                    mCallback.onSpanRemove(item, spanStart, spanEnd);
+                final SpanInfo spanInfo = new SpanInfo();
+                spanInfo.span = item;
+                spanInfo.start = spanStart;
+                spanInfo.end = spanEnd;
+                list.add(spanInfo);
             }
         }
+        return list;
+    }
+
+    private int removeSpanInternal(int selectionStart, int selectionEnd)
+    {
+        int count = 0;
+        final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd);
+        for (SpanInfo item : list)
+        {
+            getEditText().getText().removeSpan(item);
+            mMapSpan.remove(item);
+            count++;
+
+            if (mCallback != null)
+                mCallback.onSpanRemove(item);
+        }
         return count;
+    }
+
+    /**
+     * 分发按键事件
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    public final boolean dispatchKeyEvent(int keyCode, KeyEvent event)
+    {
+        if (event.getAction() != KeyEvent.ACTION_DOWN)
+            return false;
+
+        if (checkKeyDelete(keyCode))
+            return true;
+
+        return false;
+    }
+
+    private boolean checkKeyDelete(int keyCode)
+    {
+        if (keyCode != KeyEvent.KEYCODE_DEL)
+            return false;
+
+        final Editable text = getEditText().getText();
+        if (text.length() <= 0)
+            return false;
+
+        final int selectionStart = getEditText().getSelectionStart();
+        final int selectionEnd = getEditText().getSelectionEnd();
+        if (selectionStart == selectionEnd)
+        {
+            final int index = selectionStart;
+
+            List<FEditTextSpanHandler.SpanInfo> listInfo = null;
+            if (index == text.length())
+            {
+                listInfo = getSpanInfo(index - 1, index - 1);
+            } else
+            {
+                listInfo = getSpanInfo(index, index);
+            }
+
+            if (listInfo.size() > 0)
+            {
+                final FEditTextSpanHandler.SpanInfo spanInfo = listInfo.get(0);
+                getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean checkBounds(int spanStart, int spanEnd, int selectionStart, int selectionEnd)
@@ -136,8 +223,30 @@ public class FEditTextSpanHandler
 
     public interface Callback
     {
-        void onSpanInsert(Object span, int start, int end);
+        void onSpanInsert(SpanInfo spanInfo);
 
-        void onSpanRemove(Object span, int start, int end);
+        void onSpanRemove(SpanInfo spanInfo);
+    }
+
+    public static class SpanInfo
+    {
+        private Object span;
+        private int start;
+        private int end;
+
+        public Object getSpan()
+        {
+            return span;
+        }
+
+        public int getStart()
+        {
+            return start;
+        }
+
+        public int getEnd()
+        {
+            return end;
+        }
     }
 }
