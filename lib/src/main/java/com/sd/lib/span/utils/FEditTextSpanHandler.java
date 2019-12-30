@@ -11,11 +11,18 @@ public class FEditTextSpanHandler
     private final EditText mEditText;
     private final Map<Object, String> mMapSpan = new ConcurrentHashMap<>();
 
+    private Callback mCallback;
+
     public FEditTextSpanHandler(EditText editText)
     {
         if (editText == null)
             throw new NullPointerException();
         mEditText = editText;
+    }
+
+    public void setCallback(Callback callback)
+    {
+        mCallback = callback;
     }
 
     private EditText getEditText()
@@ -47,6 +54,9 @@ public class FEditTextSpanHandler
         getEditText().getText().setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         mMapSpan.put(span, "");
+
+        if (mCallback != null)
+            mCallback.onSpanInsert(span, start, end);
     }
 
     /**
@@ -60,27 +70,52 @@ public class FEditTextSpanHandler
         final int selectionEnd = getEditText().getSelectionEnd();
 
         int count = 0;
-        for (Object item : mMapSpan.keySet())
+        if (selectionStart == selectionEnd)
         {
-            final int spanStart = getEditText().getText().getSpanStart(item);
-            if (spanStart >= selectionStart && spanStart <= selectionEnd)
+            for (Object item : mMapSpan.keySet())
             {
-                getEditText().getText().removeSpan(item);
-                mMapSpan.remove(item);
-                count++;
-                continue;
-            }
+                final int spanStart = getEditText().getText().getSpanStart(item);
+                final int spanEnd = getEditText().getText().getSpanEnd(item);
 
-            final int spanEnd = getEditText().getText().getSpanEnd(item);
-            if (spanEnd >= selectionStart && spanEnd <= selectionEnd)
+                if (selectionStart >= spanStart && selectionStart <= spanEnd)
+                {
+                    getEditText().getText().removeSpan(item);
+                    mMapSpan.remove(item);
+                    count++;
+
+                    if (mCallback != null)
+                        mCallback.onSpanRemove(item, spanStart, spanEnd);
+                }
+            }
+        } else
+        {
+            for (Object item : mMapSpan.keySet())
             {
-                getEditText().getText().removeSpan(item);
-                mMapSpan.remove(item);
-                count++;
-                continue;
+                final int spanStart = getEditText().getText().getSpanStart(item);
+                final int spanEnd = getEditText().getText().getSpanEnd(item);
+
+                if (selectionEnd < spanStart || spanEnd < selectionStart)
+                {
+                    continue;
+                } else
+                {
+                    getEditText().getText().removeSpan(item);
+                    mMapSpan.remove(item);
+                    count++;
+
+                    if (mCallback != null)
+                        mCallback.onSpanRemove(item, spanStart, spanEnd);
+                }
             }
         }
 
         return count;
+    }
+
+    public interface Callback
+    {
+        void onSpanInsert(Object span, int start, int end);
+
+        void onSpanRemove(Object span, int start, int end);
     }
 }
