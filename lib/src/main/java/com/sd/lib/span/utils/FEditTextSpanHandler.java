@@ -103,6 +103,11 @@ public class FEditTextSpanHandler
         {
             final int spanStart = getEditText().getText().getSpanStart(item);
             final int spanEnd = getEditText().getText().getSpanEnd(item);
+            if (spanStart < 0 || spanEnd < 0)
+            {
+                mMapSpan.remove(item);
+                continue;
+            }
 
             if (checkBounds(spanStart, spanEnd, selectionStart, selectionEnd))
             {
