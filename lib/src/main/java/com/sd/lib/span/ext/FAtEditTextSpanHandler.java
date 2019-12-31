@@ -105,6 +105,20 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         return false;
     }
 
+    /**
+     * 是否包含某个用户
+     *
+     * @param userId
+     * @return
+     */
+    public final boolean hasUser(String userId)
+    {
+        if (TextUtils.isEmpty(userId))
+            return false;
+
+        return mMapUserInfo.containsKey(userId);
+    }
+
     @Override
     protected void onSpanRemove(SpanInfo spanInfo)
     {
