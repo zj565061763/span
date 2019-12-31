@@ -105,6 +105,20 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         return false;
     }
 
+    @Override
+    protected void onSpanRemove(SpanInfo spanInfo)
+    {
+        super.onSpanRemove(spanInfo);
+        for (Map.Entry<String, UserInfoWrapper> item : mMapUserInfo.entrySet())
+        {
+            if (item.getValue().spanInfo.equals(spanInfo))
+            {
+                mMapUserInfo.remove(item.getKey());
+                break;
+            }
+        }
+    }
+
     /**
      * 返回所有用户信息
      *
