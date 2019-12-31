@@ -28,14 +28,14 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         editText.addTextChangedListener(new TextWatcher()
         {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            public void beforeTextChanged(CharSequence s, int start, int beforeCount, int afterCount)
             {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
+            public void onTextChanged(CharSequence s, int start, int beforeCount, int afterCount)
             {
-                if (before == 0 && count == 1)
+                if (beforeCount == 0 && afterCount == 1)
                 {
                     final String newChar = String.valueOf(s.charAt(start));
                     if (mMaskChar.equals(newChar))
