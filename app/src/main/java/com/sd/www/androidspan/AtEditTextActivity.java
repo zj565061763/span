@@ -62,6 +62,7 @@ public class AtEditTextActivity extends AppCompatActivity implements View.OnClic
                 public void onUserAdd(String userId)
                 {
                     Log.i(TAG, "onUserAdd:" + userId);
+                    mListUser.add(userId);
                     showAll();
                 }
 
@@ -69,6 +70,7 @@ public class AtEditTextActivity extends AppCompatActivity implements View.OnClic
                 public void onUserRemove(String userId)
                 {
                     Log.i(TAG, "onUserRemove:" + userId);
+                    mListUser.remove(userId);
                     showAll();
                 }
             });
@@ -82,20 +84,20 @@ public class AtEditTextActivity extends AppCompatActivity implements View.OnClic
         switch (v.getId())
         {
             case R.id.btn_add:
+
                 final String userId = String.valueOf(new Random().nextInt(10000));
                 final String userName = userId;
 
                 if (getSpanHandler().addUser(userId, userName))
-                {
                     et.getText().append(" ");
-                    mListUser.add(0, userId);
-                }
+
                 break;
             case R.id.btn_remove:
-                if (mListUser.size() > 0)
-                {
-                    getSpanHandler().removeUser(mListUser.remove(0));
-                }
+
+                final int size = mListUser.size();
+                if (size > 0)
+                    getSpanHandler().removeUser(mListUser.remove(size - 1));
+
                 break;
             case R.id.btn_show_all:
                 showAll();
