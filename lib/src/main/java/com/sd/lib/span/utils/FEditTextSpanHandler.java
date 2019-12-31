@@ -165,18 +165,29 @@ public class FEditTextSpanHandler
         int count = 0;
         for (SpanInfo item : list)
         {
-            final Object span = item.getSpan();
-            if (mMapSpan.remove(span) != null)
-            {
-                getEditText().getText().removeSpan(span);
-                if (removeText)
-                    getEditText().getText().delete(item.getStart(), item.getEnd());
-
+            if (removeSpanInternal(item, removeText))
                 count++;
-                onSpanRemove(item);
-            }
         }
         return count;
+    }
+
+    private boolean removeSpanInternal(SpanInfo spanInfo, boolean removeText)
+    {
+        if (spanInfo == null)
+            return false;
+
+        final Object span = spanInfo.getSpan();
+        if (mMapSpan.remove(span) != null)
+        {
+            getEditText().getText().removeSpan(span);
+            if (removeText)
+                getEditText().getText().delete(spanInfo.getStart(), spanInfo.getEnd());
+
+            onSpanRemove(spanInfo);
+            return true;
+        }
+
+        return false;
     }
 
     protected void onSpanRemove(SpanInfo spanInfo)
