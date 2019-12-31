@@ -189,11 +189,12 @@ public class FEditTextSpanHandler
 
             final boolean checkStart = index > spanStart;
             final boolean checkEnd = includeEnd ? index <= spanEnd : index < spanEnd;
-
             return checkStart && checkEnd;
         } else
         {
-            return !(selectionEnd <= spanStart || spanEnd <= selectionStart);
+            final boolean checkStart = selectionEnd <= spanStart;
+            final boolean checkEnd = selectionStart >= spanEnd;
+            return !(checkStart || checkEnd);
         }
     }
 
