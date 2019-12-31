@@ -193,7 +193,7 @@ public class FEditTextSpanHandler
         } else
         {
             final boolean checkStart = selectionEnd <= spanStart;
-            final boolean checkEnd = selectionStart >= spanEnd;
+            final boolean checkEnd = includeEnd ? selectionStart > spanEnd : selectionStart >= spanEnd;
             return !(checkStart || checkEnd);
         }
     }
