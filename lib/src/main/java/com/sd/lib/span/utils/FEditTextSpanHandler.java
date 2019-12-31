@@ -26,9 +26,9 @@ public class FEditTextSpanHandler
             @Override
             public void beforeTextChanged(CharSequence s, int start, int beforeCount, int afterCount)
             {
-                final int delta = afterCount - beforeCount;
-                final int end = start + Math.abs(delta);
-                removeSpanInternal(start, end, false);
+                final int end = start + beforeCount;
+                final List<SpanInfo> list = getSpanInfo(start, end, false);
+                removeSpanInternal(list, false);
             }
 
             @Override
@@ -96,29 +96,12 @@ public class FEditTextSpanHandler
         final int selectionEnd = getEditText().getSelectionEnd();
         if (selectionStart == selectionEnd)
         {
-            final int count = removeSpanInternal(selectionStart, selectionEnd, true);
+            final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd, true);
+            final int count = removeSpanInternal(list, true);
             return count > 0;
         }
 
         return false;
-    }
-
-    private int removeSpanInternal(int selectionStart, int selectionEnd, boolean removeText)
-    {
-        int count = 0;
-        final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd);
-        for (SpanInfo item : list)
-        {
-            getEditText().getText().removeSpan(item.getSpan());
-            if (removeText)
-                getEditText().getText().delete(item.getStart(), item.getEnd());
-
-            mMapSpan.remove(item);
-            count++;
-
-            onSpanRemove(item);
-        }
-        return count;
     }
 
     /**
@@ -129,7 +112,7 @@ public class FEditTextSpanHandler
      */
     public final SpanInfo getSpanInfo(int index)
     {
-        final List<SpanInfo> list = getSpanInfo(index, index);
+        final List<SpanInfo> list = getSpanInfo(index, index, true);
         if (list == null || list.isEmpty())
             return null;
 
@@ -145,10 +128,10 @@ public class FEditTextSpanHandler
     {
         final int selectionStart = 0;
         final int selectionEnd = getEditText().getText().length();
-        return getSpanInfo(selectionStart, selectionEnd);
+        return getSpanInfo(selectionStart, selectionEnd, true);
     }
 
-    private List<SpanInfo> getSpanInfo(int selectionStart, int selectionEnd)
+    private List<SpanInfo> getSpanInfo(int selectionStart, int selectionEnd, boolean includeEnd)
     {
         final List<SpanInfo> list = new ArrayList<>();
         for (Object item : mMapSpan.keySet())
@@ -161,7 +144,7 @@ public class FEditTextSpanHandler
                 continue;
             }
 
-            if (checkBounds(spanStart, spanEnd, selectionStart, selectionEnd))
+            if (checkBounds(spanStart, spanEnd, selectionStart, selectionEnd, includeEnd))
             {
                 final SpanInfo spanInfo = new SpanInfo();
                 spanInfo.span = item;
@@ -173,6 +156,23 @@ public class FEditTextSpanHandler
         return list;
     }
 
+    private int removeSpanInternal(List<SpanInfo> list, boolean removeText)
+    {
+        int count = 0;
+        for (SpanInfo item : list)
+        {
+            getEditText().getText().removeSpan(item.getSpan());
+            if (removeText)
+                getEditText().getText().delete(item.getStart(), item.getEnd());
+
+            mMapSpan.remove(item);
+            count++;
+
+            onSpanRemove(item);
+        }
+        return count;
+    }
+
     protected void onSpanRemove(SpanInfo spanInfo)
     {
     }
@@ -181,12 +181,16 @@ public class FEditTextSpanHandler
     {
     }
 
-    private static boolean checkBounds(int spanStart, int spanEnd, int selectionStart, int selectionEnd)
+    private static boolean checkBounds(int spanStart, int spanEnd, int selectionStart, int selectionEnd, boolean includeEnd)
     {
         if (selectionStart == selectionEnd)
         {
             final int index = selectionStart;
-            return index > spanStart && index <= spanEnd;
+
+            final boolean checkStart = index > spanStart;
+            final boolean checkEnd = includeEnd ? index <= spanEnd : index < spanEnd;
+
+            return checkStart && checkEnd;
         } else
         {
             return !(selectionEnd <= spanStart || spanEnd <= selectionStart);
