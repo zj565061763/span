@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.sd.lib.span.ext.FAtEditTextSpanHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -24,7 +23,7 @@ public class AtEditTextActivity extends AppCompatActivity implements View.OnClic
     private FAtEditTextSpanHandler mSpanHandler;
     private EditText et;
 
-    private final List<String> mListUser = new ArrayList<>();
+    private TextView tv_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,50 +31,42 @@ public class AtEditTextActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_at_edittext);
         et = findViewById(R.id.et);
+        tv_content = findViewById(R.id.tv_content);
 
         et.setOnKeyListener(new View.OnKeyListener()
         {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event)
             {
-                if (getSpanHandler().dispatchKeyEvent(keyCode, event))
+                if (mSpanHandler.dispatchKeyEvent(keyCode, event))
                     return true;
                 return false;
             }
         });
-    }
 
-    private FAtEditTextSpanHandler getSpanHandler()
-    {
-        if (mSpanHandler == null)
+        mSpanHandler = new FAtEditTextSpanHandler(et);
+        mSpanHandler.setCallback(new FAtEditTextSpanHandler.Callback()
         {
-            mSpanHandler = new FAtEditTextSpanHandler(et);
-            mSpanHandler.setCallback(new FAtEditTextSpanHandler.Callback()
+            @Override
+            public void onInputAt()
             {
-                @Override
-                public void onInputAt()
-                {
-                    Log.i(TAG, "onInputAt");
-                }
+                Log.i(TAG, "onInputAt");
+            }
 
-                @Override
-                public void onUserAdd(String userId)
-                {
-                    Log.i(TAG, "onUserAdd:" + userId);
-                    mListUser.add(userId);
-                    showAll();
-                }
+            @Override
+            public void onUserAdd(String userId)
+            {
+                Log.i(TAG, "onUserAdd:" + userId);
+                showAll();
+            }
 
-                @Override
-                public void onUserRemove(String userId)
-                {
-                    Log.i(TAG, "onUserRemove:" + userId);
-                    mListUser.remove(userId);
-                    showAll();
-                }
-            });
-        }
-        return mSpanHandler;
+            @Override
+            public void onUserRemove(String userId)
+            {
+                Log.i(TAG, "onUserRemove:" + userId);
+                showAll();
+            }
+        });
     }
 
     @Override
@@ -88,19 +79,9 @@ public class AtEditTextActivity extends AppCompatActivity implements View.OnClic
                 final String userId = String.valueOf(new Random().nextInt(10000));
                 final String userName = userId;
 
-                if (getSpanHandler().addUser(userId, userName))
+                if (mSpanHandler.addUser(userId, userName))
                     et.getText().append(" ");
 
-                break;
-            case R.id.btn_remove:
-
-                final int size = mListUser.size();
-                if (size > 0)
-                    getSpanHandler().removeUser(mListUser.remove(size - 1));
-
-                break;
-            case R.id.btn_show_all:
-                showAll();
                 break;
             default:
                 break;
@@ -110,13 +91,12 @@ public class AtEditTextActivity extends AppCompatActivity implements View.OnClic
     private void showAll()
     {
         final StringBuilder builder = new StringBuilder();
-        final List<FAtEditTextSpanHandler.UserInfoWrapper> list = getSpanHandler().getAllUser();
+        final List<FAtEditTextSpanHandler.UserInfoWrapper> list = mSpanHandler.getAllUser();
         for (FAtEditTextSpanHandler.UserInfoWrapper item : list)
         {
             builder.append(item.getUserId()).append("\r\n");
         }
 
-        final TextView tv = findViewById(R.id.btn_show_all);
-        tv.setText(builder.toString());
+        tv_content.setText(builder.toString());
     }
 }
