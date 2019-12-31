@@ -94,14 +94,18 @@ public class FEditTextSpanHandler
     {
         final int selectionStart = getEditText().getSelectionStart();
         final int selectionEnd = getEditText().getSelectionEnd();
+
+        List<SpanInfo> list = null;
         if (selectionStart == selectionEnd)
         {
-            final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd, true);
-            final int count = removeSpanInternal(list, true);
-            return count > 0;
+            list = getSpanInfo(selectionStart, selectionEnd, true);
+        } else
+        {
+            list = getSpanInfo(selectionStart, selectionEnd, false);
         }
 
-        return false;
+        final int count = removeSpanInternal(list, true);
+        return count > 0;
     }
 
     /**
