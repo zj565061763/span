@@ -109,11 +109,11 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
     protected void onSpanRemove(SpanInfo spanInfo)
     {
         super.onSpanRemove(spanInfo);
-        for (Map.Entry<String, UserInfoWrapper> item : mMapUserInfo.entrySet())
+        for (UserInfoWrapper item : mMapUserInfo.values())
         {
-            if (item.getValue().spanInfo.equals(spanInfo))
+            if (item.spanInfo.equals(spanInfo))
             {
-                mMapUserInfo.remove(item.getKey());
+                mMapUserInfo.remove(item.userId);
                 break;
             }
         }
