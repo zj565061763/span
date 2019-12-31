@@ -2,6 +2,7 @@ package com.sd.www.androidspan;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -44,7 +45,17 @@ public class AtEditTextActivity extends AppCompatActivity implements View.OnClic
     private FAtEditTextSpanHandler getSpanHandler()
     {
         if (mSpanHandler == null)
+        {
             mSpanHandler = new FAtEditTextSpanHandler(et);
+            mSpanHandler.setCallback(new FAtEditTextSpanHandler.Callback()
+            {
+                @Override
+                public void onInputAt()
+                {
+                    Log.i(TAG, "onInputAt");
+                }
+            });
+        }
         return mSpanHandler;
     }
 

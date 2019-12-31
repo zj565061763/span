@@ -101,6 +101,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
             mMapUserInfo.put(userId, wrapper);
             return true;
         }
+
         return false;
     }
 
@@ -125,10 +126,6 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
             return "";
 
         final int selectionStart = getEditText().getSelectionStart();
-        final int selectionEnd = getEditText().getSelectionEnd();
-        if (selectionStart != selectionEnd)
-            return "";
-
         final int index = selectionStart - 1;
         if (index < 0)
             return "";
