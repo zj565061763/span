@@ -213,5 +213,21 @@ public class FEditTextSpanHandler
         {
             return end;
         }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (obj == this)
+                return true;
+
+            if (!(obj instanceof SpanInfo))
+                return false;
+
+            final SpanInfo other = (SpanInfo) obj;
+
+            return getSpan().equals(other.getSpan())
+                    && getStart() == other.getStart()
+                    && getEnd() == other.getEnd();
+        }
     }
 }
