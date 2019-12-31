@@ -2,6 +2,7 @@ package com.sd.lib.span.utils;
 
 import android.text.Editable;
 import android.text.Spannable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
@@ -34,7 +35,9 @@ public class FEditTextSpanHandler
             @Override
             public void onTextChanged(CharSequence s, int start, int beforeCount, int afterCount)
             {
-
+                final String content = s.toString();
+                if (TextUtils.isEmpty(content))
+                    mMapSpan.clear();
             }
 
             @Override
