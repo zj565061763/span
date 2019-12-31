@@ -91,7 +91,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         if (span == null)
             throw new RuntimeException("createUserSpan return null");
 
-        final FEditTextSpanHandler.SpanInfo spanInfo = insertSpan(spanText, span);
+        final SpanInfo spanInfo = insertSpan(spanText, span);
         if (spanInfo != null)
         {
             final UserInfoWrapper wrapper = new UserInfoWrapper();
@@ -164,7 +164,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
                 final int selectionEnd = getEditText().getSelectionEnd();
                 if (selectionStart == selectionEnd)
                 {
-                    final FEditTextSpanHandler.SpanInfo spanInfo = getSpanInfo(selectionStart);
+                    final SpanInfo spanInfo = getSpanInfo(selectionStart);
                     if (spanInfo != null)
                     {
                         getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
@@ -196,7 +196,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
     {
         private String userId;
         private String userName;
-        private FEditTextSpanHandler.SpanInfo spanInfo;
+        private SpanInfo spanInfo;
 
         public String getUserId()
         {
@@ -208,7 +208,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
             return userName;
         }
 
-        public FEditTextSpanHandler.SpanInfo getSpanInfo()
+        public SpanInfo getSpanInfo()
         {
             return spanInfo;
         }
