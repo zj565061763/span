@@ -225,9 +225,7 @@ public class FEditTextSpanHandler
 
             final SpanInfo other = (SpanInfo) obj;
 
-            return getSpan().equals(other.getSpan())
-                    && getStart() == other.getStart()
-                    && getEnd() == other.getEnd();
+            return getSpan().equals(other.getSpan());
         }
     }
 }
