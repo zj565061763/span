@@ -24,15 +24,15 @@ public class FEditTextSpanHandler
         mEditText.addTextChangedListener(new TextWatcher()
         {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            public void beforeTextChanged(CharSequence s, int start, int beforeCount, int afterCount)
             {
-                final int delta = after - count;
+                final int delta = afterCount - beforeCount;
                 final int end = start + Math.abs(delta);
                 removeSpanInternal(start, end, false);
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
+            public void onTextChanged(CharSequence s, int start, int beforeCount, int afterCount)
             {
 
             }
