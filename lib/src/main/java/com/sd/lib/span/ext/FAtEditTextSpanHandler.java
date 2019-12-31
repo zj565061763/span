@@ -99,6 +99,10 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
             wrapper.userName = userName;
             wrapper.spanInfo = spanInfo;
             mMapUserInfo.put(userId, wrapper);
+
+            if (mCallback != null)
+                mCallback.onUserAdd(userId);
+
             return true;
         }
 
@@ -146,6 +150,9 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
             if (item.spanInfo.equals(spanInfo))
             {
                 mMapUserInfo.remove(item.userId);
+                if (mCallback != null)
+                    mCallback.onUserRemove(item.userId);
+
                 break;
             }
         }
@@ -222,6 +229,10 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
     public interface Callback
     {
         void onInputAt();
+
+        void onUserAdd(String userId);
+
+        void onUserRemove(String userId);
     }
 
     public static final class UserInfoWrapper
