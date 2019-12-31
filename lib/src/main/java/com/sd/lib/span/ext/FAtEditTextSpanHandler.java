@@ -119,6 +119,24 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         return mMapUserInfo.containsKey(userId);
     }
 
+    /**
+     * 移除用户
+     *
+     * @param userId
+     * @return
+     */
+    public final boolean removeUser(String userId)
+    {
+        if (TextUtils.isEmpty(userId))
+            return false;
+
+        final UserInfoWrapper wrapper = mMapUserInfo.get(userId);
+        if (wrapper == null)
+            return false;
+
+        return removeSpan(wrapper.spanInfo.getSpan(), true);
+    }
+
     @Override
     protected void onSpanRemove(SpanInfo spanInfo)
     {
