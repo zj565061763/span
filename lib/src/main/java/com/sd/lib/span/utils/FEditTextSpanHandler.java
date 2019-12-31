@@ -106,6 +106,25 @@ public class FEditTextSpanHandler
     }
 
     /**
+     * 移除span
+     *
+     * @param span
+     * @return
+     */
+    public final boolean removeSpan(Object span, boolean removeText)
+    {
+        if (span == null)
+            return false;
+
+        final SpanInfo spanInfo = new SpanInfo();
+        spanInfo.span = span;
+        spanInfo.start = getEditText().getText().getSpanStart(span);
+        spanInfo.end = getEditText().getText().getSpanEnd(span);
+
+        return removeSpanInternal(spanInfo, removeText);
+    }
+
+    /**
      * 返回光标或者光标前面位置的span信息
      *
      * @param index
