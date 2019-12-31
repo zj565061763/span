@@ -138,20 +138,20 @@ public class FEditTextSpanHandler
     private List<SpanInfo> getSpanInfo(int selectionStart, int selectionEnd, boolean includeEnd)
     {
         final List<SpanInfo> list = new ArrayList<>();
-        for (Object item : mMapSpan.keySet())
+        for (Object span : mMapSpan.keySet())
         {
-            final int spanStart = getEditText().getText().getSpanStart(item);
-            final int spanEnd = getEditText().getText().getSpanEnd(item);
+            final int spanStart = getEditText().getText().getSpanStart(span);
+            final int spanEnd = getEditText().getText().getSpanEnd(span);
             if (spanStart < 0 || spanEnd < 0)
             {
-                mMapSpan.remove(item);
+                mMapSpan.remove(span);
                 continue;
             }
 
             if (checkBounds(spanStart, spanEnd, selectionStart, selectionEnd, includeEnd))
             {
                 final SpanInfo spanInfo = new SpanInfo();
-                spanInfo.span = item;
+                spanInfo.span = span;
                 spanInfo.start = spanStart;
                 spanInfo.end = spanEnd;
                 list.add(spanInfo);
@@ -165,14 +165,16 @@ public class FEditTextSpanHandler
         int count = 0;
         for (SpanInfo item : list)
         {
-            getEditText().getText().removeSpan(item.getSpan());
-            if (removeText)
-                getEditText().getText().delete(item.getStart(), item.getEnd());
+            final Object span = item.getSpan();
+            if (mMapSpan.remove(span) != null)
+            {
+                getEditText().getText().removeSpan(span);
+                if (removeText)
+                    getEditText().getText().delete(item.getStart(), item.getEnd());
 
-            mMapSpan.remove(item);
-            count++;
-
-            onSpanRemove(item);
+                count++;
+                onSpanRemove(item);
+            }
         }
         return count;
     }
