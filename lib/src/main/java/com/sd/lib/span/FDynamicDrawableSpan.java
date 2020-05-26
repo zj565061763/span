@@ -64,23 +64,18 @@ public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan implement
     {
         Drawable drawable = null;
 
-        Bitmap bitmap = onGetBitmap();
+        final Bitmap bitmap = onGetBitmap();
         if (bitmap != null)
         {
             drawable = new BitmapDrawable(getContext().getResources(), bitmap);
         } else
         {
-            int drawableResIdDefault = getDefaultDrawableResId();
+            final int drawableResIdDefault = getDefaultDrawableResId();
             if (drawableResIdDefault != 0)
-            {
                 drawable = new BitmapDrawable(getContext().getResources(), getContext().getResources().openRawResource(drawableResIdDefault));
-            }
         }
 
-        int width = drawable.getIntrinsicWidth();
-        int height = drawable.getIntrinsicHeight();
-        drawable.setBounds(0, 0, width, height);
-
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         getImageSpanHelper().processDrawable(drawable);
         return drawable;
     }

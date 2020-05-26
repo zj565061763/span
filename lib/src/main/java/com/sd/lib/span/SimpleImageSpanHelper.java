@@ -74,27 +74,24 @@ class SimpleImageSpanHelper implements ImageSpanHelper
         if (drawable == null)
             return;
 
+        final int scaleWidth = drawable.getIntrinsicWidth();
+        final int scaleHeight = drawable.getIntrinsicHeight();
+        if (scaleWidth == 0 || scaleHeight == 0)
+            return;
+
         if (mWidth != null && mHeight != null)
         {
             drawable.setBounds(0, 0, mWidth, mHeight);
         } else if (mWidth != null)
         {
-            final int scaleWidth = drawable.getIntrinsicWidth();
-            final int scaleHeight = drawable.getIntrinsicHeight();
-            if (scaleWidth == 0)
-                return;
-
-            final int targetHeight = scaleHeight * mWidth / scaleWidth;
-            drawable.setBounds(0, 0, mWidth, targetHeight);
+            final int targetWidth = mWidth;
+            final int targetHeight = scaleHeight * targetWidth / scaleWidth;
+            drawable.setBounds(0, 0, targetWidth, targetHeight);
         } else if (mHeight != null)
         {
-            final int scaleWidth = drawable.getIntrinsicWidth();
-            final int scaleHeight = drawable.getIntrinsicHeight();
-            if (scaleHeight == 0)
-                return;
-
-            final int targetWidth = scaleWidth * mHeight / scaleHeight;
-            drawable.setBounds(0, 0, targetWidth, mHeight);
+            final int targetHeight = mHeight;
+            final int targetWidth = scaleWidth * targetHeight / scaleHeight;
+            drawable.setBounds(0, 0, targetWidth, targetHeight);
         }
     }
 
