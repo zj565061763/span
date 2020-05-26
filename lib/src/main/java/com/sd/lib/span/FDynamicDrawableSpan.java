@@ -98,9 +98,15 @@ public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan implement
     }
 
     @Override
-    public void setWidth(int width)
+    public void setWidth(Integer width)
     {
         getImageSpanHelper().setWidth(width);
+    }
+
+    @Override
+    public void setHeight(Integer height)
+    {
+        getImageSpanHelper().setHeight(height);
     }
 
     @Override

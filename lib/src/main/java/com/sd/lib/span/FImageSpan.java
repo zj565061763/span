@@ -100,9 +100,15 @@ public class FImageSpan extends ImageSpan implements ImageSpanHelper
     }
 
     @Override
-    public void setWidth(int width)
+    public void setWidth(Integer width)
     {
         getImageSpanHelper().setWidth(width);
+    }
+
+    @Override
+    public void setHeight(Integer height)
+    {
+        getImageSpanHelper().setHeight(height);
     }
 
     @Override

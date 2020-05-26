@@ -7,7 +7,14 @@ public interface ImageSpanHelper
      *
      * @param width
      */
-    void setWidth(int width);
+    void setWidth(Integer width);
+
+    /**
+     * 设置高度
+     *
+     * @param height
+     */
+    void setHeight(Integer height);
 
     /**
      * 设置左边间距

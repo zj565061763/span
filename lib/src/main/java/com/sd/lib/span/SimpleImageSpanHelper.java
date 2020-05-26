@@ -14,10 +14,13 @@ class SimpleImageSpanHelper implements ImageSpanHelper
     private final DynamicDrawableSpan mSpan;
 
     private VerticalAlignType mVerticalAlignType = VerticalAlignType.ALIGN_BOTTOM;
+
+    private Integer mWidth;
+    private Integer mHeight;
+
     private int mMarginLeft;
     private int mMarginRight;
     private int mMarginBottom;
-    private int mWidth;
 
     public SimpleImageSpanHelper(DynamicDrawableSpan span)
     {
@@ -25,9 +28,15 @@ class SimpleImageSpanHelper implements ImageSpanHelper
     }
 
     @Override
-    public void setWidth(int width)
+    public void setWidth(Integer width)
     {
         mWidth = width;
+    }
+
+    @Override
+    public void setHeight(Integer height)
+    {
+        mHeight = height;
     }
 
     @Override
@@ -67,11 +76,28 @@ class SimpleImageSpanHelper implements ImageSpanHelper
         if (mWidth <= 0)
             return;
 
-        final int scaleWidth = drawable.getIntrinsicWidth();
-        final int scaleHeight = drawable.getIntrinsicHeight();
-        final int targetHeight = scaleHeight * mWidth / scaleWidth;
+        if (mWidth != null && mHeight != null)
+        {
+            drawable.setBounds(0, 0, mWidth, mHeight);
+        } else if (mWidth != null)
+        {
+            final int scaleWidth = drawable.getIntrinsicWidth();
+            final int scaleHeight = drawable.getIntrinsicHeight();
+            if (scaleWidth == 0)
+                return;
 
-        drawable.setBounds(0, 0, mWidth, targetHeight);
+            final int targetHeight = scaleHeight * mWidth / scaleWidth;
+            drawable.setBounds(0, 0, mWidth, targetHeight);
+        } else if (mHeight != null)
+        {
+            final int scaleWidth = drawable.getIntrinsicWidth();
+            final int scaleHeight = drawable.getIntrinsicHeight();
+            if (scaleHeight == 0)
+                return;
+
+            final int targetWidth = scaleWidth * mHeight / scaleHeight;
+            drawable.setBounds(0, 0, targetWidth, mHeight);
+        }
     }
 
     /**
