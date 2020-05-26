@@ -1,11 +1,15 @@
 package com.sd.www.androidspan;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.sd.lib.span.FDynamicDrawableSpan;
 
 /**
@@ -42,13 +46,22 @@ public class NetImageSpan extends FDynamicDrawableSpan
     {
         if (mBitmap == null || mBitmap.isRecycled())
         {
-            Glide.with(getContext()).load(mUrl).asBitmap().into(new SimpleTarget<Bitmap>()
+            Glide.with(getContext()).asBitmap().load(mUrl).into(new CustomTarget<Bitmap>()
             {
                 @Override
-                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation)
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition)
                 {
-                    mBitmap = resource; //demo演示简单在span内部保存，具体项目中应该把Bitmap对象存到app的缓存管理中
-                    getView().postInvalidate(); //加载成功后，刷新View
+                    //demo演示简单在span内部保存，具体项目中应该把Bitmap对象存到app的缓存管理中
+                    mBitmap = resource;
+                    final View view = getView();
+                    if (view != null)
+                        view.postInvalidate();
+                }
+
+                @Override
+                public void onLoadCleared(@Nullable Drawable placeholder)
+                {
+
                 }
             });
         }
