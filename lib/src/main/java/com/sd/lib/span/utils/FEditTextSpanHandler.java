@@ -77,8 +77,7 @@ public class FEditTextSpanHandler
         final int end = start + key.length();
         getEditText().getText().setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        final SpanInfo spanInfo = new SpanInfo();
-        spanInfo.span = span;
+        final SpanInfo spanInfo = new SpanInfo(span);
         spanInfo.start = start;
         spanInfo.end = end;
 
@@ -119,8 +118,7 @@ public class FEditTextSpanHandler
         if (span == null)
             return false;
 
-        final SpanInfo spanInfo = new SpanInfo();
-        spanInfo.span = span;
+        final SpanInfo spanInfo = new SpanInfo(span);
         spanInfo.start = getEditText().getText().getSpanStart(span);
         spanInfo.end = getEditText().getText().getSpanEnd(span);
 
@@ -170,8 +168,7 @@ public class FEditTextSpanHandler
 
             if (checkBounds(spanStart, spanEnd, selectionStart, selectionEnd, includeEnd))
             {
-                final SpanInfo spanInfo = new SpanInfo();
-                spanInfo.span = span;
+                final SpanInfo spanInfo = new SpanInfo(span);
                 spanInfo.start = spanStart;
                 spanInfo.end = spanEnd;
                 list.add(spanInfo);
@@ -235,11 +232,16 @@ public class FEditTextSpanHandler
         }
     }
 
-    public static class SpanInfo
+    public static final class SpanInfo
     {
-        private Object span;
+        private final Object span;
         private int start;
         private int end;
+
+        public SpanInfo(Object span)
+        {
+            this.span = span;
+        }
 
         public Object getSpan()
         {
@@ -257,16 +259,19 @@ public class FEditTextSpanHandler
         }
 
         @Override
+        public int hashCode()
+        {
+            return span.hashCode();
+        }
+
+        @Override
         public boolean equals(Object obj)
         {
-            if (obj == this)
-                return true;
-
-            if (!(obj instanceof SpanInfo))
-                return false;
+            if (obj == this) return true;
+            if (obj == null) return false;
+            if (obj.getClass() != getClass()) return false;
 
             final SpanInfo other = (SpanInfo) obj;
-
             return getSpan().equals(other.getSpan());
         }
     }
