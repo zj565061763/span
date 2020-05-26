@@ -73,8 +73,6 @@ class SimpleImageSpanHelper implements ImageSpanHelper
     {
         if (drawable == null)
             return;
-        if (mWidth <= 0)
-            return;
 
         if (mWidth != null && mHeight != null)
         {
