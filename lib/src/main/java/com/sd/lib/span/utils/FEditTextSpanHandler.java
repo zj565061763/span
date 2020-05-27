@@ -111,6 +111,7 @@ public class FEditTextSpanHandler
      * 移除span
      *
      * @param span
+     * @param removeText true-移除span对应的文字
      * @return
      */
     public final boolean removeSpan(Object span, boolean removeText)
