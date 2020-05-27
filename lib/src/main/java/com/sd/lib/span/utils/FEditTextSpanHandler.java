@@ -167,7 +167,7 @@ public class FEditTextSpanHandler
                 continue;
             }
 
-            if (checkBounds(spanStart, spanEnd, selectionStart, selectionEnd, includeEnd))
+            if (checkSpanBounds(spanStart, spanEnd, selectionStart, selectionEnd, includeEnd))
             {
                 final SpanInfo spanInfo = new SpanInfo(span);
                 spanInfo.start = spanStart;
@@ -216,7 +216,17 @@ public class FEditTextSpanHandler
     {
     }
 
-    private static boolean checkBounds(int spanStart, int spanEnd, int selectionStart, int selectionEnd, boolean includeEnd)
+    /**
+     * 检查光标范围是否包含span
+     *
+     * @param spanStart
+     * @param spanEnd
+     * @param selectionStart
+     * @param selectionEnd
+     * @param includeEnd
+     * @return
+     */
+    private static boolean checkSpanBounds(int spanStart, int spanEnd, int selectionStart, int selectionEnd, boolean includeEnd)
     {
         if (selectionStart == selectionEnd)
         {
