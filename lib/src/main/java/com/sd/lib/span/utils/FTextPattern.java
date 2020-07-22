@@ -67,26 +67,32 @@ public class FTextPattern
                 continue;
 
             final Matcher matcher = Pattern.compile(regex).matcher(content);
-            if (matcher != null)
+            item.onMatchStart();
+            while (matcher.find())
             {
-                while (matcher.find())
-                {
-                    item.onMatch(matcher, builder);
-                }
+                item.onMatch(matcher, builder);
             }
+            item.onMatchFinish();
         }
 
         return builder;
     }
 
-    public interface MatchCallback
+    public static abstract class MatchCallback
     {
         /**
          * 返回正则表达式
          *
          * @return
          */
-        String getRegex();
+        public abstract String getRegex();
+
+        /**
+         * 开始匹配回调
+         */
+        public void onMatchStart()
+        {
+        }
 
         /**
          * 正则表达式匹配回调
@@ -94,6 +100,71 @@ public class FTextPattern
          * @param matcher
          * @param builder
          */
-        void onMatch(Matcher matcher, SpannableStringBuilder builder);
+        public abstract void onMatch(Matcher matcher, SpannableStringBuilder builder);
+
+        /**
+         * 结束匹配回调
+         */
+        public void onMatchFinish()
+        {
+        }
+    }
+
+    public static abstract class ReplaceAtNumberCallback extends MatchCallback
+    {
+        private int mDeltaStart = 0;
+
+        @Override
+        public String getRegex()
+        {
+            return "@\\d{1,}";
+        }
+
+        @Override
+        public void onMatchStart()
+        {
+            super.onMatchStart();
+            mDeltaStart = 0;
+        }
+
+        @Override
+        public void onMatch(Matcher matcher, SpannableStringBuilder builder)
+        {
+            final String key = matcher.group();
+            final int start = matcher.start() + mDeltaStart;
+            final int end = matcher.end() + mDeltaStart;
+
+            final String number = key.substring(1);
+            final String replaceContent = getReplaceContent(number);
+            if (!TextUtils.isEmpty(replaceContent))
+            {
+                final String replace = "@" + replaceContent;
+                builder.replace(start, end, replace);
+                final int replaceEnd = start + replace.length();
+
+                final int delta = replace.length() - key.length();
+                mDeltaStart += delta;
+
+                processReplaceContent(number, start, replaceEnd, builder);
+            }
+        }
+
+        /**
+         * 返回要替换的内容
+         *
+         * @param number
+         * @return
+         */
+        protected abstract String getReplaceContent(String number);
+
+        /**
+         * 处理替换内容
+         *
+         * @param number
+         * @param start
+         * @param end
+         * @param builder
+         */
+        protected abstract void processReplaceContent(String number, int start, int end, SpannableStringBuilder builder);
     }
 }
