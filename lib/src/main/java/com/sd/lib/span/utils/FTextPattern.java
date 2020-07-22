@@ -20,7 +20,7 @@ public class FTextPattern
     public void addMatchCallback(MatchCallback callback)
     {
         if (callback == null)
-            throw new NullPointerException();
+            return;
 
         if (!mListCallback.contains(callback))
             mListCallback.add(callback);
@@ -29,33 +29,31 @@ public class FTextPattern
     /**
      * 移除正则表达式匹配回调
      *
-     * @param regex
+     * @param callback
      */
-    public void removeMatchCallback(String regex)
+    public void removeMatchCallback(MatchCallback callback)
     {
-        mListCallback.remove(regex);
+        mListCallback.remove(callback);
     }
 
     /**
      * 开始处理
      *
-     * @param text
+     * @param content
      * @return
      */
-    public SpannableStringBuilder process(CharSequence text)
+    public SpannableStringBuilder process(CharSequence content)
     {
-        if (text == null)
+        if (content == null || TextUtils.isEmpty(content.toString()))
             return null;
 
         if (mListCallback.isEmpty())
             return null;
 
-        final String content = text.toString();
-
         SpannableStringBuilder builder = null;
-        if (text instanceof SpannableStringBuilder)
+        if (content instanceof SpannableStringBuilder)
         {
-            builder = (SpannableStringBuilder) text;
+            builder = (SpannableStringBuilder) content;
         } else
         {
             builder = new SpannableStringBuilder();
