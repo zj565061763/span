@@ -46,10 +46,10 @@ public class FTextPattern
      */
     public SpannableStringBuilder process(CharSequence content)
     {
-        if (content == null || TextUtils.isEmpty(content.toString()))
+        if (mListCallback.isEmpty())
             return null;
 
-        if (mListCallback.isEmpty())
+        if (content == null || TextUtils.isEmpty(content.toString()))
             return null;
 
         SpannableStringBuilder builder = null;
@@ -145,11 +145,11 @@ public class FTextPattern
             {
                 final String replace = "@" + replaceContent;
                 builder.replace(start, end, replace);
-                final int replaceEnd = start + replace.length();
 
                 final int delta = replace.length() - key.length();
                 mDeltaStart += delta;
 
+                final int replaceEnd = start + replace.length();
                 processReplaceContent(number, start, replaceEnd, builder);
             }
         }
