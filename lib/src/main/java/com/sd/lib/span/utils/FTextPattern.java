@@ -67,7 +67,7 @@ public class FTextPattern
             if (TextUtils.isEmpty(regex))
                 continue;
 
-            final Matcher matcher = Pattern.compile(regex).matcher(content);
+            final Matcher matcher = Pattern.compile(regex).matcher(builder);
             item.onMatchStart(this);
             while (matcher.find())
             {
