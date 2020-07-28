@@ -5,14 +5,14 @@ import android.graphics.drawable.Drawable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FTextPattern
 {
-    private final List<MatchCallback> mListCallback = new CopyOnWriteArrayList<>();
+    private final Map<MatchCallback, String> mCallbacks = new ConcurrentHashMap<>();
 
     /**
      * 添加正则表达式匹配回调
@@ -24,8 +24,7 @@ public class FTextPattern
         if (callback == null)
             return;
 
-        if (!mListCallback.contains(callback))
-            mListCallback.add(callback);
+        mCallbacks.put(callback, "");
     }
 
     /**
@@ -35,7 +34,7 @@ public class FTextPattern
      */
     public void removeMatchCallback(MatchCallback callback)
     {
-        mListCallback.remove(callback);
+        mCallbacks.remove(callback);
     }
 
     /**
@@ -46,7 +45,7 @@ public class FTextPattern
      */
     public SpannableStringBuilder process(CharSequence content)
     {
-        if (mListCallback.isEmpty())
+        if (mCallbacks.isEmpty())
             return null;
 
         if (content == null || TextUtils.isEmpty(content.toString()))
@@ -62,19 +61,19 @@ public class FTextPattern
             builder.append(content);
         }
 
-        for (MatchCallback item : mListCallback)
+        for (MatchCallback item : mCallbacks.keySet())
         {
             final String regex = item.getRegex();
             if (TextUtils.isEmpty(regex))
                 continue;
 
             final Matcher matcher = Pattern.compile(regex).matcher(content);
-            item.onMatchStart();
+            item.onMatchStart(this);
             while (matcher.find())
             {
                 item.onMatch(matcher, builder);
             }
-            item.onMatchFinish();
+            item.onMatchFinish(this);
         }
 
         return builder;
@@ -91,8 +90,10 @@ public class FTextPattern
 
         /**
          * 开始匹配回调
+         *
+         * @param pattern
          */
-        public void onMatchStart()
+        public void onMatchStart(FTextPattern pattern)
         {
         }
 
@@ -106,8 +107,10 @@ public class FTextPattern
 
         /**
          * 结束匹配回调
+         *
+         * @param pattern
          */
-        public void onMatchFinish()
+        public void onMatchFinish(FTextPattern pattern)
         {
         }
     }
@@ -126,9 +129,9 @@ public class FTextPattern
         }
 
         @Override
-        public void onMatchStart()
+        public void onMatchStart(FTextPattern pattern)
         {
-            super.onMatchStart();
+            super.onMatchStart(pattern);
             mDeltaStart = 0;
         }
 
