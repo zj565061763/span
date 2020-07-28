@@ -116,17 +116,11 @@ public class FTextPattern
     }
 
     /**
-     * 替换@数字的内容
+     * 替换字符串回调
      */
-    public static abstract class ReplaceAtNumberCallback extends MatchCallback
+    public static abstract class ReplaceCallback extends MatchCallback
     {
         private int mDeltaStart = 0;
-
-        @Override
-        public String getRegex()
-        {
-            return "@\\d{1,}";
-        }
 
         @Override
         public void onMatchStart(FTextPattern pattern)
@@ -142,38 +136,48 @@ public class FTextPattern
             final int start = matcher.start() + mDeltaStart;
             final int end = matcher.end() + mDeltaStart;
 
-            final String number = key.substring(1);
-            final String replaceContent = getReplaceContent(number);
+            final String replaceContent = getReplaceContent(key);
             if (!TextUtils.isEmpty(replaceContent))
             {
-                final String replace = "@" + replaceContent;
-                builder.replace(start, end, replace);
+                builder.replace(start, end, replaceContent);
 
-                final int delta = replace.length() - key.length();
+                final int delta = replaceContent.length() - key.length();
                 mDeltaStart += delta;
 
-                final int replaceEnd = start + replace.length();
-                processReplaceContent(number, start, replaceEnd, builder);
+                final int replaceEnd = start + replaceContent.length();
+                processReplaceContent(key, start, replaceEnd, builder);
             }
         }
 
         /**
          * 返回要替换的内容
          *
-         * @param number
+         * @param target
          * @return
          */
-        protected abstract String getReplaceContent(String number);
+        protected abstract String getReplaceContent(String target);
 
         /**
-         * 处理替换内容（包含@）
+         * 处理替换内容
          *
-         * @param number  被替换的数字
+         * @param target  被替换的字符串
          * @param start   替换后的目标字符串开始位置
          * @param end     替换后的目标字符串结束位置
          * @param builder
          */
-        protected abstract void processReplaceContent(String number, int start, int end, SpannableStringBuilder builder);
+        protected abstract void processReplaceContent(String target, int start, int end, SpannableStringBuilder builder);
+    }
+
+    /**
+     * 替换@数字的内容
+     */
+    public static abstract class ReplaceAtNumberCallback extends ReplaceCallback
+    {
+        @Override
+        public String getRegex()
+        {
+            return "@\\d{1,}";
+        }
     }
 
     /**

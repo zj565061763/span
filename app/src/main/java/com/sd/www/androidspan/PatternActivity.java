@@ -89,13 +89,13 @@ public class PatternActivity extends AppCompatActivity
     private final FTextPattern.ReplaceAtNumberCallback mReplaceAtNumberCallback = new FTextPattern.ReplaceAtNumberCallback()
     {
         @Override
-        protected String getReplaceContent(String number)
+        protected String getReplaceContent(String target)
         {
-            return "昵称";
+            return "@昵称";
         }
 
         @Override
-        protected void processReplaceContent(final String number, int start, int end, SpannableStringBuilder builder)
+        protected void processReplaceContent(final String target, int start, int end, SpannableStringBuilder builder)
         {
             final ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.RED);
             final ClickableSpan clickableSpan = new ClickableSpan()
@@ -103,7 +103,7 @@ public class PatternActivity extends AppCompatActivity
                 @Override
                 public void onClick(@NonNull View widget)
                 {
-                    Toast.makeText(PatternActivity.this, "clicked number:" + number, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatternActivity.this, "clicked target:" + target, Toast.LENGTH_SHORT).show();
                 }
             };
 
