@@ -12,7 +12,9 @@
 # Demo
 
 * 实际项目效果图
+<br>
 ![](http://thumbsnap.com/i/QeKxWmbM.png?0718)
 
 * TextView效果
+<br>
 ![](http://thumbsnap.com/i/uKnMNBqU.gif?0718)<br>
