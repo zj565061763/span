@@ -14,24 +14,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sd.lib.span.utils.FTextPattern;
+import com.sd.lib.span.utils.FRegexHandler;
 
 /**
  * Created by Administrator on 2017/7/18.
  */
 
-public class PatternActivity extends AppCompatActivity
+public class RegexActivity extends AppCompatActivity
 {
     private static final String CONTENT = "fdkfsofosi[face]fdsfsdf[face]54654655[face]654654 @78956dfsfs12345@66666ofisidf";
 
-    private FTextPattern mTextPattern;
+    private FRegexHandler mRegexHandler;
     private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_pattern);
+        setContentView(R.layout.act_regex);
         tv = findViewById(R.id.tv);
         tv.setText(CONTENT);
 
@@ -40,7 +40,7 @@ public class PatternActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(PatternActivity.this, "click FrameLayout", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegexActivity.this, "click FrameLayout", Toast.LENGTH_SHORT).show();
             }
         });
         tv.setOnClickListener(new View.OnClickListener()
@@ -48,7 +48,7 @@ public class PatternActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(PatternActivity.this, "click TextView", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegexActivity.this, "click TextView", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -58,7 +58,7 @@ public class PatternActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 // 匹配内容
-                final CharSequence result = getTextPattern().process(CONTENT);
+                final CharSequence result = getRegexHandler().process(CONTENT);
                 tv.setText(result);
             }
         });
@@ -72,26 +72,26 @@ public class PatternActivity extends AppCompatActivity
         });
     }
 
-    private FTextPattern getTextPattern()
+    private FRegexHandler getRegexHandler()
     {
-        if (mTextPattern == null)
+        if (mRegexHandler == null)
         {
-            mTextPattern = new FTextPattern();
-            mTextPattern.addMatchCallback(mBracketResDrawableCallback);
-            mTextPattern.addMatchCallback(mReplaceAtNumberCallback);
+            mRegexHandler = new FRegexHandler();
+            mRegexHandler.addMatchCallback(mBracketResDrawableCallback);
+            mRegexHandler.addMatchCallback(mReplaceAtNumberCallback);
         }
-        return mTextPattern;
+        return mRegexHandler;
     }
 
     /**
      * 匹配中括号表情
      */
-    private final FTextPattern.BracketResDrawableCallback mBracketResDrawableCallback = new FTextPattern.BracketResDrawableCallback(PatternActivity.this)
+    private final FRegexHandler.BracketResDrawableCallback mBracketResDrawableCallback = new FRegexHandler.BracketResDrawableCallback(RegexActivity.this)
     {
         @Override
         protected void onMatchResDrawable(String name, int start, int end, int resId, SpannableStringBuilder builder)
         {
-            final ImageSpan imageSpan = new ImageSpan(PatternActivity.this, resId);
+            final ImageSpan imageSpan = new ImageSpan(RegexActivity.this, resId);
             builder.setSpan(imageSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     };
@@ -99,7 +99,7 @@ public class PatternActivity extends AppCompatActivity
     /**
      * 替换@数字的内容
      */
-    private final FTextPattern.ReplaceAtNumberCallback mReplaceAtNumberCallback = new FTextPattern.ReplaceAtNumberCallback()
+    private final FRegexHandler.ReplaceAtNumberCallback mReplaceAtNumberCallback = new FRegexHandler.ReplaceAtNumberCallback()
     {
         @Override
         protected String getReplaceContent(String target)
@@ -116,7 +116,7 @@ public class PatternActivity extends AppCompatActivity
                 @Override
                 public void onClick(@NonNull View widget)
                 {
-                    Toast.makeText(PatternActivity.this, "click span target:" + target, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegexActivity.this, "click span target:" + target, Toast.LENGTH_SHORT).show();
                 }
             };
 

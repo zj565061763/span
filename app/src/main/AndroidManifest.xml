@@ -23,7 +23,7 @@
         <activity android:name=".TextViewActivity"/>
         <activity android:name=".EditTextActivity"/>
         <activity android:name=".AtEditTextActivity"/>
-        <activity android:name=".PatternActivity"/>
+        <activity android:name=".RegexActivity"/>
         <activity android:name=".NetSpanActivity"/>
     </application>
 

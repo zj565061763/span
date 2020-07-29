@@ -2,8 +2,9 @@ package com.sd.www.androidspan;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -28,8 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_at_edittext:
                 startActivity(new Intent(MainActivity.this, AtEditTextActivity.class));
                 break;
-            case R.id.btn_pattern:
-                startActivity(new Intent(MainActivity.this, PatternActivity.class));
+            case R.id.btn_regex:
+                startActivity(new Intent(MainActivity.this, RegexActivity.class));
                 break;
             case R.id.btn_netspan:
                 startActivity(new Intent(MainActivity.this, NetSpanActivity.class));
