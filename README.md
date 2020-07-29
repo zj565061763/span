@@ -17,4 +17,4 @@
 <br>
 TextView效果
 <br>
-![](http://thumbsnap.com/i/uKnMNBqU.gif?0718)<br>
+![](http://thumbsnap.com/i/uKnMNBqU.gif?0718)
