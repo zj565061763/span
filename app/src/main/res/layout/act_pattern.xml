@@ -4,10 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv"
+    <FrameLayout
+        android:id="@+id/fl_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#70000000"
+        android:paddingBottom="50dp">
+
+        <com.sd.lib.span.ext.view.FClickableSpanTextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/btn_match"

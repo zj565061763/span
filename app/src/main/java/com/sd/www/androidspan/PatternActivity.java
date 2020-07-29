@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
@@ -34,10 +33,24 @@ public class PatternActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_pattern);
         tv = findViewById(R.id.tv);
-
-        tv.setMovementMethod(LinkMovementMethod.getInstance());
-        tv.setHighlightColor(Color.TRANSPARENT);
         tv.setText(CONTENT);
+
+        findViewById(R.id.fl_text).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(PatternActivity.this, "click FrameLayout", Toast.LENGTH_SHORT).show();
+            }
+        });
+        tv.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Toast.makeText(PatternActivity.this, "click TextView", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         findViewById(R.id.btn_match).setOnClickListener(new View.OnClickListener()
         {
@@ -103,7 +116,7 @@ public class PatternActivity extends AppCompatActivity
                 @Override
                 public void onClick(@NonNull View widget)
                 {
-                    Toast.makeText(PatternActivity.this, "clicked target:" + target, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatternActivity.this, "click span target:" + target, Toast.LENGTH_SHORT).show();
                 }
             };
 
