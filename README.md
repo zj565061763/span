@@ -9,8 +9,10 @@
 # Gradle
 [![](https://jitpack.io/v/zj565061763/span.svg)](https://jitpack.io/#zj565061763/span)
 
-# 实际项目效果图
+# Demo
+
+* 实际项目效果图
 ![](http://thumbsnap.com/i/QeKxWmbM.png?0718)
 
-# TextView效果
+* TextView效果
 ![](http://thumbsnap.com/i/uKnMNBqU.gif?0718)<br>
