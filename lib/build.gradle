@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 20200729
-        versionName "1.1.2-beta8"
+        versionName "1.1.2-beta9"
     }
 
     buildTypes {
