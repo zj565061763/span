@@ -10,11 +10,11 @@
 [![](https://jitpack.io/v/zj565061763/span.svg)](https://jitpack.io/#zj565061763/span)
 
 # Demo
-
-* 实际项目效果图
+实际项目效果图
 <br>
 ![](http://thumbsnap.com/i/QeKxWmbM.png?0718)
 
-* TextView效果
+<br>
+TextView效果
 <br>
 ![](http://thumbsnap.com/i/uKnMNBqU.gif?0718)<br>
