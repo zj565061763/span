@@ -2,13 +2,14 @@ package com.sd.www.androidspan;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.sd.lib.span.FImageSpan;
 import com.sd.lib.span.utils.FEditTextSpanHandler;
@@ -60,8 +61,8 @@ public class EditTextActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                // 删除span
-                getEditTextSpanHandler().removeSpan();
+                // 删除
+                getEditTextSpanHandler().pressDeleteKey();
             }
         });
 

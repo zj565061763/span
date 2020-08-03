@@ -153,6 +153,35 @@ public class FEditTextSpanHandler
         return getSpanInfo(selectionStart, selectionEnd, true);
     }
 
+    /**
+     * 模拟点击删除按钮
+     *
+     * @return
+     */
+    public boolean pressDeleteKey()
+    {
+        final int length = getEditText().getText().length();
+        if (length <= 0)
+            return false;
+
+        if (removeSpan())
+        {
+            // span被移除
+        } else
+        {
+            final int selectionStart = getEditText().getSelectionStart();
+            final int selectionEnd = getEditText().getSelectionEnd();
+            if (selectionStart == selectionEnd)
+            {
+                getEditText().getText().delete(selectionStart - 1, selectionStart);
+            } else
+            {
+                getEditText().getText().delete(selectionStart, selectionEnd);
+            }
+        }
+        return true;
+    }
+
     private List<SpanInfo> getSpanInfo(int selectionStart, int selectionEnd, boolean includeEnd)
     {
         final List<SpanInfo> list = new ArrayList<>();
