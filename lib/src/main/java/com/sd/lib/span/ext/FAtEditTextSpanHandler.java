@@ -13,12 +13,14 @@ import com.sd.lib.span.utils.FEditTextSpanHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FAtEditTextSpanHandler extends FEditTextSpanHandler
 {
     private final String mMaskChar = "@";
     private final Map<String, UserInfoWrapper> mMapUserInfo = new ConcurrentHashMap<>();
+    private final Map<SpanInfo, String> mMapAtSpanInfo = new WeakHashMap<>();
 
     private Callback mCallback;
 
@@ -94,6 +96,8 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         final SpanInfo spanInfo = insertSpan(spanText, span);
         if (spanInfo != null)
         {
+            mMapAtSpanInfo.put(spanInfo, "");
+
             final UserInfoWrapper wrapper = new UserInfoWrapper();
             wrapper.userId = userId;
             wrapper.userName = userName;
@@ -145,6 +149,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
     protected void onSpanRemove(SpanInfo spanInfo)
     {
         super.onSpanRemove(spanInfo);
+        mMapAtSpanInfo.remove(spanInfo);
         for (UserInfoWrapper item : mMapUserInfo.values())
         {
             if (item.spanInfo.equals(spanInfo))
@@ -204,7 +209,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
                 if (selectionStart == selectionEnd)
                 {
                     final SpanInfo spanInfo = getSpanInfo(selectionStart);
-                    if (spanInfo != null)
+                    if (spanInfo != null && mMapAtSpanInfo.containsKey(spanInfo))
                     {
                         getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
                         return true;
