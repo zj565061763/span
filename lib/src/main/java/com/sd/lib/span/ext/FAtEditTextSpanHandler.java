@@ -204,20 +204,35 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         {
             if (keyCode == KeyEvent.KEYCODE_DEL)
             {
-                final int selectionStart = getEditText().getSelectionStart();
-                final int selectionEnd = getEditText().getSelectionEnd();
-                if (selectionStart == selectionEnd)
-                {
-                    final SpanInfo spanInfo = getSpanInfo(selectionStart);
-                    if (spanInfo != null && mMapAtSpanInfo.containsKey(spanInfo))
-                    {
-                        getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
-                        return true;
-                    }
-                }
+                if (shouldSelectAtSpan())
+                    return true;
             }
         }
 
+        return false;
+    }
+
+    @Override
+    public boolean pressDeleteKey()
+    {
+        if (shouldSelectAtSpan())
+            return true;
+        return super.pressDeleteKey();
+    }
+
+    private boolean shouldSelectAtSpan()
+    {
+        final int selectionStart = getEditText().getSelectionStart();
+        final int selectionEnd = getEditText().getSelectionEnd();
+        if (selectionStart == selectionEnd)
+        {
+            final SpanInfo spanInfo = getSpanInfo(selectionStart);
+            if (spanInfo != null && mMapAtSpanInfo.containsKey(spanInfo))
+            {
+                getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
+                return true;
+            }
+        }
         return false;
     }
 
