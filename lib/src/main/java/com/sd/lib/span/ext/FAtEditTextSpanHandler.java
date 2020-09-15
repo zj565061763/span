@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FAtEditTextSpanHandler extends FEditTextSpanHandler
 {
     private final String mMaskChar = "@";
-    private final Map<String, UserInfoWrapper> mMapUserInfo = new ConcurrentHashMap<>();
+    private final Map<String, UserInfo> mMapUserInfo = new ConcurrentHashMap<>();
     private final Map<Object, String> mMapAtSpan = new HashMap<>();
 
     private Callback mCallback;
@@ -98,11 +98,11 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         {
             mMapAtSpan.put(spanInfo.getSpan(), "");
 
-            final UserInfoWrapper wrapper = new UserInfoWrapper();
-            wrapper.userId = userId;
-            wrapper.userName = userName;
-            wrapper.span = spanInfo.getSpan();
-            mMapUserInfo.put(userId, wrapper);
+            final UserInfo userInfo = new UserInfo();
+            userInfo.userId = userId;
+            userInfo.userName = userName;
+            userInfo.span = spanInfo.getSpan();
+            mMapUserInfo.put(userId, userInfo);
 
             if (mCallback != null)
                 mCallback.onUserAdd(userId);
@@ -138,11 +138,11 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         if (TextUtils.isEmpty(userId))
             return false;
 
-        final UserInfoWrapper wrapper = mMapUserInfo.get(userId);
-        if (wrapper == null)
+        final UserInfo userInfo = mMapUserInfo.get(userId);
+        if (userInfo == null)
             return false;
 
-        return removeSpan(wrapper.span, true);
+        return removeSpan(userInfo.span, true);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
     {
         super.onSpanRemove(span);
         mMapAtSpan.remove(span);
-        for (UserInfoWrapper item : mMapUserInfo.values())
+        for (UserInfo item : mMapUserInfo.values())
         {
             if (item.span.equals(span))
             {
@@ -168,7 +168,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
      *
      * @return
      */
-    public final List<UserInfoWrapper> getAllUser()
+    public final List<UserInfo> getAllUser()
     {
         return new ArrayList<>(mMapUserInfo.values());
     }
@@ -250,7 +250,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         void onUserRemove(String userId);
     }
 
-    public static final class UserInfoWrapper
+    public static final class UserInfo
     {
         private String userId;
         private String userName;

@@ -91,8 +91,8 @@ public class AtEditTextActivity extends AppCompatActivity implements View.OnClic
     private void showAll()
     {
         final StringBuilder builder = new StringBuilder();
-        final List<FAtEditTextSpanHandler.UserInfoWrapper> list = mSpanHandler.getAllUser();
-        for (FAtEditTextSpanHandler.UserInfoWrapper item : list)
+        final List<FAtEditTextSpanHandler.UserInfo> list = mSpanHandler.getAllUser();
+        for (FAtEditTextSpanHandler.UserInfo item : list)
         {
             builder.append(item.getUserId()).append("\r\n");
         }
