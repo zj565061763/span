@@ -240,6 +240,9 @@ public class FEditTextSpanHandler
         if (span == null)
             return false;
 
+        if (span instanceof SpanInfo)
+            throw new IllegalArgumentException("span is instance of " + SpanInfo.class.getName());
+
         if (mMapSpan.remove(span) != null)
         {
             final int start = getEditText().getText().getSpanStart(span);
