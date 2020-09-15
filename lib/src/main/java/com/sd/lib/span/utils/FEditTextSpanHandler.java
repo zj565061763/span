@@ -64,7 +64,6 @@ public class FEditTextSpanHandler
     {
         final int selectionStart = getEditText().getSelectionStart();
         final int selectionEnd = getEditText().getSelectionEnd();
-
         if (selectionStart == selectionEnd)
         {
             getEditText().getText().insert(selectionStart, key);
@@ -96,7 +95,6 @@ public class FEditTextSpanHandler
     {
         final int selectionStart = getEditText().getSelectionStart();
         final int selectionEnd = getEditText().getSelectionEnd();
-
         if (selectionStart == selectionEnd)
         {
             final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd, true);
