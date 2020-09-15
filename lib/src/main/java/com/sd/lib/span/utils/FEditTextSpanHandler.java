@@ -87,25 +87,6 @@ public class FEditTextSpanHandler
     }
 
     /**
-     * 移除光标或者光标前面位置的span
-     *
-     * @return
-     */
-    public final boolean removeSpan()
-    {
-        final int selectionStart = getEditText().getSelectionStart();
-        final int selectionEnd = getEditText().getSelectionEnd();
-        if (selectionStart == selectionEnd)
-        {
-            final List<SpanInfo> list = getSpanInfo(selectionStart, selectionEnd, true);
-            final int count = removeSpanInternal(list, true);
-            return count > 0;
-        }
-
-        return false;
-    }
-
-    /**
      * 移除span
      *
      * @param span
@@ -125,12 +106,41 @@ public class FEditTextSpanHandler
     }
 
     /**
-     * 返回光标或者光标前面位置的span信息
+     * 移除光标或者光标前面位置的span
+     *
+     * @return
+     */
+    public final boolean removeCursorSpan()
+    {
+        final SpanInfo spanInfo = getCursorSpanInfo();
+        if (spanInfo != null)
+            return removeSpanInternal(spanInfo, true);
+
+        return false;
+    }
+
+    /**
+     * 返回光标或者光标前面的span信息
+     *
+     * @return
+     */
+    public final SpanInfo getCursorSpanInfo()
+    {
+        final int selectionStart = getEditText().getSelectionStart();
+        final int selectionEnd = getEditText().getSelectionEnd();
+        if (selectionStart == selectionEnd)
+            return getSpanInfo(selectionStart);
+
+        return null;
+    }
+
+    /**
+     * 返回指定位置或者指定位置前面的span信息
      *
      * @param index
      * @return
      */
-    public final SpanInfo getSpanInfo(int index)
+    private SpanInfo getSpanInfo(int index)
     {
         final List<SpanInfo> list = getSpanInfo(index, index, true);
         if (list == null || list.isEmpty())
@@ -162,7 +172,7 @@ public class FEditTextSpanHandler
         if (length <= 0)
             return false;
 
-        if (removeSpan())
+        if (removeCursorSpan())
         {
             // span被移除
         } else
@@ -187,16 +197,11 @@ public class FEditTextSpanHandler
      */
     public boolean selectCursorSpan()
     {
-        final int selectionStart = getEditText().getSelectionStart();
-        final int selectionEnd = getEditText().getSelectionEnd();
-        if (selectionStart == selectionEnd)
+        final SpanInfo spanInfo = getCursorSpanInfo();
+        if (spanInfo != null)
         {
-            final SpanInfo spanInfo = getSpanInfo(selectionStart);
-            if (spanInfo != null)
-            {
-                getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
-                return true;
-            }
+            getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
+            return true;
         }
         return false;
     }
