@@ -180,6 +180,27 @@ public class FEditTextSpanHandler
         return true;
     }
 
+    /**
+     * 选中光标之前的span
+     *
+     * @return true-选中
+     */
+    public boolean selectCursorSpan()
+    {
+        final int selectionStart = getEditText().getSelectionStart();
+        final int selectionEnd = getEditText().getSelectionEnd();
+        if (selectionStart == selectionEnd)
+        {
+            final SpanInfo spanInfo = getSpanInfo(selectionStart);
+            if (spanInfo != null)
+            {
+                getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
+                return true;
+            }
+        }
+        return false;
+    }
+
     private List<SpanInfo> getSpanInfo(int selectionStart, int selectionEnd, boolean includeEnd)
     {
         final List<SpanInfo> list = new ArrayList<>();

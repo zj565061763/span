@@ -75,20 +75,10 @@ public class EditTextActivity extends AppCompatActivity
                 {
                     if (keyCode == KeyEvent.KEYCODE_DEL)
                     {
-                        final int selectionStart = et.getSelectionStart();
-                        final int selectionEnd = et.getSelectionEnd();
-                        if (selectionStart == selectionEnd)
-                        {
-                            final FEditTextSpanHandler.SpanInfo spanInfo = getEditTextSpanHandler().getSpanInfo(selectionStart);
-                            if (spanInfo != null)
-                            {
-                                et.setSelection(spanInfo.getStart(), spanInfo.getEnd());
-                                return true;
-                            }
-                        }
+                        if (getEditTextSpanHandler().selectCursorSpan())
+                            return true;
                     }
                 }
-
                 return false;
             }
         });
