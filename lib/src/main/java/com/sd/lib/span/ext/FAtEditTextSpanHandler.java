@@ -11,16 +11,16 @@ import android.widget.EditText;
 import com.sd.lib.span.utils.FEditTextSpanHandler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FAtEditTextSpanHandler extends FEditTextSpanHandler
 {
     private final String mMaskChar = "@";
     private final Map<String, UserInfoWrapper> mMapUserInfo = new ConcurrentHashMap<>();
-    private final Map<SpanInfo, String> mMapAtSpanInfo = new WeakHashMap<>();
+    private final Map<Object, String> mMapAtSpan = new HashMap<>();
 
     private Callback mCallback;
 
@@ -96,12 +96,12 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         final SpanInfo spanInfo = insertSpan(spanText, span);
         if (spanInfo != null)
         {
-            mMapAtSpanInfo.put(spanInfo, "");
+            mMapAtSpan.put(spanInfo.getSpan(), "");
 
             final UserInfoWrapper wrapper = new UserInfoWrapper();
             wrapper.userId = userId;
             wrapper.userName = userName;
-            wrapper.spanInfo = spanInfo;
+            wrapper.span = spanInfo.getSpan();
             mMapUserInfo.put(userId, wrapper);
 
             if (mCallback != null)
@@ -142,17 +142,17 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
         if (wrapper == null)
             return false;
 
-        return removeSpan(wrapper.spanInfo.getSpan(), true);
+        return removeSpan(wrapper.span, true);
     }
 
     @Override
-    protected void onSpanRemove(SpanInfo spanInfo)
+    protected void onSpanRemove(Object span)
     {
-        super.onSpanRemove(spanInfo);
-        mMapAtSpanInfo.remove(spanInfo);
+        super.onSpanRemove(span);
+        mMapAtSpan.remove(span);
         for (UserInfoWrapper item : mMapUserInfo.values())
         {
-            if (item.spanInfo.equals(spanInfo))
+            if (item.span.equals(span))
             {
                 mMapUserInfo.remove(item.userId);
                 if (mCallback != null)
@@ -223,7 +223,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
     private boolean shouldSelectAtSpan()
     {
         final SpanInfo spanInfo = getCursorSpanInfo();
-        if (spanInfo != null && mMapAtSpanInfo.containsKey(spanInfo))
+        if (spanInfo != null && mMapAtSpan.containsKey(spanInfo))
         {
             getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
             return true;
@@ -254,7 +254,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
     {
         private String userId;
         private String userName;
-        private SpanInfo spanInfo;
+        private Object span;
 
         public String getUserId()
         {
@@ -266,9 +266,9 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
             return userName;
         }
 
-        public SpanInfo getSpanInfo()
+        public Object getSpan()
         {
-            return spanInfo;
+            return span;
         }
     }
 }

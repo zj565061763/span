@@ -29,7 +29,7 @@ public class FEditTextSpanHandler
             {
                 final int end = start + beforeCount;
                 final List<SpanInfo> list = getSpanInfo(start, end, false);
-                removeSpanInternal(list, false);
+                removeSpanInfo(list, false);
             }
 
             @Override
@@ -95,14 +95,7 @@ public class FEditTextSpanHandler
      */
     public final boolean removeSpan(Object span, boolean removeText)
     {
-        if (span == null)
-            return false;
-
-        final SpanInfo spanInfo = new SpanInfo(span);
-        spanInfo.start = getEditText().getText().getSpanStart(span);
-        spanInfo.end = getEditText().getText().getSpanEnd(span);
-
-        return removeSpanInternal(spanInfo, removeText);
+        return removeSpanObject(span, removeText);
     }
 
     /**
@@ -114,7 +107,7 @@ public class FEditTextSpanHandler
     {
         final SpanInfo spanInfo = getCursorSpanInfo();
         if (spanInfo != null)
-            return removeSpanInternal(spanInfo, true);
+            return removeSpanObject(spanInfo.getSpan(), true);
 
         return false;
     }
@@ -231,41 +224,54 @@ public class FEditTextSpanHandler
         return list;
     }
 
-    private int removeSpanInternal(List<SpanInfo> list, boolean removeText)
+    private int removeSpanInfo(List<SpanInfo> list, boolean removeText)
     {
         int count = 0;
         for (SpanInfo item : list)
         {
-            if (removeSpanInternal(item, removeText))
+            if (removeSpanObject(item.getSpan(), removeText))
                 count++;
         }
         return count;
     }
 
-    private boolean removeSpanInternal(SpanInfo spanInfo, boolean removeText)
+    private boolean removeSpanObject(Object span, boolean removeText)
     {
-        if (spanInfo == null)
+        if (span == null)
             return false;
 
-        final Object span = spanInfo.getSpan();
         if (mMapSpan.remove(span) != null)
         {
-            getEditText().getText().removeSpan(span);
-            if (removeText)
-                getEditText().getText().delete(spanInfo.getStart(), spanInfo.getEnd());
+            final int start = getEditText().getText().getSpanStart(span);
+            final int end = getEditText().getText().getSpanEnd(span);
+            if (start >= 0 && end >= 0)
+            {
+                getEditText().getText().removeSpan(span);
+                if (removeText)
+                    getEditText().getText().delete(start, end);
 
-            onSpanRemove(spanInfo);
-            return true;
+                onSpanRemove(span);
+                return true;
+            }
         }
-
         return false;
     }
 
-    protected void onSpanRemove(SpanInfo spanInfo)
+    /**
+     * span添加回调
+     *
+     * @param spanInfo
+     */
+    protected void onSpanInsert(SpanInfo spanInfo)
     {
     }
 
-    protected void onSpanInsert(SpanInfo spanInfo)
+    /**
+     * span移除回调
+     *
+     * @param span
+     */
+    protected void onSpanRemove(Object span)
     {
     }
 

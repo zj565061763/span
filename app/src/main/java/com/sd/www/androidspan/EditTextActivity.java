@@ -98,10 +98,10 @@ public class EditTextActivity extends AppCompatActivity
                 }
 
                 @Override
-                protected void onSpanRemove(SpanInfo spanInfo)
+                protected void onSpanRemove(Object span)
                 {
-                    super.onSpanRemove(spanInfo);
-                    Log.i(TAG, "onSpanRemove start:" + spanInfo.getStart() + " end:" + spanInfo.getEnd() + " span:" + spanInfo.getSpan());
+                    super.onSpanRemove(span);
+                    Log.i(TAG, "onSpanRemove span:" + span);
                 }
             };
         }
