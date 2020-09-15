@@ -1,6 +1,7 @@
 package com.sd.lib.span;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -62,17 +63,22 @@ public abstract class FDynamicDrawableSpan extends DynamicDrawableSpan implement
     @Override
     public Drawable getDrawable()
     {
+        final Context context = getContext();
+        if (context == null)
+            return null;
+
+        final Resources resources = context.getResources();
         Drawable drawable = null;
 
         final Bitmap bitmap = onGetBitmap();
         if (bitmap != null)
         {
-            drawable = new BitmapDrawable(getContext().getResources(), bitmap);
+            drawable = new BitmapDrawable(resources, bitmap);
         } else
         {
-            final int drawableResIdDefault = getDefaultDrawableResId();
-            if (drawableResIdDefault != 0)
-                drawable = new BitmapDrawable(getContext().getResources(), getContext().getResources().openRawResource(drawableResIdDefault));
+            final int defaultDrawableResId = getDefaultDrawableResId();
+            if (defaultDrawableResId != 0)
+                drawable = new BitmapDrawable(resources, resources.openRawResource(defaultDrawableResId));
         }
 
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
