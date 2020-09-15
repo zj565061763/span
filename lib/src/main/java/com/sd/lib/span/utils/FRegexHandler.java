@@ -24,10 +24,8 @@ public class FRegexHandler
      */
     public void addMatchCallback(MatchCallback callback)
     {
-        if (callback == null)
-            return;
-
-        mCallbacks.put(callback, "");
+        if (callback != null)
+            mCallbacks.put(callback, "");
     }
 
     /**
@@ -37,7 +35,8 @@ public class FRegexHandler
      */
     public void removeMatchCallback(MatchCallback callback)
     {
-        mCallbacks.remove(callback);
+        if (callback != null)
+            mCallbacks.remove(callback);
     }
 
     /**
