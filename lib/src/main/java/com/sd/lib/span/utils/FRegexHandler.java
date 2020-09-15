@@ -25,7 +25,12 @@ public class FRegexHandler
     public void addMatchCallback(MatchCallback callback)
     {
         if (callback != null)
+        {
+            if (TextUtils.isEmpty(callback.getRegex()))
+                throw new IllegalArgumentException("regex is empty with callback:" + callback);
+
             mCallbacks.put(callback, "");
+        }
     }
 
     /**
