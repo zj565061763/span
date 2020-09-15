@@ -67,7 +67,7 @@ public class FRegexHandler
         {
             final String regex = item.getRegex();
             if (TextUtils.isEmpty(regex))
-                continue;
+                throw new RuntimeException("regex is empty with callback:" + item);
 
             final Matcher matcher = Pattern.compile(regex).matcher(builder);
             item.onMatchStart(this);
