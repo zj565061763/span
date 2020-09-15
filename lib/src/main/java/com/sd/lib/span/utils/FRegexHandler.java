@@ -236,20 +236,20 @@ public class FRegexHandler
         protected final void onMatchBracket(String name, int start, int end, SpannableStringBuilder builder)
         {
             final int resId = getIdentifierForDrawable(name, mContext);
-            if (resId != 0)
-            {
-                Drawable drawable = null;
-                try
-                {
-                    drawable = mContext.getResources().getDrawable(resId);
-                } catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+            if (resId == 0)
+                return;
 
-                if (drawable != null)
-                    onMatchResDrawable(name, start, end, resId, builder);
+            Drawable drawable = null;
+            try
+            {
+                drawable = mContext.getResources().getDrawable(resId);
+            } catch (Exception e)
+            {
+                e.printStackTrace();
             }
+
+            if (drawable != null)
+                onMatchResDrawable(name, start, end, resId, builder);
         }
 
         protected abstract void onMatchResDrawable(String name, int start, int end, int resId, SpannableStringBuilder builder);
