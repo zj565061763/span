@@ -223,7 +223,7 @@ public class FAtEditTextSpanHandler extends FEditTextSpanHandler
     private boolean shouldSelectAtSpan()
     {
         final SpanInfo spanInfo = getCursorSpanInfo();
-        if (spanInfo != null && mMapAtSpan.containsKey(spanInfo))
+        if (spanInfo != null && mMapAtSpan.containsKey(spanInfo.getSpan()))
         {
             getEditText().setSelection(spanInfo.getStart(), spanInfo.getEnd());
             return true;
