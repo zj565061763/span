@@ -34,8 +34,8 @@ public class FClickableSpanTextView extends AppCompatTextView
         init();
     }
 
-    private boolean mHasOnClickListener;
     private boolean mIsClickSpan;
+    private OnClickListener mOnClickListener;
 
     private void init()
     {
@@ -47,27 +47,54 @@ public class FClickableSpanTextView extends AppCompatTextView
     @Override
     public void setOnClickListener(OnClickListener listener)
     {
-        mHasOnClickListener = listener != null;
-        super.setOnClickListener(listener);
+        mOnClickListener = listener;
+        if (!mIsClickSpan)
+            super.setOnClickListener(listener);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
+        boolean result = false;
+
         mIsClickSpan = false;
         final boolean superResult = super.onTouchEvent(event);
 
         if (mIsClickSpan)
         {
-            return true;
+            result = true;
+            removeOnClickListener();
         } else
         {
-            if (mHasOnClickListener)
-                return superResult;
-
-            return false;
+            result = superResult;
         }
+
+        if (event.getAction() == MotionEvent.ACTION_UP)
+            restoreOnClickListener();
+
+        return result;
     }
+
+    private void removeOnClickListener()
+    {
+        removeCallbacks(mRestoreClickRunnable);
+        super.setOnClickListener(null);
+    }
+
+    private void restoreOnClickListener()
+    {
+        removeCallbacks(mRestoreClickRunnable);
+        post(mRestoreClickRunnable);
+    }
+
+    private final Runnable mRestoreClickRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            FClickableSpanTextView.super.setOnClickListener(mOnClickListener);
+        }
+    };
 
     private static class InternalLinkMovementMethod extends LinkMovementMethod
     {
