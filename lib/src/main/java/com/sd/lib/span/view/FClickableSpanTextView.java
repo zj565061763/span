@@ -1,4 +1,4 @@
-package com.sd.lib.span.ext.view;
+package com.sd.lib.span.view;
 
 import android.content.Context;
 import android.text.Layout;

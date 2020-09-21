@@ -11,7 +11,7 @@
         android:background="#70000000"
         android:paddingBottom="50dp">
 
-        <com.sd.lib.span.ext.view.FClickableSpanTextView
+        <com.sd.lib.span.view.FClickableSpanTextView
             android:id="@+id/tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
