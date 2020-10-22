@@ -13,8 +13,9 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.emoji.widget.EmojiAppCompatTextView;
 
-public class FClickableSpanTextView extends AppCompatTextView
+public class FClickableSpanTextView extends EmojiAppCompatTextView
 {
     public FClickableSpanTextView(Context context)
     {

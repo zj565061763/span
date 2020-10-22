@@ -7,9 +7,9 @@ android {
     compileSdkVersion 28
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 22
-        versionCode 20200916
-        versionName "1.1.5-beta5"
+        targetSdkVersion 28
+        versionCode 20201022
+        versionName "1.1.5-beta6"
     }
 
     buildTypes {
@@ -26,34 +26,30 @@ android {
 }
 
 dependencies {
-    compileOnly 'androidx.appcompat:appcompat:1.0.2'
+    api 'androidx.emoji:emoji:1.1.0'
+    api 'androidx.emoji:emoji-appcompat:1.1.0'
+    api 'androidx.emoji:emoji-bundled:1.1.0'
 }
 
-// 指定编码
 tasks.withType(Javadoc) {
     options {
-        encoding "UTF-8"
+        encoding 'UTF-8'
         charSet 'UTF-8'
-        failOnError false
     }
 }
 
-// 打包源码
 task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
+    getArchiveClassifier().set('sources')
+    from android.sourceSets.main.java.sourceFiles
 }
 
 task javadoc(type: Javadoc) {
-    failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
 }
 
-// 制作文档(Javadoc)
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+    getArchiveClassifier().set('javadoc')
     from javadoc.destinationDir
 }
 
