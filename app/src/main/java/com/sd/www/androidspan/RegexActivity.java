@@ -43,14 +43,6 @@ public class RegexActivity extends AppCompatActivity
                 Toast.makeText(RegexActivity.this, "click FrameLayout", Toast.LENGTH_SHORT).show();
             }
         });
-        tv.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Toast.makeText(RegexActivity.this, "click TextView", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         findViewById(R.id.btn_match).setOnClickListener(new View.OnClickListener()
         {
