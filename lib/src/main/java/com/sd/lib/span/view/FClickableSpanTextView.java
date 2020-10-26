@@ -12,7 +12,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.emoji.widget.EmojiAppCompatTextView;
 
 public class FClickableSpanTextView extends EmojiAppCompatTextView
@@ -49,8 +48,14 @@ public class FClickableSpanTextView extends EmojiAppCompatTextView
     public void setOnClickListener(OnClickListener listener)
     {
         mOnClickListener = listener;
-        if (!mIsClickSpan)
+
+        if (mIsClickSpan)
+        {
+            // 忽略
+        } else
+        {
             super.setOnClickListener(listener);
+        }
     }
 
     @Override
@@ -67,7 +72,7 @@ public class FClickableSpanTextView extends EmojiAppCompatTextView
             removeOnClickListener();
         } else
         {
-            result = superResult;
+            result = superResult && mOnClickListener != null;
         }
 
         if (event.getAction() == MotionEvent.ACTION_UP)
