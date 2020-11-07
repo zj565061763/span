@@ -2,6 +2,7 @@ package com.sd.www.androidspan;
 
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +26,18 @@ public class ViewSpanActivity extends AppCompatActivity
         mBinding = ActViewSpanBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
 
+        mBinding.btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                setVewSpan();
+            }
+        });
+    }
+
+    private void setVewSpan()
+    {
         final SpannableStringBuilder builder = new SpannableStringBuilder();
         builder.append("before");
 
@@ -44,6 +57,5 @@ public class ViewSpanActivity extends AppCompatActivity
 
         builder.append("after");
         mBinding.tvContent.setText(builder);
-
     }
 }
