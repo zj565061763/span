@@ -9,13 +9,19 @@
     android:paddingRight="10dp">
 
     <TextView
+        android:id="@+id/tv_content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="hello" />
+        android:layout_height="wrap_content"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/face" />
+
+    <ImageView
+        android:id="@+id/iv_net_image"
+        android:layout_width="wrap_content"
+        android:src="@drawable/face"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
