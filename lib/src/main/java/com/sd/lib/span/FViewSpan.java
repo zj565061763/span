@@ -17,7 +17,6 @@ public class FViewSpan extends ReplacementSpan
     private final InternalLayout mLayout;
     private Paint.FontMetricsInt mFontMetricsInt;
 
-    private volatile boolean mHasDraw = false;
     private volatile boolean mHasPrepared = false;
     private volatile boolean mIsDirty = false;
 
@@ -36,13 +35,9 @@ public class FViewSpan extends ReplacementSpan
      */
     public void update()
     {
-        if (mHasDraw)
-        {
-            Log.i(TAG, "update " + FViewSpan.this);
-
-            final CharSequence text = mTextView.getText();
-            mTextView.setText(text);
-        }
+        Log.i(TAG, "update " + FViewSpan.this);
+        final CharSequence text = mTextView.getText();
+        mTextView.setText(text);
     }
 
     @Override
@@ -128,9 +123,6 @@ public class FViewSpan extends ReplacementSpan
         protected void onDraw(Canvas canvas)
         {
             super.onDraw(canvas);
-            if (!mHasDraw)
-                mHasDraw = true;
-
             if (!mHasPrepared)
             {
                 mHasPrepared = true;
