@@ -3,12 +3,15 @@ package com.sd.www.androidspan;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.sd.lib.span.FViewSpan;
 import com.sd.lib.span.utils.FSpanUtil;
+import com.sd.lib.utils.FViewUtil;
+import com.sd.lib.utils.context.FResUtil;
 import com.sd.www.androidspan.databinding.ActViewSpanBinding;
 import com.sd.www.androidspan.view.TestImageView;
 import com.sd.www.androidspan.view.UserInfoView;
@@ -61,13 +64,21 @@ public class ViewSpanActivity extends AppCompatActivity implements View.OnClickL
     private void addImageView()
     {
         final TestImageView imageView = new TestImageView(ViewSpanActivity.this);
-        Glide.with(ViewSpanActivity.this)
-                .load("https://www.baidu.com/img/bd_logo1.png")
-                .placeholder(R.drawable.ic_loading)
-                .error(R.drawable.ic_load_failed)
-                .into(imageView);
+        FViewUtil.setSize(imageView, FResUtil.dp2px(20), ViewGroup.LayoutParams.MATCH_PARENT);
 
-        final FViewSpan imageViewSpan = new FViewSpan(imageView, mBinding.tvContent);
+        final FViewSpan imageViewSpan = new FViewSpan(imageView, mBinding.tvContent)
+        {
+            @Override
+            protected void onPrepared()
+            {
+                super.onPrepared();
+                Glide.with(ViewSpanActivity.this)
+                        .load("https://www.baidu.com/img/bd_logo1.png")
+                        .placeholder(R.drawable.ic_loading)
+                        .error(R.drawable.ic_load_failed)
+                        .into(imageView);
+            }
+        };
         FSpanUtil.appendSpan(mBuilder, "span", imageViewSpan);
     }
 
