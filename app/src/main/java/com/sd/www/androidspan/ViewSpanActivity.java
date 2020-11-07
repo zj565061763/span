@@ -36,7 +36,6 @@ public class ViewSpanActivity extends AppCompatActivity implements View.OnClickL
     {
         mBuilder.clear();
         addUserInfoView();
-        addImageView();
         mBuilder.append("hello world!");
         updateTextView();
     }
