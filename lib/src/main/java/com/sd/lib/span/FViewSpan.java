@@ -16,7 +16,6 @@ public class FViewSpan extends ReplacementSpan
     private final TextView mTextView;
     private final InternalLayout mLayout;
 
-    private volatile boolean mHasDraw = false;
     private volatile boolean mIsPrepared = false;
     private volatile boolean mIsDirty = false;
 
@@ -37,7 +36,7 @@ public class FViewSpan extends ReplacementSpan
      */
     public void update()
     {
-        if (mHasDraw)
+        if (mIsPrepared)
         {
             Log.i(TAG, "update " + FViewSpan.this);
             final CharSequence text = mTextView.getText();
@@ -55,7 +54,6 @@ public class FViewSpan extends ReplacementSpan
         @Override
         public void onViewDetachedFromWindow(View v)
         {
-            mHasDraw = false;
             mIsPrepared = false;
             onDestroy();
         }
@@ -145,9 +143,6 @@ public class FViewSpan extends ReplacementSpan
         protected void onDraw(Canvas canvas)
         {
             super.onDraw(canvas);
-            if (!mHasDraw)
-                mHasDraw = true;
-
             if (!mIsPrepared)
             {
                 mIsPrepared = true;
