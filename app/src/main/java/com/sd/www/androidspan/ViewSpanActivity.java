@@ -1,7 +1,6 @@
 package com.sd.www.androidspan;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.SpannableStringBuilder;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,19 +31,19 @@ public class ViewSpanActivity extends AppCompatActivity
         final IncludeViewSpanBinding binding = IncludeViewSpanBinding.inflate(getLayoutInflater());
         binding.tvContent.setText("text in view");
 
-        final FViewSpan viewSpan = new FViewSpan(binding.getRoot(), mBinding.tvContent);
+        final FViewSpan viewSpan = new FViewSpan(binding.getRoot(), mBinding.tvContent)
+        {
+            @Override
+            protected void onPrepared()
+            {
+                super.onPrepared();
+                Glide.with(ViewSpanActivity.this).load("https://www.baidu.com/img/bd_logo1.png").into(binding.ivNetImage);
+            }
+        };
         FSpanUtil.appendSpan(builder, "span", viewSpan);
 
         builder.append("after");
         mBinding.tvContent.setText(builder);
 
-        new Handler().postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                Glide.with(ViewSpanActivity.this).load("https://www.baidu.com/img/bd_logo1.png").into(binding.ivNetImage);
-            }
-        }, 5 * 1000);
     }
 }

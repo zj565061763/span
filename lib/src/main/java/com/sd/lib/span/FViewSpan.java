@@ -18,12 +18,27 @@ public class FViewSpan extends ReplacementSpan
     private Paint.FontMetricsInt mFontMetricsInt;
 
     private boolean mHasDraw = false;
+    private boolean mHasPrepared = false;
 
     public FViewSpan(View view, TextView textView)
     {
         mTextView = textView;
         mLayout = new InternalLayout(view.getContext());
         mLayout.addView(view);
+    }
+
+    /**
+     * 更新span
+     */
+    public void update()
+    {
+        if (mHasDraw)
+        {
+            Log.i(TAG, "update " + FViewSpan.this);
+
+            final CharSequence text = mTextView.getText();
+            mTextView.setText(text);
+        }
     }
 
     @Override
@@ -81,14 +96,27 @@ public class FViewSpan extends ReplacementSpan
         @Override
         public void requestLayout()
         {
-            Log.i(TAG, "InternalLayout requestLayout mHasDraw:" + mHasDraw + " " + FViewSpan.this);
             super.requestLayout();
+            update();
+        }
 
-            if (mHasDraw)
+        @Override
+        protected void onDraw(Canvas canvas)
+        {
+            super.onDraw(canvas);
+            if (!mHasDraw)
+                mHasDraw = true;
+
+            if (!mHasPrepared)
             {
-                final CharSequence text = mTextView.getText();
-                mTextView.setText(text);
+                mHasPrepared = true;
+                Log.i(TAG, "onPrepared " + FViewSpan.this);
+                onPrepared();
             }
         }
+    }
+
+    protected void onPrepared()
+    {
     }
 }
