@@ -17,6 +17,7 @@ public class FViewSpan extends ReplacementSpan
     private final InternalLayout mLayout;
     private Paint.FontMetricsInt mFontMetricsInt;
 
+    private volatile boolean mHasDraw = false;
     private volatile boolean mIsPrepared = false;
     private volatile boolean mIsDirty = false;
 
@@ -37,9 +38,12 @@ public class FViewSpan extends ReplacementSpan
      */
     public void update()
     {
-        Log.i(TAG, "update " + FViewSpan.this);
-        final CharSequence text = mTextView.getText();
-        mTextView.setText(text);
+        if (mHasDraw)
+        {
+            Log.i(TAG, "update " + FViewSpan.this);
+            final CharSequence text = mTextView.getText();
+            mTextView.setText(text);
+        }
     }
 
     private final View.OnAttachStateChangeListener mOnAttachStateChangeListener = new View.OnAttachStateChangeListener()
@@ -52,6 +56,7 @@ public class FViewSpan extends ReplacementSpan
         @Override
         public void onViewDetachedFromWindow(View v)
         {
+            mHasDraw = false;
             mIsPrepared = false;
             onDestroy();
         }
@@ -140,6 +145,9 @@ public class FViewSpan extends ReplacementSpan
         protected void onDraw(Canvas canvas)
         {
             super.onDraw(canvas);
+            if (!mHasDraw)
+                mHasDraw = true;
+
             if (!mIsPrepared)
             {
                 mIsPrepared = true;
