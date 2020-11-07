@@ -15,7 +15,6 @@ public class FViewSpan extends ReplacementSpan
 
     private final TextView mTextView;
     private final InternalLayout mLayout;
-    private Paint.FontMetricsInt mFontMetricsInt;
 
     private volatile boolean mHasDraw = false;
     private volatile boolean mIsPrepared = false;
@@ -76,28 +75,29 @@ public class FViewSpan extends ReplacementSpan
     @Override
     public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm)
     {
-        if (fm != null)
-            mFontMetricsInt = fm;
-
-        final int height = getLineHeight();
+        final int height = getLineHeight(fm);
         if (mIsDirty)
         {
             measureLayout(height);
             Log.i(TAG, "getSize width:" + mLayout.getMeasuredWidth() + " height:" + height + " " + FViewSpan.this);
         }
-
         return mLayout.getMeasuredWidth();
     }
 
-    private int getLineHeight()
+    private int getLineHeight(Paint.FontMetricsInt fm)
     {
-        final int measuredHeight = mLayout.getMeasuredHeight();
-
         int height = 0;
-        final Paint.FontMetricsInt fm = mFontMetricsInt;
         if (fm != null)
             height = fm.bottom - fm.top;
 
+        if (height <= 0)
+        {
+            fm = mTextView.getPaint().getFontMetricsInt();
+            if (fm != null)
+                height = fm.bottom - fm.top;
+        }
+
+        final int measuredHeight = mLayout.getMeasuredHeight();
         if (height != measuredHeight)
             setDirty(true);
 
