@@ -17,8 +17,9 @@ public class FViewSpan extends ReplacementSpan
     private final InternalLayout mLayout;
     private Paint.FontMetricsInt mFontMetricsInt;
 
-    private boolean mHasDraw = false;
-    private boolean mHasPrepared = false;
+    private volatile boolean mHasDraw = false;
+    private volatile boolean mHasPrepared = false;
+    private volatile boolean mIsDirty = false;
 
     public FViewSpan(View view, TextView textView)
     {
@@ -62,21 +63,38 @@ public class FViewSpan extends ReplacementSpan
             mFontMetricsInt = fm;
 
         final int height = getLineHeight();
-        measureLayout(height);
+        if (mIsDirty)
+        {
+            measureLayout(height);
+            Log.i(TAG, "getSize width:" + mLayout.getMeasuredWidth() + " height:" + height + " " + FViewSpan.this);
+        }
 
-        final int viewWidth = mLayout.getMeasuredWidth();
-
-        Log.i(TAG, "getSize width" + viewWidth + " height:" + height + " " + FViewSpan.this);
-        return viewWidth;
+        return mLayout.getMeasuredWidth();
     }
 
     private int getLineHeight()
     {
+        final int measuredHeight = mLayout.getMeasuredHeight();
+
+        int height = 0;
         final Paint.FontMetricsInt fm = mFontMetricsInt;
         if (fm != null)
-            return fm.bottom - fm.top;
+            height = fm.bottom - fm.top;
 
-        return 0;
+        if (height != measuredHeight)
+            setDirty(true);
+
+        return height;
+    }
+
+    private boolean setDirty(boolean dirty)
+    {
+        if (mIsDirty != dirty)
+        {
+            mIsDirty = dirty;
+            return true;
+        }
+        return false;
     }
 
     private void measureLayout(int height)
@@ -85,6 +103,7 @@ public class FViewSpan extends ReplacementSpan
         final int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
         mLayout.measure(widthMeasureSpec, heightMeasureSpec);
         mLayout.layout(0, 0, mLayout.getMeasuredWidth(), mLayout.getMeasuredHeight());
+        setDirty(false);
     }
 
     private final class InternalLayout extends FrameLayout
@@ -98,7 +117,11 @@ public class FViewSpan extends ReplacementSpan
         public void requestLayout()
         {
             super.requestLayout();
-            update();
+            if (setDirty(true))
+            {
+                Log.i(TAG, "requestLayout " + FViewSpan.this);
+                update();
+            }
         }
 
         @Override
