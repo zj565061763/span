@@ -37,11 +37,19 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/btn_netspan"
+        android:id="@+id/btn_net_span"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:onClick="onClick"
-        android:text="btn_netspan"
+        android:text="btn_net_span"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_view_span"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="onClick"
+        android:text="btn_view_span"
         android:textAllCaps="false" />
 
 </LinearLayout>

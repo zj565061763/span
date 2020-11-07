@@ -25,6 +25,7 @@
         <activity android:name=".AtEditTextActivity"/>
         <activity android:name=".RegexActivity"/>
         <activity android:name=".NetSpanActivity"/>
+        <activity android:name=".ViewSpanActivity"/>
     </application>
 
 </manifest>

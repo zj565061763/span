@@ -36,8 +36,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_regex:
                 startActivity(new Intent(MainActivity.this, RegexActivity.class));
                 break;
-            case R.id.btn_netspan:
+            case R.id.btn_net_span:
                 startActivity(new Intent(MainActivity.this, NetSpanActivity.class));
+                break;
+            case R.id.btn_view_span:
+                startActivity(new Intent(MainActivity.this, ViewSpanActivity.class));
                 break;
             default:
                 break;
