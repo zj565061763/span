@@ -5,16 +5,27 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btn_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="click"
+        android:onClick="onClick"
+        android:text="show"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="add"
         android:textAllCaps="false" />
 
     <FrameLayout
         android:id="@+id/fl_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#66000000"
+        android:padding="5dp">
 
         <com.sd.lib.span.view.FClickableSpanTextView
             android:id="@+id/tv_content"
