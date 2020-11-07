@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_view_span:
                 startActivity(new Intent(MainActivity.this, ViewSpanActivity.class));
                 break;
+            case R.id.btn_recycler_view:
+                startActivity(new Intent(MainActivity.this, RecyclerViewActivity.class));
+                break;
             default:
                 break;
         }

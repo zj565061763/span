@@ -36,4 +36,5 @@ dependencies {
 
     implementation project(':lib')
     implementation 'com.github.zj565061763:views:1.1.10'
+    implementation 'com.github.zj565061763:adapter:1.2.1-beta11'
 }

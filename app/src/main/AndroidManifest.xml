@@ -26,6 +26,7 @@
         <activity android:name=".RegexActivity"/>
         <activity android:name=".NetSpanActivity"/>
         <activity android:name=".ViewSpanActivity"/>
+        <activity android:name=".RecyclerViewActivity"/>
     </application>
 
 </manifest>

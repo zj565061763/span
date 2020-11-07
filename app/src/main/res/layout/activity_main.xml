@@ -52,4 +52,12 @@
         android:text="btn_view_span"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btn_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="onClick"
+        android:text="btn_recycler_view"
+        android:textAllCaps="false" />
+
 </LinearLayout>
