@@ -117,7 +117,9 @@ public class FViewSpan extends ReplacementSpan
     private void measureLayout(int height)
     {
         final int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        final int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
+        final int heightMeasureSpec = height > 0 ?
+                View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY) :
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         mLayout.measure(widthMeasureSpec, heightMeasureSpec);
         mLayout.layout(0, 0, mLayout.getMeasuredWidth(), mLayout.getMeasuredHeight());
         setDirty(false);
