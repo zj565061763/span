@@ -65,7 +65,7 @@ public class FViewSpan extends ReplacementSpan
         Log.i(TAG, "draw " + FViewSpan.this);
 
         canvas.save();
-        canvas.translate(x, 0);
+        canvas.translate(x, top);
         mLayout.draw(canvas);
         canvas.restore();
     }
