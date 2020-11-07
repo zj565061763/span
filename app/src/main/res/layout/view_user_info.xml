@@ -13,20 +13,20 @@
         android:id="@+id/iv_level"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/rank_1" />
+        android:src="@drawable/ic_level_1" />
 
     <com.sd.lib.views.FAutoWidthImageView
         android:id="@+id/iv_light"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
-        android:src="@drawable/ic_is_light" />
+        android:src="@drawable/ic_beauty" />
 
     <com.sd.lib.views.FAutoWidthImageView
         android:id="@+id/iv_vip"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
-        android:src="@drawable/ic_is_vip_msg" />
+        android:src="@drawable/ic_vip_msg" />
 
 </LinearLayout>

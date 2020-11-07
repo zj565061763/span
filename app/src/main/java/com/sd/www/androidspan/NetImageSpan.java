@@ -38,7 +38,7 @@ public class NetImageSpan extends FDynamicDrawableSpan
     protected int getDefaultDrawableResId()
     {
         //返回图片未加载成功之前的占位图片
-        return R.drawable.ic_default;
+        return R.drawable.ic_loading;
     }
 
     @Override

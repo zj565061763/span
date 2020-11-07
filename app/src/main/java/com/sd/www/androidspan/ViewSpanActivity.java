@@ -3,7 +3,6 @@ package com.sd.www.androidspan;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.sd.lib.span.FViewSpan;
 import com.sd.lib.span.utils.FSpanUtil;
 import com.sd.www.androidspan.databinding.ActViewSpanBinding;
+import com.sd.www.androidspan.view.TestImageView;
 import com.sd.www.androidspan.view.UserInfoView;
 
 /**
@@ -60,17 +60,15 @@ public class ViewSpanActivity extends AppCompatActivity implements View.OnClickL
      */
     private void addImageView()
     {
-        final ImageView imageView = new ImageView(ViewSpanActivity.this);
-        imageView.setImageResource(R.drawable.face);
-        final FViewSpan imageViewSpan = new FViewSpan(imageView, mBinding.tvContent)
-        {
-            @Override
-            protected void onPrepared()
-            {
-                super.onPrepared();
-                Glide.with(ViewSpanActivity.this).load("https://www.baidu.com/img/bd_logo1.png").into(imageView);
-            }
-        };
+        final TestImageView imageView = new TestImageView(ViewSpanActivity.this);
+        Glide.with(ViewSpanActivity.this)
+                .load("https://www.baidu.com/img/bd_logo1.png")
+                .placeholder(R.drawable.ic_loading)
+                .error(R.drawable.ic_load_failed)
+                .timeout(5 * 1000)
+                .into(imageView);
+
+        final FViewSpan imageViewSpan = new FViewSpan(imageView, mBinding.tvContent);
         FSpanUtil.appendSpan(mBuilder, "span", imageViewSpan);
     }
 
