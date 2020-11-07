@@ -153,11 +153,9 @@ public class FViewSpan extends ReplacementSpan
 
     protected void onPrepared()
     {
-        Log.i(TAG, "onPrepared " + FViewSpan.this);
     }
 
     protected void onDestroy()
     {
-        Log.i(TAG, "onDestroy " + FViewSpan.this);
     }
 }
