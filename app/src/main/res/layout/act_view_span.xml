@@ -30,7 +30,8 @@
         <com.sd.lib.span.view.FClickableSpanTextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="15sp" />
 
     </FrameLayout>
 
