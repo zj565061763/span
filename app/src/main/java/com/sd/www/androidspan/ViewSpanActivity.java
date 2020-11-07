@@ -65,7 +65,6 @@ public class ViewSpanActivity extends AppCompatActivity implements View.OnClickL
                 .load("https://www.baidu.com/img/bd_logo1.png")
                 .placeholder(R.drawable.ic_loading)
                 .error(R.drawable.ic_load_failed)
-                .timeout(5 * 1000)
                 .into(imageView);
 
         final FViewSpan imageViewSpan = new FViewSpan(imageView, mBinding.tvContent);
