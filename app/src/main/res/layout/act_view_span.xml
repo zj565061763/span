@@ -13,11 +13,11 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/btn_add"
+        android:id="@+id/btn_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
-        android:text="add"
+        android:text="image"
         android:textAllCaps="false" />
 
     <FrameLayout

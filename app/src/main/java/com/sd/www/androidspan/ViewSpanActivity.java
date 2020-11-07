@@ -1,9 +1,7 @@
 package com.sd.www.androidspan;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -33,20 +31,19 @@ public class ViewSpanActivity extends AppCompatActivity implements View.OnClickL
 
     private void showSpan()
     {
-        final SpannableStringBuilder builder = mBuilder;
-        builder.clear();
-
-        addText("before", Color.RED);
+        mBuilder.clear();
         addUserInfoView();
-        addText("after", Color.BLUE);
-
-        mBinding.tvContent.setText(builder);
+        addImageView();
+        mBuilder.append("hello world!");
+        updateTextView();
     }
 
-    private void addText(String content, int color)
+    /**
+     * 更新TextView
+     */
+    private void updateTextView()
     {
-        final ForegroundColorSpan textSpan = new ForegroundColorSpan(color);
-        FSpanUtil.appendSpan(mBuilder, content, textSpan);
+        mBinding.tvContent.setText(mBuilder);
     }
 
     /**
@@ -83,10 +80,10 @@ public class ViewSpanActivity extends AppCompatActivity implements View.OnClickL
         if (v == mBinding.btnShow)
         {
             showSpan();
-        } else if (v == mBinding.btnAdd)
+        } else if (v == mBinding.btnImage)
         {
-            mBuilder.append("after");
-            mBinding.tvContent.setText(mBuilder);
+            addImageView();
+            updateTextView();
         }
     }
 }
