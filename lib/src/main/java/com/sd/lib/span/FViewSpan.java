@@ -53,8 +53,6 @@ public class FViewSpan extends ReplacementSpan
         canvas.translate(x, 0);
         mLayout.draw(canvas);
         canvas.restore();
-
-        mHasDraw = true;
     }
 
     @Override
