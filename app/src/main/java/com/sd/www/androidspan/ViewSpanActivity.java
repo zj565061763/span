@@ -63,7 +63,7 @@ public class ViewSpanActivity extends AppCompatActivity implements View.OnClickL
     private void addImageView()
     {
         final TestImageView imageView = new TestImageView(ViewSpanActivity.this);
-        FViewUtil.setSize(imageView, FResUtil.dp2px(20), ViewGroup.LayoutParams.MATCH_PARENT);
+        FViewUtil.setSize(imageView, FResUtil.dp2px(40), ViewGroup.LayoutParams.MATCH_PARENT);
 
         final FViewSpan imageViewSpan = new FViewSpan(imageView, mBinding.tvContent)
         {
