@@ -22,6 +22,9 @@ public class FViewSpan extends ReplacementSpan
 
     public FViewSpan(View view, TextView textView)
     {
+        if (view == null || textView == null)
+            throw new NullPointerException("null");
+
         mTextView = textView;
         mLayout = new InternalLayout(view.getContext());
         mLayout.addView(view);
