@@ -17,7 +17,7 @@ public class FViewSpan extends ReplacementSpan
     private final InternalLayout mLayout;
     private Paint.FontMetricsInt mFontMetricsInt;
 
-    private volatile boolean mHasPrepared = false;
+    private volatile boolean mIsPrepared = false;
     private volatile boolean mIsDirty = false;
 
     public FViewSpan(View view, TextView textView)
@@ -28,6 +28,8 @@ public class FViewSpan extends ReplacementSpan
         mTextView = textView;
         mLayout = new InternalLayout(view.getContext());
         mLayout.addView(view);
+
+        textView.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
     }
 
     /**
@@ -39,6 +41,21 @@ public class FViewSpan extends ReplacementSpan
         final CharSequence text = mTextView.getText();
         mTextView.setText(text);
     }
+
+    private final View.OnAttachStateChangeListener mOnAttachStateChangeListener = new View.OnAttachStateChangeListener()
+    {
+        @Override
+        public void onViewAttachedToWindow(View v)
+        {
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(View v)
+        {
+            mIsPrepared = false;
+            onDestroy();
+        }
+    };
 
     @Override
     public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
@@ -123,10 +140,9 @@ public class FViewSpan extends ReplacementSpan
         protected void onDraw(Canvas canvas)
         {
             super.onDraw(canvas);
-            if (!mHasPrepared)
+            if (!mIsPrepared)
             {
-                mHasPrepared = true;
-                Log.i(TAG, "onPrepared " + FViewSpan.this);
+                mIsPrepared = true;
                 onPrepared();
             }
         }
@@ -134,5 +150,11 @@ public class FViewSpan extends ReplacementSpan
 
     protected void onPrepared()
     {
+        Log.i(TAG, "onPrepared " + FViewSpan.this);
+    }
+
+    protected void onDestroy()
+    {
+        Log.i(TAG, "onDestroy " + FViewSpan.this);
     }
 }

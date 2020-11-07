@@ -29,7 +29,7 @@ public class ViewSpanActivity extends AppCompatActivity
         mBinding.btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v)
+            public void onClick(final View v)
             {
                 setVewSpan();
             }
