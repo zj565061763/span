@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.text.style.ReplacementSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -25,6 +27,8 @@ public class FViewSpan extends ReplacementSpan
             throw new NullPointerException("null");
 
         mTextView = textView;
+
+        removeViewFromParent(view);
         mLayout = new InternalLayout(view.getContext());
         mLayout.addView(view);
 
@@ -157,5 +161,23 @@ public class FViewSpan extends ReplacementSpan
 
     protected void onDestroy()
     {
+    }
+
+    private static void removeViewFromParent(final View view)
+    {
+        if (view == null)
+            return;
+
+        final ViewParent parent = view.getParent();
+        if (parent == null)
+            return;
+
+        try
+        {
+            final ViewGroup viewGroup = (ViewGroup) parent;
+            viewGroup.removeView(view);
+        } catch (Exception e)
+        {
+        }
     }
 }
