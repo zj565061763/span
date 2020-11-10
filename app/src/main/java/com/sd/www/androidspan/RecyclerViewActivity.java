@@ -44,7 +44,10 @@ public class RecyclerViewActivity extends AppCompatActivity implements View.OnCl
             final SpannableStringBuilder builder = new SpannableStringBuilder();
 
             final UserInfoView view = new UserInfoView(RecyclerViewActivity.this);
-            FSpanUtil.appendSpan(builder, "span", new FViewSpan(view, binding.tvContent));
+            final FViewSpan viewSpan = new FViewSpan(view, binding.tvContent);
+            viewSpan.setAlignType(FViewSpan.AlignType.baseline);
+
+            FSpanUtil.appendSpan(builder, "span", viewSpan);
 
             builder.append("hello world!");
             binding.tvContent.setText(builder);

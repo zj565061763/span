@@ -18,6 +18,8 @@ public class FViewSpan extends ReplacementSpan
     private final TextView mTextView;
     private final InternalLayout mLayout;
 
+    private AlignType mAlignType = AlignType.bottom;
+
     private volatile boolean mIsPrepared = false;
     private volatile boolean mIsDirty = false;
 
@@ -33,6 +35,23 @@ public class FViewSpan extends ReplacementSpan
         mLayout.addView(view);
 
         textView.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
+    }
+
+    /**
+     * 设置对齐类型
+     *
+     * @param alignType
+     */
+    public void setAlignType(AlignType alignType)
+    {
+        if (alignType == null)
+            return;
+
+        if (mAlignType != alignType)
+        {
+            mAlignType = alignType;
+            update();
+        }
     }
 
     /**
@@ -90,19 +109,32 @@ public class FViewSpan extends ReplacementSpan
     {
         int height = 0;
         if (fm != null)
-            height = fm.bottom - fm.top;
+            height = getFontMetricsIntHeight(fm);
 
         if (height <= 0)
         {
             fm = mTextView.getPaint().getFontMetricsInt();
             if (fm != null)
-                height = fm.bottom - fm.top;
+                height = getFontMetricsIntHeight(fm);
         }
 
         final int measuredHeight = mLayout.getMeasuredHeight();
         if (height != measuredHeight)
             setDirty(true);
 
+        return height;
+    }
+
+    private int getFontMetricsIntHeight(Paint.FontMetricsInt fm)
+    {
+        int height = 0;
+        if (mAlignType == AlignType.bottom)
+        {
+            height = fm.bottom - fm.top;
+        } else if (mAlignType == AlignType.baseline)
+        {
+            height = fm.bottom - fm.top - fm.descent;
+        }
         return height;
     }
 
@@ -161,6 +193,12 @@ public class FViewSpan extends ReplacementSpan
 
     protected void onDestroy()
     {
+    }
+
+    public enum AlignType
+    {
+        bottom,
+        baseline
     }
 
     private static void removeViewFromParent(final View view)
