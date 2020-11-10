@@ -19,6 +19,7 @@ public class FViewSpan extends ReplacementSpan
     private final InternalLayout mLayout;
 
     private AlignType mAlignType = AlignType.bottom;
+    private HeightType mHeightType = HeightType.match;
 
     private volatile boolean mIsPrepared = false;
     private volatile boolean mIsDirty = false;
@@ -50,6 +51,23 @@ public class FViewSpan extends ReplacementSpan
         if (mAlignType != alignType)
         {
             mAlignType = alignType;
+            update();
+        }
+    }
+
+    /**
+     * 设置高度类型
+     *
+     * @param heightType
+     */
+    public void setHeightType(HeightType heightType)
+    {
+        if (heightType == null)
+            return;
+
+        if (mHeightType != heightType)
+        {
+            mHeightType = heightType;
             update();
         }
     }
@@ -88,7 +106,31 @@ public class FViewSpan extends ReplacementSpan
         Log.i(TAG, "draw " + FViewSpan.this);
 
         canvas.save();
-        canvas.translate(x, top);
+
+        int transY = top;
+        if (mAlignType == AlignType.baseline)
+        {
+            final int descent = Math.abs(paint.getFontMetricsInt().descent);
+            if (mHeightType == HeightType.match)
+            {
+                transY -= descent;
+            } else if (mHeightType == HeightType.ascent)
+            {
+                transY += descent;
+            }
+        } else if (mAlignType == AlignType.bottom)
+        {
+            final int descent = Math.abs(paint.getFontMetricsInt().descent);
+            final int ascent = Math.abs(paint.getFontMetricsInt().ascent);
+            if (mHeightType == HeightType.match)
+            {
+            } else if (mHeightType == HeightType.ascent)
+            {
+                transY += (ascent + descent);
+            }
+        }
+
+        canvas.translate(x, transY);
         mLayout.draw(canvas);
         canvas.restore();
     }
@@ -128,12 +170,12 @@ public class FViewSpan extends ReplacementSpan
     private int getFontMetricsIntHeight(Paint.FontMetricsInt fm)
     {
         int height = 0;
-        if (mAlignType == AlignType.bottom)
+        if (mHeightType == HeightType.match)
         {
             height = fm.bottom - fm.top;
-        } else if (mAlignType == AlignType.baseline)
+        } else if (mHeightType == HeightType.ascent)
         {
-            height = fm.bottom - fm.top - fm.descent;
+            height = Math.abs(fm.ascent);
         }
         return height;
     }
@@ -199,6 +241,12 @@ public class FViewSpan extends ReplacementSpan
     {
         bottom,
         baseline
+    }
+
+    public enum HeightType
+    {
+        match,
+        ascent
     }
 
     private static void removeViewFromParent(final View view)
