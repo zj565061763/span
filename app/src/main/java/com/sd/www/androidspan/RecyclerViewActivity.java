@@ -44,6 +44,7 @@ public class RecyclerViewActivity extends AppCompatActivity implements View.OnCl
             final SpannableStringBuilder builder = new SpannableStringBuilder();
 
             final UserInfoView view = new UserInfoView(RecyclerViewActivity.this);
+
             final FViewSpan viewSpan = new FViewSpan(view, binding.tvContent);
             viewSpan.setHeightType(FViewSpan.HeightType.ascent);
             viewSpan.setAlignType(FViewSpan.AlignType.baseline);

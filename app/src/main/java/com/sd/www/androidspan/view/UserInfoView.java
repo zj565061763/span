@@ -1,6 +1,7 @@
 package com.sd.www.androidspan.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
@@ -14,6 +15,7 @@ public class UserInfoView extends FrameLayout
     {
         super(context);
         mBinding = ViewUserInfoBinding.inflate(LayoutInflater.from(context), this, true);
+        setBackgroundColor(Color.RED);
     }
 
     public ViewUserInfoBinding getBinding()
