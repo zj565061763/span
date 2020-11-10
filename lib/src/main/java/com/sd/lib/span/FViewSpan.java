@@ -108,12 +108,12 @@ public class FViewSpan extends ReplacementSpan
     private int getLineHeight(Paint.FontMetricsInt fm)
     {
         int height = 0;
-        if (fm != null)
-            height = getFontMetricsIntHeight(fm);
+        final Paint.FontMetricsInt fmTextView = mTextView.getPaint().getFontMetricsInt();
+        if (fmTextView != null)
+            height = getFontMetricsIntHeight(fmTextView);
 
         if (height <= 0)
         {
-            fm = mTextView.getPaint().getFontMetricsInt();
             if (fm != null)
                 height = getFontMetricsIntHeight(fm);
         }
