@@ -116,17 +116,21 @@ public class FViewSpan extends ReplacementSpan
                 transY -= descent;
             } else if (mHeightType == HeightType.ascent)
             {
-                transY += descent;
+                final int height = Math.abs(paint.getFontMetricsInt().bottom - paint.getFontMetricsInt().top);
+                final int ascent = Math.abs(paint.getFontMetricsInt().ascent);
+
+                final int leading = height - descent - ascent;
+                transY += leading;
             }
         } else if (mAlignType == AlignType.bottom)
         {
+            final int leading = Math.abs(paint.getFontMetricsInt().leading);
             final int descent = Math.abs(paint.getFontMetricsInt().descent);
-            final int ascent = Math.abs(paint.getFontMetricsInt().ascent);
             if (mHeightType == HeightType.match)
             {
             } else if (mHeightType == HeightType.ascent)
             {
-                transY += (ascent + descent);
+                transY += (leading + descent);
             }
         }
 
@@ -172,7 +176,7 @@ public class FViewSpan extends ReplacementSpan
         int height = 0;
         if (mHeightType == HeightType.match)
         {
-            height = fm.bottom - fm.top;
+            height = Math.abs(fm.bottom - fm.top);
         } else if (mHeightType == HeightType.ascent)
         {
             height = Math.abs(fm.ascent);
