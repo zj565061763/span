@@ -118,19 +118,19 @@ public class FViewSpan extends ReplacementSpan
             {
                 final int height = Math.abs(paint.getFontMetricsInt().bottom - paint.getFontMetricsInt().top);
                 final int ascent = Math.abs(paint.getFontMetricsInt().ascent);
-
-                final int leading = height - descent - ascent;
-                transY += leading;
+                final int delta = height - descent - ascent;
+                transY += delta;
             }
         } else if (mAlignType == AlignType.bottom)
         {
-            final int leading = Math.abs(paint.getFontMetricsInt().leading);
-            final int descent = Math.abs(paint.getFontMetricsInt().descent);
             if (mHeightType == HeightType.match)
             {
             } else if (mHeightType == HeightType.ascent)
             {
-                transY += (leading + descent);
+                final int height = Math.abs(paint.getFontMetricsInt().bottom - paint.getFontMetricsInt().top);
+                final int ascent = Math.abs(paint.getFontMetricsInt().ascent);
+                final int delta = height - ascent;
+                transY += delta;
             }
         }
 
