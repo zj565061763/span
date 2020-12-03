@@ -19,8 +19,11 @@ public class FSpanUtil
      */
     public static void appendSpan(SpannableStringBuilder builder, String key, Object... spans)
     {
-        if (TextUtils.isEmpty(key) || spans == null || spans.length <= 0)
-            throw new IllegalArgumentException();
+        if (TextUtils.isEmpty(key))
+            return;
+
+        if (spans == null || spans.length <= 0)
+            return;
 
         builder.append(key);
         final int end = builder.length();
@@ -40,8 +43,11 @@ public class FSpanUtil
      */
     public static void overlyingSpan(SpannableStringBuilder builder, Object oldSpan, Object... spans)
     {
-        if (oldSpan == null || spans == null || spans.length <= 0)
-            throw new IllegalArgumentException();
+        if (oldSpan == null)
+            return;
+
+        if (spans == null || spans.length <= 0)
+            return;
 
         final int end = builder.getSpanEnd(oldSpan);
         final int start = builder.getSpanStart(oldSpan);
