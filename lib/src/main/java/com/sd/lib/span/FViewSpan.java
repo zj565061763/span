@@ -3,6 +3,7 @@ package com.sd.lib.span;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.text.style.ReplacementSpan;
 import android.util.Log;
 import android.view.View;
@@ -214,19 +215,23 @@ public class FViewSpan extends ReplacementSpan
 
     private void setPrepared(boolean prepared)
     {
-        if (mIsPrepared != prepared)
+        if (mIsPrepared == prepared)
+            return;
+
+        if (prepared && !isViewAttached(mTextView))
+            return;
+
+        mIsPrepared = prepared;
+        Log.i(TAG, "setPrepared:" + prepared + " " + FViewSpan.this);
+
+        if (prepared)
         {
-            mIsPrepared = prepared;
-            Log.i(TAG, "setPrepared:" + prepared + " " + FViewSpan.this);
-            if (prepared)
-            {
-                mTextView.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
-                onPrepared();
-            } else
-            {
-                mTextView.removeOnAttachStateChangeListener(mOnAttachStateChangeListener);
-                onDestroy();
-            }
+            mTextView.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
+            onPrepared();
+        } else
+        {
+            mTextView.removeOnAttachStateChangeListener(mOnAttachStateChangeListener);
+            onDestroy();
         }
     }
 
@@ -280,5 +285,16 @@ public class FViewSpan extends ReplacementSpan
         } catch (Exception e)
         {
         }
+    }
+
+    private static boolean isViewAttached(View view)
+    {
+        if (view == null)
+            return false;
+
+        if (Build.VERSION.SDK_INT >= 19)
+            return view.isAttachedToWindow();
+        else
+            return view.getWindowToken() != null;
     }
 }
