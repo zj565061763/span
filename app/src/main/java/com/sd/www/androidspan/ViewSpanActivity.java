@@ -2,6 +2,7 @@ package com.sd.www.androidspan;
 
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,6 +22,8 @@ import com.sd.www.androidspan.view.UserInfoView;
  */
 public class ViewSpanActivity extends AppCompatActivity implements View.OnClickListener
 {
+    public static final String TAG = ViewSpanActivity.class.getSimpleName();
+
     private ActViewSpanBinding mBinding;
     private final SpannableStringBuilder mBuilder = new SpannableStringBuilder();
 
@@ -71,11 +74,19 @@ public class ViewSpanActivity extends AppCompatActivity implements View.OnClickL
             protected void onPrepared()
             {
                 super.onPrepared();
+                Log.i(TAG, "FViewSpan onPrepared:" + this);
                 Glide.with(ViewSpanActivity.this)
                         .load("https://www.baidu.com/img/bd_logo1.png")
                         .placeholder(R.drawable.ic_loading)
                         .error(R.drawable.ic_load_failed)
                         .into(imageView);
+            }
+
+            @Override
+            protected void onDestroy()
+            {
+                super.onDestroy();
+                Log.i(TAG, "FViewSpan onDestroy:" + this);
             }
         };
         FSpanUtil.appendSpan(mBuilder, "span", imageViewSpan);
