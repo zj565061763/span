@@ -79,10 +79,23 @@ public class FViewSpan extends ReplacementSpan
         if (mIsPrepared)
         {
             Log.i(TAG, "update " + FViewSpan.this);
-            final CharSequence text = mTextView.getText();
-            mTextView.setText(text);
+            mTextView.removeCallbacks(mUpdateRunnable);
+            mTextView.post(mUpdateRunnable);
         }
     }
+
+    private final Runnable mUpdateRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (mIsPrepared)
+            {
+                final CharSequence text = mTextView.getText();
+                mTextView.setText(text);
+            }
+        }
+    };
 
     @Override
     public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
