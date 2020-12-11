@@ -21,8 +21,8 @@ public class FViewSpan extends ReplacementSpan
     private AlignType mAlignType = AlignType.bottom;
     private HeightType mHeightType = HeightType.match;
 
-    private volatile boolean mIsPrepared = false;
-    private volatile boolean mIsDirty = false;
+    private boolean mIsPrepared = false;
+    private boolean mIsDirty = false;
 
     public FViewSpan(View view, TextView textView)
     {
@@ -34,8 +34,6 @@ public class FViewSpan extends ReplacementSpan
         removeViewFromParent(view);
         mLayout = new InternalLayout(view.getContext());
         mLayout.addView(view);
-
-        textView.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
     }
 
     /**
@@ -84,21 +82,6 @@ public class FViewSpan extends ReplacementSpan
             mTextView.setText(text);
         }
     }
-
-    private final View.OnAttachStateChangeListener mOnAttachStateChangeListener = new View.OnAttachStateChangeListener()
-    {
-        @Override
-        public void onViewAttachedToWindow(View v)
-        {
-        }
-
-        @Override
-        public void onViewDetachedFromWindow(View v)
-        {
-            mIsPrepared = false;
-            onDestroy();
-        }
-    };
 
     @Override
     public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
@@ -225,13 +208,41 @@ public class FViewSpan extends ReplacementSpan
         protected void onDraw(Canvas canvas)
         {
             super.onDraw(canvas);
-            if (!mIsPrepared)
+            setPrepared(true);
+        }
+    }
+
+    private void setPrepared(boolean prepared)
+    {
+        if (mIsPrepared != prepared)
+        {
+            mIsPrepared = prepared;
+            Log.i(TAG, "setPrepared:" + prepared + " " + FViewSpan.this);
+            if (prepared)
             {
-                mIsPrepared = true;
+                mTextView.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
                 onPrepared();
+            } else
+            {
+                mTextView.removeOnAttachStateChangeListener(mOnAttachStateChangeListener);
+                onDestroy();
             }
         }
     }
+
+    private final View.OnAttachStateChangeListener mOnAttachStateChangeListener = new View.OnAttachStateChangeListener()
+    {
+        @Override
+        public void onViewAttachedToWindow(View v)
+        {
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(View v)
+        {
+            setPrepared(false);
+        }
+    };
 
     protected void onPrepared()
     {
